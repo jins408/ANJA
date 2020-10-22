@@ -1,0 +1,23 @@
+.Mainheader{
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-top: 3rem;
+}
+
+.scroll{
+    font-size: 2rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn_join{
+    position: absolute;
+    top:1rem;
+    right: 1rem;
+}
+
+.skill{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
