@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-import '../css/Main.css'
+import '../css/Introduce.css'
 
-const Main =()=> {
+const Introduce =()=> {
     return (
         <div>
             <p className="Mainheader">코로나 캡스</p>
@@ -55,4 +55,4 @@ const Main =()=> {
     );
 }
 
-export default Main;
+export default Introduce;
