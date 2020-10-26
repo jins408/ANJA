@@ -1,0 +1,23 @@
+.header { 
+    background: #5c7cfa; 
+}
+
+.nav-item{
+    margin: auto 0;
+}
+
+.navbar-brand{
+    color: white;
+}
+
+.item {
+    color: white; 
+    text-decoration: none !important; 
+    font-size: 1.1rem; 
+} 
+
+.navbar_btn1{
+    width: 6rem;
+    font-size: 1.1rem; 
+}
+
