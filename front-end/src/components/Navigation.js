@@ -7,7 +7,7 @@ const Navigation = () =>{
         <nav className="header navbar navbar-expand-sm ">
                 <ul className="navbar-nav">
                     <li className="nav-item active">
-                        <Link to="/" className="navbar-brand">Corona Caps</Link>
+                        <Link to="/" className="navbar-brand" >Corona Caps</Link>
                     </li>
                     <li className="nav-item">
                         <Link to="/home" className="item mr-3" >Home</Link>
