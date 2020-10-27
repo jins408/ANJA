@@ -17,7 +17,7 @@ const Navigation = () =>{
                     </li>
                 </ul>
                 <ul className="my-auto ml-auto">
-                    <button className="navbar_btn1 btn btn-outline-light mr-2" type="submit">Login</button>     
+                    <Link to="/Login"><button className="navbar_btn1 btn btn-outline-light mr-2" type="submit">Login</button></Link>     
                     <button className="navbar_btn2 btn btn-light" type="submit">서비스 신청하기</button>     
                 </ul>
         </nav>
