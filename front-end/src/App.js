@@ -4,7 +4,7 @@ import './App.css';
 import { Route } from 'react-router-dom'
 
 import Introduce from './pages/Introduce'
-import Join from './components/Join'
+import Join from './pages/Join'
 
 const App = () => {
   return (

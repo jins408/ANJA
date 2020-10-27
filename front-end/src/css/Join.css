@@ -1,0 +1,39 @@
+.joinheader{
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.inputdiv{
+    width: 60%;
+    margin-left: 50%;
+    transform:translateX(-40%);
+}
+
+.input-text{
+    display: inline-block;
+    width: 8rem;
+    text-align: right;
+    margin: auto 1rem auto 0;
+}
+
+.input-e{
+    margin: auto 1rem auto 1rem;
+}
+
+.input-email{
+    width: 8rem;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.input{
+    width: 29rem;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.select-email{
+    width: 9.5rem;
+    border-radius: 5px;
+}
