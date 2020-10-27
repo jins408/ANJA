@@ -5,7 +5,7 @@ import Navigation from './components/Navigation'
 import { Route, useLocation } from 'react-router-dom'
 
 import Introduce from './pages/Introduce'
-import Join from './components/Join'
+import Join from './pages/Join'
 import Home from './pages/Home'
 import About from './pages/About'
 import Login from './pages/Login'
