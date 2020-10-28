@@ -8,3 +8,6 @@ class User(models.Model):
     pw = models.CharField(max_length=45)
     name = models.CharField(max_length=45)
     # access = models.IntegerField
+
+    # def __str__(self):
+    #     return self
