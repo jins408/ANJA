@@ -1,10 +1,12 @@
 import React from 'react';
-
+import Search from '../../../components/Search';
 
 const main = () =>{
     return(
             <div>
-                <h1>Hello main Page</h1>
+                <h3 className="text-center">Hello main Page</h3>
+                <Search />
+              
             </div>
         );
     }
