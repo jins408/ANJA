@@ -12,6 +12,9 @@ import { Route } from 'react-router-dom'
 // import Apply from './pages/Apply'
 
 import Favorites from './pages/moblie/tab/Favorites'
+import Main from './pages/moblie/tab/main'
+import Bottombar from './components/Bottombar';
+
 
 const App = () => {
   // let location = useLocation()
@@ -26,7 +29,9 @@ const App = () => {
       <Route exact path="/join" component={Join}></Route>
       <Route exact path="/login" component={Login}></Route>
       <Route exact path="/apply" component={Apply}></Route> */}
-      <Route exact path='/favorite' component={Favorites}></Route>
+      <Route exact path='/mobile/favorite' component={Favorites}></Route>
+      <Route exact path='/mobile/main' component={Main}></Route>
+      <Bottombar />
     </>
   );
 }
