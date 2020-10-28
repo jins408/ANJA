@@ -9,6 +9,7 @@ import Join from './pages/Join'
 import Home from './pages/Home'
 import About from './pages/About'
 import Login from './pages/Login'
+import Apply from './pages/Apply'
 
 const App = () => {
   let location = useLocation()
@@ -22,6 +23,7 @@ const App = () => {
       <Route path="/about" component={About} />
       <Route exact path="/join" component={Join}></Route>
       <Route exact path="/login" component={Login}></Route>
+      <Route exact path="/apply" component={Apply}></Route>
     </>
   );
 }
