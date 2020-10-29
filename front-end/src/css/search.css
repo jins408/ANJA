@@ -1,0 +1,15 @@
+.MuiOutlinedInput-input {
+    padding: 0.5rem 0.4rem !important;
+}
+
+.MuiOutlinedInput-root{
+    width: 16.5rem;
+}
+
+.searchIcon{
+    height: 5.5rem;
+}
+
+.searchinput{
+    width: 100%;
+}
