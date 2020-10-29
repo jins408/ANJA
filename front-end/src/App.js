@@ -12,7 +12,7 @@ import { Route } from 'react-router-dom'
 // import Apply from './pages/Apply'
 
 import Favorites from './pages/moblie/tab/Favorites'
-import Main from './pages/moblie/tab/main'
+import Main from './pages/moblie/tab/Main'
 import Alarm from './pages/moblie/tab/Alarm'
 import Claim from './pages/moblie/tab/Claim';
 import Setting from './pages/moblie/tab/Setting';
