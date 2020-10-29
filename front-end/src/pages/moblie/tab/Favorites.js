@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'
 // import { Link, useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -24,12 +25,22 @@ const Favorites = () => {
     const classes = useStyles();
     const [hidden, setHidden] = useState(false);
     const [input, setInput] = useState('');
-    // const [favname, setFavname] = useState(['검색', '즐찾']);
-    const [favname, setFavname] = useState([
-        {id:0, content:'검색'},
-        {id:1, content:'추가'}
-    ]);
-    var nextid = favname.length
+    const [favname, setFavname] = useState([]);
+
+    useEffect(()=>{
+        const store = []
+        for(let i=0; i<localStorage.length; i++){
+            store.push({id:localStorage.key(i),content:localStorage.getItem(localStorage.key(i))})
+        }
+        setFavname(store)
+    },[])
+
+    var nextid = 0
+    for(let i=0; i<=favname.length; i++){
+        if(Number(nextid) < localStorage.key(i)){
+            nextid = localStorage.key(i)
+        }
+    }
 
     const setInputText = e => {
         setInput(e.target.value)
@@ -38,31 +49,29 @@ const Favorites = () => {
     const setFavnameText = e =>{
         if(e.key === 'Enter' || e.type === 'click') {
             const addfavname = {
-                id: nextid++,
+                id: ++nextid,
                 content: input
             };
+            localStorage.setItem(addfavname.id, addfavname.content)
             setFavname(favname.concat(addfavname))
             setInput('')
-            // setFavname(favname.concat(input))
-            // setInput('')
           }
     }
+   
 
     const onRemove = (id) =>{
         setFavname(favname.filter(favn => favn.id !== id));
-        // setFavname(
-        //     ...favname.slice(0,id),
-        //     ...favname.slice(id+1,favname.length)
-        // )
+        localStorage.removeItem(id)
     }
-
 
     const favlist = favname.map((favn) => 
             <ListItem key={favn.id}>
                 <StarIcon className="favorite_star" />
+                <Link to="/selectroute"  className="favorite_list">
                 <ListItemText 
                     primary={favn.content}
-                />
+                    className="listname"
+                /></Link>
                 {hidden && <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="delete" onClick={()=>onRemove(favn.id)}>
                         <DeleteIcon />
@@ -83,7 +92,7 @@ const Favorites = () => {
         <div>
             <p className="Favorite_header">즐겨찾기</p>
             <div className="d-flex justify-content-end">
-                {hidden ? <button className="btn btn-outline Favorite_edit" onClick={edit}>취소</button> : <button className="btn btn-outline Favorite_edit" onClick={edit}>편집</button>}
+                {hidden ? <button className="btn btn-outline Favorite_edit" onClick={edit}>완료</button> : <button className="btn btn-outline Favorite_edit" onClick={edit}>편집</button>}
             </div>
             <input type="text" value={input} onChange={setInputText} onKeyPress={setFavnameText}></input><button onClick={setFavnameText}>추가</button>
             <Grid item xs={12} md={6}>

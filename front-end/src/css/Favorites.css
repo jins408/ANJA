@@ -17,9 +17,13 @@
 }
 
 .favorite_list{
-    margin: 1rem 0 !important;
+    color: black;
 }
 
 .favorite_star {
     margin-right: 1rem;
+}
+
+.listname{
+    width: 70vw;
 }
