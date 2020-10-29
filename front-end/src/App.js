@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import { Route } from 'react-router-dom'
+import { Route } from 'react-router-dom' 
 
 // import Navigation from './components/Navigation'
 // import Introduce from './pages/Introduce'
@@ -13,6 +13,9 @@ import { Route } from 'react-router-dom'
 
 import Favorites from './pages/moblie/tab/Favorites'
 import Main from './pages/moblie/tab/main'
+import Alarm from './pages/moblie/tab/Alarm'
+import Claim from './pages/moblie/tab/Claim';
+import Setting from './pages/moblie/tab/Setting';
 import Bottombar from './components/Bottombar';
 import Selectroute from './pages/moblie/detail/SelectRoute'
 
@@ -32,8 +35,12 @@ const App = () => {
       <Route exact path="/apply" component={Apply}></Route> */}
       <Route exact path='/mobile/favorite' component={Favorites}></Route>
       <Route exact path='/mobile/main' component={Main}></Route>
+      <Route exact path='/mobile/alarm' component={Alarm}></Route>
+      <Route exact path='/mobile/claim' component={Claim}></Route>
+      <Route exact path='/mobile/setting' component={Setting}></Route>
       <Route exact path='/selectroute/:id' component={Selectroute}></Route>
-      <Bottombar />
+        <Bottombar />
+
     </>
   );
 }
