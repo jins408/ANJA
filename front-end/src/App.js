@@ -14,6 +14,7 @@ import { Route } from 'react-router-dom'
 import Favorites from './pages/moblie/tab/Favorites'
 import Main from './pages/moblie/tab/main'
 import Bottombar from './components/Bottombar';
+import Selectroute from './pages/moblie/detail/SelectRoute'
 
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
       <Route exact path="/apply" component={Apply}></Route> */}
       <Route exact path='/mobile/favorite' component={Favorites}></Route>
       <Route exact path='/mobile/main' component={Main}></Route>
+      <Route exact path='/selectroute/:id' component={Selectroute}></Route>
       <Bottombar />
     </>
   );
