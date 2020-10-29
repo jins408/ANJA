@@ -19,7 +19,7 @@ class UserView(APIView):
     def post(self, request, format=None):
         user = User.objects.filter(email=request.data["email"])
         if user.exists():
-            return Response({'data': 'EXIST EMAIL'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'data': 'EXIST EMAIL'})
         if(request.data["pw"] == request.data["pwConfirm"]):
             new_user = {
                 'email': request.data["email"],

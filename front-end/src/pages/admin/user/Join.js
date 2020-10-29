@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 
-import '../css/Join.css'
+import '../../../css/Join.css'
+
+import axios from 'axios'
+
+const baseURL = 'http://127.0.0.1:8080'
 
 const Join = () => {
-    const [nickname, setNickname] = useState();
+    const [name, setNickname] = useState();
     const [email, setEmail] = useState();
     const [conemail, setConemail] = useState();
-    const [password, setPassword] = useState();
-    const [conpassword, setConpassword] = useState();
+    const [pw, setPassword] = useState();
+    const [pwConfirm, setConpassword] = useState();
     const [Lemail, setLeamil] = useState('');
     const [wemail, setWemail] = useState('');
     const [ewriter, setEwriter] = useState(false);
@@ -42,6 +46,40 @@ const Join = () => {
         setLeamil(e.target.value)
     }
 
+    const gojoin = () => {
+        // axios({
+        //     method: 'POST',
+        //     url:'http:localhost:8080/api/users',
+        //     data:{
+        //         email: email,
+        //         pw: pw,
+        //         pwConfirm: pwConfirm,
+        //         name: name
+        //     }
+        // })
+        console.log(email);
+        axios.post(`${baseURL}/api/users/`,
+            {
+                email: email,
+                pw: pw,
+                pwConfirm: pwConfirm,
+                name: name
+            }
+        )
+        .then((res)=>{
+            if (res.data.data === "EXIST EMAIL"){
+                alert('중복')
+            }else{
+                alert('가입성공')
+            }
+            console.log(res.data)
+        })
+        .catch((err, a)=>{
+            console.log(err)
+            console.log(a)
+        })
+    }
+
 
     return (
         <div>
@@ -71,17 +109,17 @@ const Join = () => {
                     <button className="btn btn-primary ml-2">인증 확인</button>
                 </div>
                 <div className="mb-4 inputdiv">
-                    <span className="input-text">닉네임</span><input className="input" value={nickname || ''} onChange={setNicknameText} placeholder="닉네임을 입력해주세요." ></input>
+                    <span className="input-text">닉네임</span><input className="input" value={name || ''} onChange={setNicknameText} placeholder="닉네임을 입력해주세요." ></input>
                 </div>
                 <div className="mb-4 inputdiv">
-                    <span className="input-text">비밀번호</span><input className="input" value={password || ''} onChange={setPasswordText} type="password" placeholder="비밀번호를 입력해주세요"></input>
+                    <span className="input-text">비밀번호</span><input className="input" value={pw || ''} onChange={setPasswordText} type="password" placeholder="비밀번호를 입력해주세요"></input>
                 </div>
                 <div className="mb-4 inputdiv">
-                    <span className="input-text">비밀번호 확인</span><input className="input" value={conpassword || ''} onChange={setConpasswordText} type="password" placeholder="비밀번호를 다시 입력해주세요."></input>
+                    <span className="input-text">비밀번호 확인</span><input className="input" value={pwConfirm || ''} onChange={setConpasswordText} type="password" placeholder="비밀번호를 다시 입력해주세요."></input>
                 </div>
                 <div className="d-flex justify-content-center">
                     <Link to="/"><button className="btn btn-primary mr-5">돌아가기</button></Link>
-                    <button className="btn btn-primary">가입하기</button>
+                    <button className="btn btn-primary" onClick={gojoin}>가입하기</button>
                 </div>
             </div>
             <br />
@@ -89,11 +127,11 @@ const Join = () => {
             <br />
             이메일 인증번호 : {conemail}
             <br />
-            닉네임 : {nickname}
+            닉네임 : {name}
             <br />
-            비번 : {password}
+            비번 : {pw}
             <br />
-            비번확인 : {conpassword}
+            비번확인 : {pwConfirm}
         </div>
     );
 }
