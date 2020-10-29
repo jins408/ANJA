@@ -11,21 +11,21 @@ const Search = () =>{
         <div className="d-flex justify-content-between">
 
         <div className="searchinput">
-            <p><span className="mr-2 ml-2">출발:</span> 
+            <div><span className="mr-2 ml-2">출발:</span> 
             <TextField
-            className="text_box"
+            className="text_box mb-3"
             id="outlined-secondary"
             variant="outlined"
             color="secondary"
-            /></p>
+            /></div>
             
-            <p><span className="mr-2 ml-2">도착:</span>  
+            <div><span className="mr-2 ml-2">도착:</span>  
             <TextField
             className="text_box"
             id="outlined-secondary"
             variant="outlined"
             color="secondary"
-            /></p>
+            /></div>
         </div>
         <div>
             <IconButton className="searchIcon" component="span">
