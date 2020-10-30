@@ -8,7 +8,7 @@ const Main = () =>{
 
     return(
             <div>
-                <h3 className="text-center">Hello main Page</h3>
+                {/* <h3 className="text-center">Hello main Page</h3> */}
                 <Search />
                 <div className="subway-wrapper">
                     <div className="subway">
