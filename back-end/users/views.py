@@ -12,14 +12,18 @@ from .serializers import UserSerializer
 # Create your views here.
 class UserView(APIView):
     def get(self, request, format=None):
-        queryset = User.objects.all()
-        serializer = UserSerializer(queryset, many=True)
-        return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+        if 'email' in request.GET:
+            email = request.GET['email']
+            return Response({'data': email + ' 이메일중복확인'}, status=status.HTTP_200_OK)
+        else:
+            queryset = User.objects.all()
+            serializer = UserSerializer(queryset, many=True)
+            return Response({'data': serializer.data}, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
         user = User.objects.filter(email=request.data["email"])
         if user.exists():
-            return Response({'data': 'EXIST EMAIL'})
+            return Response({'data': 'EXIST EMAIL'}, status=status.HTTP_200_OK)
         if(request.data["pw"] == request.data["pwConfirm"]):
             new_user = {
                 'email': request.data["email"],
@@ -30,7 +34,7 @@ class UserView(APIView):
             if(serializer.is_valid()):
                 serializer.save()
             return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
-        return Response({'data': 'INVALID PASSWORD'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'data': 'INVALID PASSWORD'}, status=status.HTTP_200_OK)
 
     def put(self, request):
         user = User.objects.filter(email=request.data["email"]).first()
@@ -40,10 +44,10 @@ class UserView(APIView):
                 return Response({'data': serializer.data}, status=status.HTTP_200_OK)
 
             else:
-                return Response({'data': "INVALID PASSWORD"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'data': "INVALID PASSWORD"}, status=status.HTTP_200_OK)
 
         else:
-            return Response({'data': "NOT FOUND USER"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'data': "NOT FOUND USER"}, status=status.HTTP_200_OK)
 
 
 class UserDetailView(APIView):
@@ -54,7 +58,7 @@ class UserDetailView(APIView):
             return Response({'data': serializer.data}, status=status.HTTP_200_OK)
 
         else:
-            return Response({'data': 'NOT FOUND USER'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'data': 'NOT FOUND USER'}, status=status.HTTP_200_OK)
 
     def put(self, request, user_pk, format=None):
         user = User.objects.get(uid=user_pk)
@@ -64,7 +68,7 @@ class UserDetailView(APIView):
             user.save()
             return Response({'data': 'SUCCESS'}, status=status.HTTP_200_OK)
         else:
-            return Response({'data': 'INVALID PASSWORD'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'data': 'INVALID PASSWORD'}, status=status.HTTP_200_OK)
 
     def delete(self, request, user_pk, format=None):
         user = User.objects.get(uid=user_pk)
@@ -72,4 +76,4 @@ class UserDetailView(APIView):
             user.delete()
             return Response({'data': 'SUCCESS'}, status=status.HTTP_200_OK)
         else:
-            return Response({'data': 'NOT FOUND USER'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'data': 'NOT FOUND USER'}, status=status.HTTP_200_OK)
