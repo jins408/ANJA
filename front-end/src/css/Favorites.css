@@ -1,0 +1,29 @@
+.Favorite_header{
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.Favorite_edit{
+    font-size: 1rem;
+    margin-right: 1rem;
+    color: red !important;
+}
+
+.Favorite_edit:focus{
+    outline: none !important;
+    box-shadow:none;
+}
+
+.favorite_list{
+    color: black;
+}
+
+.favorite_star {
+    margin-right: 1rem;
+}
+
+.listname{
+    width: 70vw;
+}
