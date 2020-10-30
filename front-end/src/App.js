@@ -18,7 +18,7 @@ import Claim from './pages/moblie/tab/Claim';
 import Setting from './pages/moblie/tab/Setting';
 import Bottombar from './components/Bottombar';
 import Selectroute from './pages/moblie/detail/SelectRoute'
-
+import Headerbar from './components/Headerbar';
 
 const App = () => {
   // let location = useLocation()
@@ -33,6 +33,7 @@ const App = () => {
       <Route exact path="/join" component={Join}></Route>
       {/* <Route exact path="/login" component={Login}></Route>
       <Route exact path="/apply" component={Apply}></Route> */}
+      <Headerbar />
       <Route exact path='/mobile/favorite' component={Favorites}></Route>
       <Route exact path='/mobile/main' component={Main}></Route>
       <Route exact path='/mobile/alarm' component={Alarm}></Route>
