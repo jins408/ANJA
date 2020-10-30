@@ -38,7 +38,7 @@ const App = () => {
       <Route exact path='/mobile/alarm' component={Alarm}></Route>
       <Route exact path='/mobile/claim' component={Claim}></Route>
       <Route exact path='/mobile/setting' component={Setting}></Route>
-      <Route exact path='/selectroute/:id' component={Selectroute}></Route>
+      <Route exact path='/selectroute' component={Selectroute}></Route>
         <Bottombar />
 
     </>
