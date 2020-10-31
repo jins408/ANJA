@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { Route } from 'react-router-dom' 
 
@@ -20,7 +21,14 @@ import Bottombar from './components/Bottombar';
 import Selectroute from './pages/moblie/detail/SelectRoute'
 import Headerbar from './components/Headerbar';
 
+const useStyles = makeStyles(() => ({
+  header: {
+      paddingTop : '48px'
+  }
+}));
+
 const App = () => {
+  const classes = useStyles();
   // let location = useLocation()
   // if(location.pathname === "/"){
   //   return <Route exact path="/" component={Introduce}></Route>
@@ -34,13 +42,15 @@ const App = () => {
       {/* <Route exact path="/login" component={Login}></Route>
       <Route exact path="/apply" component={Apply}></Route> */}
       <Headerbar />
-      <Route exact path='/mobile/favorite' component={Favorites}></Route>
-      <Route exact path='/mobile/main' component={Main}></Route>
-      <Route exact path='/mobile/alarm' component={Alarm}></Route>
-      <Route exact path='/mobile/claim' component={Claim}></Route>
-      <Route exact path='/mobile/setting' component={Setting}></Route>
-      <Route exact path='/selectroute' component={Selectroute}></Route>
-        <Bottombar />
+      <div className={classes.header}>
+        <Route exact path='/mobile/favorite' component={Favorites}></Route>
+        <Route exact path='/mobile/main' component={Main}></Route>
+        <Route exact path='/mobile/alarm' component={Alarm}></Route>
+        <Route exact path='/mobile/claim' component={Claim}></Route>
+        <Route exact path='/mobile/setting' component={Setting}></Route>
+        <Route exact path='/selectroute' component={Selectroute}></Route>
+          <Bottombar />
+      </div>
 
     </>
   );

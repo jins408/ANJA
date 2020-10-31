@@ -1,3 +1,9 @@
 .MuiTypography-h6 {
     transform: translateX(55%);
 }
+
+.header{
+    /* z-index: 2 !important; */
+    position: fixed;
+    top: 0;
+}
