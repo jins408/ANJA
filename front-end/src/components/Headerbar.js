@@ -10,7 +10,12 @@ import '../css/Header.css'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    // flexGrow: 1,
+    position: 'fixed',
+    width: '100%',
+    top: 0,
+    height: '48px',
+    zIndex: '2'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -22,7 +27,7 @@ const  Headerbar = () =>{
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
+        <div className={classes.root }>
           <AppBar position="static">
             <Toolbar variant="dense">
               <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
