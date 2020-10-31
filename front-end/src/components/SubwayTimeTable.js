@@ -71,7 +71,7 @@ const rows = [
   createData('06:03', '06:05'),
 ];
 
-const SubwayTime_Table = (props) =>{
+const SubwayTimeTable = (props) =>{
     const classes = useStyles();
 
     console.log(props.radio_value)
@@ -98,4 +98,4 @@ const SubwayTime_Table = (props) =>{
     )
 }
 
-export default SubwayTime_Table;
+export default SubwayTimeTable;
