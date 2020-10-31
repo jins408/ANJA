@@ -19,6 +19,7 @@ import Setting from './pages/moblie/tab/Setting';
 import Bottombar from './components/Bottombar';
 import Selectroute from './pages/moblie/detail/SelectRoute'
 import Headerbar from './components/Headerbar';
+import SubwayTime from './pages/moblie/detail/SubwayTime';
 
 const App = () => {
   // let location = useLocation()
@@ -39,7 +40,8 @@ const App = () => {
       <Route exact path='/mobile/alarm' component={Alarm}></Route>
       <Route exact path='/mobile/claim' component={Claim}></Route>
       <Route exact path='/mobile/setting' component={Setting}></Route>
-      <Route exact path='/selectroute' component={Selectroute}></Route>
+      <Route exact path='/selectroute/:start/:end' component={Selectroute}></Route>
+      <Route exact path='/subwaytime/:subway' component={SubwayTime}></Route>
         <Bottombar />
 
     </>

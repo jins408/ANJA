@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'
-// import { Link, useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -18,26 +17,31 @@ const useStyles = makeStyles((theme) => ({
     demo: {
         backgroundColor: theme.palette.background.paper,
     },
+    trash:{
+        color: 'crimson'
+    }
 }));
 
 
 const Favorites = () => {
+    let history = useHistory();
     const classes = useStyles();
     const [hidden, setHidden] = useState(false);
     const [input, setInput] = useState('');
     const [favname, setFavname] = useState([]);
 
-    useEffect(()=>{
+    useEffect(() => {
         const store = []
-        for(let i=0; i<localStorage.length; i++){
-            store.push({id:localStorage.key(i),content:localStorage.getItem(localStorage.key(i))})
+        for (let i = 0; i < localStorage.length; i++) {
+            store.push({ id: localStorage.key(i), content: localStorage.getItem(localStorage.key(i)) })
         }
         setFavname(store)
-    },[])
+    }, [])
+
 
     var nextid = 0
-    for(let i=0; i<=favname.length; i++){
-        if(Number(nextid) < localStorage.key(i)){
+    for (let i = 0; i <= favname.length; i++) {
+        if (Number(nextid) < localStorage.key(i)) {
             nextid = localStorage.key(i)
         }
     }
@@ -46,8 +50,8 @@ const Favorites = () => {
         setInput(e.target.value)
     }
 
-    const setFavnameText = e =>{
-        if(e.key === 'Enter' || e.type === 'click') {
+    const setFavnameText = e => {
+        if (e.key === 'Enter' || e.type === 'click') {
             const addfavname = {
                 id: ++nextid,
                 content: input
@@ -55,30 +59,35 @@ const Favorites = () => {
             localStorage.setItem(addfavname.id, addfavname.content)
             setFavname(favname.concat(addfavname))
             setInput('')
-          }
+        }
     }
-   
 
-    const onRemove = (id) =>{
+
+    const onRemove = (id) => {
         setFavname(favname.filter(favn => favn.id !== id));
         localStorage.removeItem(id)
     }
 
-    const favlist = favname.map((favn) => 
-            <ListItem key={favn.id}>
-                <StarIcon className="favorite_star" />
-                <Link to="/selectroute"  className="favorite_list">
-                <ListItemText 
-                    primary={favn.content}
-                    className="listname"
-                /></Link>
-                {hidden && <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete" onClick={()=>onRemove(favn.id)}>
-                        <DeleteIcon />
-                    </IconButton>
-                </ListItemSecondaryAction>}
-            </ListItem>
-        )
+    const godetail = (content) => {
+        const start = content.split(',')[0]
+        const end = content.split(',')[1]
+        history.push(`/selectroute/${start}/${end}`)
+    }
+
+    const favlist = favname.map((favn) =>
+        <ListItem key={favn.id} onClick={() => godetail(favn.content)}>
+            <StarIcon className="favorite_star" />
+            <ListItemText
+                primary={favn.content.split(',')[0] + '->' + favn.content.split(',')[1]}
+                className="listname"
+            />
+            {hidden && <ListItemSecondaryAction>
+                <IconButton edge="end" aria-label="delete" onClick={() => onRemove(favn.id)}>
+                    <DeleteIcon className={classes.trash} />
+                </IconButton>
+            </ListItemSecondaryAction>}
+        </ListItem>
+    )
 
     const edit = () => {
         if (hidden) {
