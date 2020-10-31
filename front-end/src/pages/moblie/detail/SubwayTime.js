@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import SubwayTime_Radio from '../../../components/SubwayTime_Radio'
-import SubwayTime_Table from '../../../components/SubwayTime_Table'
+import SubwayTimeRadio from '../../../components/SubwayTimeRadio'
+import SubwayTimeTable from '../../../components/SubwayTimeTable'
 
 const useStyles = makeStyles({
     subwaytime_header: {
@@ -20,9 +20,9 @@ const SubwayTime = ({match}) =>{
         <div>
             <p className={classes.subwaytime_header}>{match.params.subway}</p>
             <div className="d-flex justify-content-end">
-                <SubwayTime_Radio radio_value={(value) => setRadio(value)}/>
+                <SubwayTimeRadio radio_value={(value) => setRadio(value)}/>
             </div>
-            <SubwayTime_Table radio_value={radio} />
+            <SubwayTimeTable radio_value={radio} />
         </div>
       );
 }

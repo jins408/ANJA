@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     }
 });
 
-const SubwayTime_Radio = (props) => {
+const SubwayTimeRadio = (props) => {
     const classes = useStyles();
     const [value, setValue] = useState('daily');
 
@@ -57,4 +57,4 @@ const SubwayTime_Radio = (props) => {
     );
 }
 
-export default SubwayTime_Radio;
+export default SubwayTimeRadio;
