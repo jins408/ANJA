@@ -1,6 +1,6 @@
 import React from 'react';
 
-const claim = () =>{
+const Claim = () =>{
     return(
             <div>
                 <h3 className="text-center">Hello claim Page</h3>
@@ -9,4 +9,4 @@ const claim = () =>{
         );
     }
 
-export default claim;
+export default Claim;
