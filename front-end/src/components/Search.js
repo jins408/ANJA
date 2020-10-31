@@ -7,7 +7,7 @@ import '../css/search.css'
 
 const Search = () =>{
     return (
-    <form className="search mt-3" noValidate autoComplete="off">
+    <form className="search pt-3" noValidate autoComplete="off">
         <div className="d-flex justify-content-between">
 
         <div className="searchinput">

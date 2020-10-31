@@ -14,3 +14,9 @@
     width: 100%;
 }
 
+.search{
+    position: fixed;
+    z-index: 2 !important;
+    background-color: white;
+    /* top:60px; */
+}
