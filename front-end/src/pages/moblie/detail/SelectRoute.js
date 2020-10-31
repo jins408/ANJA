@@ -4,6 +4,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
 import Button from '@material-ui/core/Button';
 import TrainIcon from '@material-ui/icons/Train';
+import ForwardIcon from '@material-ui/icons/Forward';
 
 import '../../../css/selectroute.css'
 
@@ -23,17 +24,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-const SelectRoute = () => {
+const SelectRoute = ({match}) => {
     const classes = useStyles();
     const [star, setStar] = useState(false);
-    const [start, setStart] = useState('유온')
-    const [end, setEnd] = useState('대전역')
+    const [start, setStart] = useState(match.params.start)
+    const [end, setEnd] = useState(match.params.end)
     const [id, setId] = useState(0)
     var [nextid, setNextid] = useState(0)
 
     useEffect(()=>{
-
-
         const checkid = []
         const checknextid = [0]
         for(let i=0; i<localStorage.length; i++){
@@ -75,11 +74,11 @@ const SelectRoute = () => {
                 <div className="d-flex justify-content-end mr-2 mt-2">
                     {star ? <StarIcon className="selectroute_star" onClick={starHandler} /> : <StarBorderIcon className="selectroute_star" onClick={starHandler} />}
                 </div>
-                    <p className="selectroute_location">{start} -> {end}</p>
+                    <p className="selectroute_location">{start} <ForwardIcon/> {end}</p>
                     <p className="sleectroute_time">소요시간 20:00</p>
                     <div>
                         <div className="d-flex justify-content-end">
-                            <Button href="#text-buttons" color="primary">TIME</Button>
+                            <Button href={`/subwaytime/${start}`} color="primary">TIME</Button>
                         </div>
                         <div className="d-flex justify-content-between mx-auto mb-3 selectroute_updown">
                             <span>반석행:10분</span>

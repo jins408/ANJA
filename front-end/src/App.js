@@ -20,6 +20,7 @@ import Setting from './pages/moblie/tab/Setting';
 import Bottombar from './components/Bottombar';
 import Selectroute from './pages/moblie/detail/SelectRoute'
 import Headerbar from './components/Headerbar';
+import SubwayTime from './pages/moblie/detail/SubwayTime';
 
 const useStyles = makeStyles(() => ({
   header: {
