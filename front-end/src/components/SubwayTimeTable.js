@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -29,53 +29,47 @@ const useStyles = makeStyles({
     }
 });
 
-function createData(upward, downward) {
-  return { upward, downward };
-}
-
-const rows = [
-  createData('05:23', '05:25'),
-  createData('05:33', '05:35'),
-  createData('05:43', '05:45'),
-  createData('05:53', '05:55'),
-  createData('06:03', '06:05'),
-  createData('05:23', '05:25'),
-  createData('05:33', '05:35'),
-  createData('05:43', '05:45'),
-  createData('05:53', '05:55'),
-  createData('06:03', '06:05'),
-  createData('05:23', '05:25'),
-  createData('05:33', '05:35'),
-  createData('05:43', '05:45'),
-  createData('05:53', '05:55'),
-  createData('06:03', '06:05'),
-  createData('05:23', '05:25'),
-  createData('05:33', '05:35'),
-  createData('05:43', '05:45'),
-  createData('05:53', '05:55'),
-  createData('06:03', '06:05'),
-  createData('05:23', '05:25'),
-  createData('05:33', '05:35'),
-  createData('05:43', '05:45'),
-  createData('05:53', '05:55'),
-  createData('06:03', '06:05'),
-  createData('05:23', '05:25'),
-  createData('05:33', '05:35'),
-  createData('05:43', '05:45'),
-  createData('05:53', '05:55'),
-  createData('06:03', '06:05'),
-  createData('05:23', '05:25'),
-  createData('05:33', '05:35'),
-  createData('05:43', '05:45'),
-  createData('05:53', '05:55'),
-  createData('06:03', '06:05'),
-];
 
 const SubwayTimeTable = (props) =>{
     const classes = useStyles();
+    const upwardlist = props.upward
+    const downwardlist = props.downward
+    // const arrive = [upwardlist, downwardlist]
+    // const radio_value = props.radio_value;
+    const [radio_value, setRadio_value] = useState(props.radio_value);
+    const [maxlen, setMaxlen] = useState(0);
+    const [arrivetime, setArrivetime] = useState([]);
 
-    console.log(props.radio_value)
 
+    useEffect(()=>{
+        if(upwardlist.length < downwardlist.length){
+            setMaxlen(downwardlist.length)
+        }else{
+            setMaxlen(upwardlist.length)
+        }
+
+        const arr =[]
+        for (let i = 0; i < maxlen; i++){
+            if (!upwardlist[i] && downwardlist[i]){
+                arr.push(['',downwardlist[i].ARRIVETIME])
+            }
+            else if (upwardlist[i] && !downwardlist[i]){
+                arr.push([upwardlist[i].ARRIVETIME,''])
+            }
+            else{
+                arr.push([upwardlist[i].ARRIVETIME, downwardlist[i].ARRIVETIME])
+            }
+        }
+        setArrivetime(arr)
+    },[upwardlist, downwardlist])
+
+    if(radio_value !== props.radio_value){
+        setRadio_value(props.radio_value)
+    }
+    console.log(radio_value)
+    console.log(arrivetime)
+
+    
     return (
         <TableContainer className={classes.tablecon} component={Paper}>
             <Table className={classes.table} size="small" aria-label="a dense table">
@@ -86,10 +80,10 @@ const SubwayTimeTable = (props) =>{
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                {rows.map((row, index) => (
+                {arrivetime.map((time, index) => (
                     <TableRow key={index}>
-                    <TableCell align="center">{row.upward}</TableCell>
-                    <TableCell align="center">{row.downward}</TableCell>
+                    <TableCell align="center">{time[0]}</TableCell>
+                    <TableCell align="center">{time[1]}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
@@ -98,4 +92,4 @@ const SubwayTimeTable = (props) =>{
     )
 }
 
-export default SubwayTimeTable;
+export default React.memo(SubwayTimeTable);
