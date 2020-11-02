@@ -1,5 +1,5 @@
 .input-category{
-    width: 8rem;
+    width: 9rem;
     height: 3rem;
     border-radius: 5px;
     border: 1px solid black;
@@ -7,5 +7,17 @@
 }
 
 .selectbox{
+    width: 8rem;
     height: 3rem;
+}
+
+.subway-number{
+    margin-top: 2rem;
+}
+
+.number-input{
+    width: 9rem;
+    height: 3rem;
+    border-radius: 5px;
+    border: 1px solid black;
 }
