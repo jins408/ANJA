@@ -25,18 +25,16 @@ from utils.general import (
     check_img_size, non_max_suppression, apply_classifier, scale_coords,
     xyxy2xywh, plot_one_box, strip_optimizer, set_logging)
 from .firebase import push_data
-# import sys
-# sys.path.insert(0, './yolov5')
 
-
-# Create your views here.
- 
 directory = os.getcwd()
 filePath = directory + '/app/templates/resources/images/'
+subway_data = {
+	'sid' : 12345,
+	'line' : 1,
+}
 
 class VideoCamera(object):
 	def __init__(self):
-		push_data()
 		threading.Thread(target=self.test, args=()).start()
 		# self.video = cv2.VideoCapture(0)
 		# (self.grabbed, self.frame) = self.video.read()
@@ -70,7 +68,10 @@ class VideoCamera(object):
 		img = torch.zeros((1, 3, imgsz, imgsz), device=device)  # init img
 		# _ = model(img.half() if half else img) if device.type != 'cpu' else None  # run once
 		_ = model(img) if device.type != 'cpu' else None  # run once
+		# DB에 너무 많은 입력을 보내지 않기위해 지정 -> 포스트그레
 		saveTime = 0
+		# 위험감지 시간 30초에 한번으로 지정 -> firestore
+		dangerTime = 0
 		for path, img, im0s, vid_cap in dataset:
 			# print('path',path,'img',img,'im0s',im0s,'vid_cap',vid_cap)
 			img = torch.from_numpy(img).to(device)
@@ -116,14 +117,20 @@ class VideoCamera(object):
 						# n => 개수 names[int(c)] => 클래스 이름
 						n = (det[:, -1] == c).sum()  # detections per class
 						s += '%g %ss, ' % (n, names[int(c)])  # add to string
-						if (names[int(c)] == 'mask'):
+						if (names[int(c)] == 'mask'and dangerTime>0):
 							nowPS += int(n)
 						if (names[int(c)] == 'no-mask'):
 							nowPS += int(n)
+						if(names[int(c)] == 'smoking' and dangerTime>0):
+							alarm = subway_data
+							alarm['message'] = str(alarm['line'])+'호선의 '+str(alarm['sid'])+'번 열차에서 흡연 의심 문제 발생'
+							push_data(alarm)
+							# 6초
+							dangerTime = -180
 
 					if saveTime%900==0:
 						passenger = {
-							'sid': 1234,
+							'sid': subway_data['sid'],
 							'nowPS': nowPS,
 							'fullPS': fullPS,
 							'time': datetime.now()
@@ -153,6 +160,7 @@ class VideoCamera(object):
 
 				self.frame = im0
 				saveTime += 1
+				dangerTime +=1
 
 
 		# # Stream results
