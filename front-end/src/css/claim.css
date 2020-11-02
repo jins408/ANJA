@@ -1,8 +1,14 @@
 
 .title-claim{
     text-align: center;
-    margin-bottom: 1.5rem;
-    margin-top: 6rem;
+    margin-bottom: 3rem;
+    margin-top: 5rem;
+}
+
+.textcount{
+    text-align: right;
+    font-size: small;
+    color: gray;
 }
 
 .categoty-claim{

@@ -8,6 +8,24 @@ const Claim = () =>{
     const [writer, setWriter] = useState(false);
     const [category, setCategory] = useState('');
     const [inputbox, setInputbox] = useState('');
+    const [content, setContent] = useState('');
+
+    const Claimcontent = e =>{
+        console.log(e.target.value.length)
+        setContent(e.target.value)
+        if(e.target.value.length > 100){
+            setContent(content)
+            alert('100자')
+            return
+        }
+    }
+
+    const maxLengthCheck = (object) => {
+        console.log(object.target.value.length)
+        if (object.target.value.length > object.target.maxLength) {
+            object.target.value = object.target.value.slice(0, object.target.maxLength)
+        }
+    }
 
     const setcategoryText = e => {
         setCategory(e.target.value)
@@ -27,7 +45,7 @@ const Claim = () =>{
         
         <div >
             <div>
-            <h3 className="title-claim">신고</h3>
+            <h2 className="title-claim">신고</h2>
             </div>
             <div className="claim-form">
                 <span className="categoty-claim">신고유형: </span>
@@ -43,12 +61,13 @@ const Claim = () =>{
             </div>
             <div className="subway-number">
                 <span className="categoty-claim">열차번호: </span>
-                <input className="number-input" type="text" placeholder="번호를 입력해주세요."></input>
+                <input className="number-input"  maxLength = "8" onInput={maxLengthCheck} type="number" placeholder="번호를 입력해주세요."></input>
             </div>
             <div className="content d-flex justify-content-start">
                 <span className="categoty-claim mr-1">신고내용: </span>
                 <div>
-                    <textarea className="claim-content" type="text" placeholder="내용을 입력해주세요."></textarea>
+                    <textarea className="claim-content" value={content} onChange={Claimcontent} type="text" placeholder="내용을 입력해주세요."></textarea>
+                    <p className="textcount">글자수100자 이하</p>
                 </div>
             </div>
             <div className="d-flex justify-content-center mt-4">
