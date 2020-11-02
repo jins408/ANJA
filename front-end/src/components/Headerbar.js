@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom'
 
 import '../css/Header.css'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     // flexGrow: 1,
     position: 'fixed',
@@ -19,17 +19,15 @@ const useStyles = makeStyles((theme) => ({
     zIndex: '2'
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    position: 'absolute !important'
   },
 }));
 
 
-const  Headerbar = () =>{
+const  Headerbar = ({location}) =>{
     const classes = useStyles();
     const [back, setBack] = useState(false);
     let history = useHistory();
-    // const pre = window.location.href
-
      
     const goback = () =>{
       history.goBack()
@@ -37,14 +35,14 @@ const  Headerbar = () =>{
 
     
     useEffect(()=>{
-      if(window.location.href !== 'http://localhost:3000/mobile/main'){
+      if( location !== '/mobile/main' && location !== '/mobile/favorite' && location !== '/mobile/alarm' && location !== '/mobile/claim'){
         setBack(true)
       }else{
         setBack(false)
       }
-    },[back])
+    },[location])
+  
     
-
     return (
         <div className={classes.root }>
           <AppBar position="static">
@@ -52,9 +50,11 @@ const  Headerbar = () =>{
               {back && <IconButton edge="start" className={classes.menuButton} onClick={goback} color="inherit" aria-label="menu">
                 <ArrowBackIosIcon />
               </IconButton>}
-              <Typography  variant="h6" color="inherit">
-                Subway Alimi
-              </Typography>
+              <div className="d-flex justify-content-center w-100">
+                <Typography  variant="h6" color="inherit">
+                  Subway Alimi
+                </Typography>
+              </div>
             </Toolbar>
           </AppBar>
         </div>
