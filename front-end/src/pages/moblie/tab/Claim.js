@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
+
 
 import '../../../css/claim.css'
 
@@ -46,6 +48,10 @@ const Claim = () =>{
                 <div>
                     <textarea className="claim-content" type="text" placeholder="내용을 입력해주세요."></textarea>
                 </div>
+            </div>
+            <div className="d-flex justify-content-center mt-4">
+                <Button className="mr-3" variant="contained" color="secondary">취소</Button>
+                <Button variant="contained" color="primary">신고하기</Button>
             </div>
             
         </div>
