@@ -69,6 +69,7 @@ class VideoCamera(object):
 		img = torch.zeros((1, 3, imgsz, imgsz), device=device)  # init img
 		# _ = model(img.half() if half else img) if device.type != 'cpu' else None  # run once
 		_ = model(img) if device.type != 'cpu' else None  # run once
+		saveTime = 0
 		for path, img, im0s, vid_cap in dataset:
 			# print('path',path,'img',img,'im0s',im0s,'vid_cap',vid_cap)
 			img = torch.from_numpy(img).to(device)
@@ -90,6 +91,7 @@ class VideoCamera(object):
 			# Apply Classifier
 
 			# Process detections
+
 			for i, det in enumerate(pred):  # detections per image
 				if webcam:  # batch_size >= 1
 					p, s, im0 = path[i], '%g: ' % i, im0s[i].copy()
@@ -101,32 +103,37 @@ class VideoCamera(object):
 				s += '%gx%g ' % img.shape[2:]  # print string
 				gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
 
-				print('i',i,'det',det)
-
 				if det is not None and len(det):
 					# Rescale boxes from img_size to im0 size
-					print('test')
-					passenger = {
-						'sid' : 1234,
-						'nowPS' : 1,
-						'fullPS' : 23,
-						'time' : datetime.now()
-					}
-					serializer = PsSerializer(data=passenger)
-					print('시리얼라이저',serializer)
-					if(serializer.is_valid()):
-						serializer.save()
 
 					det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
+					nowPS = 0
+					fullPS = 54
 
 					# Print results
 					for c in det[:, -1].unique():
 						# n => 개수 names[int(c)] => 클래스 이름
 						n = (det[:, -1] == c).sum()  # detections per class
 						s += '%g %ss, ' % (n, names[int(c)])  # add to string
-					# print(s)
+						if (names[int(c)] == 'mask'):
+							nowPS += int(n)
+						if (names[int(c)] == 'no-mask'):
+							nowPS += int(n)
 
-					# print('det',det)
+					if saveTime%900==0:
+						passenger = {
+							'sid': 1234,
+							'nowPS': nowPS,
+							'fullPS': fullPS,
+							'time': datetime.now()
+						}
+						serializer = PsSerializer(data=passenger)
+						print('시리얼라이저', serializer)
+
+						if (serializer.is_valid()):
+							serializer.save()
+							print('성공',saveTime)
+
 					# Write results
 					for *xyxy, conf, cls in reversed(det):
 					# 	if save_txt:  # Write to file
@@ -138,10 +145,14 @@ class VideoCamera(object):
 							label = '%s %.2f' % (names[int(cls)], conf)
 							plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
 
+
+
 				# Print time (inference + NMS)
 				# print('%sDone. (%.3fs)' % (s, t2 - t1))
 
 				self.frame = im0
+				saveTime += 1
+
 
 		# # Stream results
 		# if view_img:
