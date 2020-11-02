@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { useHistory } from 'react-router-dom'
 
 import '../css/Header.css'
 
@@ -25,14 +26,32 @@ const useStyles = makeStyles((theme) => ({
 
 const  Headerbar = () =>{
     const classes = useStyles();
+    const [back, setBack] = useState(false);
+    let history = useHistory();
+    // const pre = window.location.href
+
+     
+    const goback = () =>{
+      history.goBack()
+    }
+
+    
+    useEffect(()=>{
+      if(window.location.href !== 'http://localhost:3000/mobile/main'){
+        setBack(true)
+      }else{
+        setBack(false)
+      }
+    },[back])
+    
 
     return (
         <div className={classes.root }>
           <AppBar position="static">
             <Toolbar variant="dense">
-              <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+              {back && <IconButton edge="start" className={classes.menuButton} onClick={goback} color="inherit" aria-label="menu">
                 <ArrowBackIosIcon />
-              </IconButton>
+              </IconButton>}
               <Typography  variant="h6" color="inherit">
                 Subway Alimi
               </Typography>
