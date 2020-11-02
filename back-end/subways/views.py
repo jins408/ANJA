@@ -16,32 +16,9 @@ from pprint import pprint
 
 import json
 
-# URL = "http://openapi.tago.go.kr/openapi/service/MetroRtInfoService/getMetroRtTrainLocList?serviceKey=dFO37hTXbj0XfqChs155Oc8em7iRWRtqQYi9kT54LWZSjjBIErEr4sEYwfKn8wIAisL3B8MUYIggAKSrxZXIPA%3D%3D&pageNo=1&numOfRows=100&cityCd=BS&trainNo=2&lineNo=2"
 API_KEY = "dFO37hTXbj0XfqChs155Oc8em7iRWRtqQYi9kT54LWZSjjBIErEr4sEYwfKn8wIAisL3B8MUYIggAKSrxZXIPA%3D%3D"
-
-# Create your views here.
-# class SubwayView(APIView):
-#     def get(self, request):
-#         req = requests.get(URL)
-#         html = req.text
-#         soup = BeautifulSoup(html, 'html.parser')
-#         # items = soup.find_all('item')
-#         subways = {}
-#         attrs = ['dirnm', 'stationnm', 'deststanm', 'statusnm', 'colldttm']
-#         # print(soup)
-#         for attr in attrs:
-#             finded_attr = soup.find_all(attr)
-#             # print(attr)
-#             # print(finded_attr)
-#             if subways.get(attr) is None:
-#                 subways[attr] = [x.text for x in finded_attr]
-#             else:
-#                 subways[attr] = subways[attr] + [x.text for x in finded_attr]
-#
-#         df = pd.DataFrame(subways)
-#         df = df.rename(columns={'dirnm': '상하행', 'colldttm': '수집시간', 'deststanm':'종착역', 'statusnm': '열차상태', 'stationnm': '현재역'})
-#         print(df)
-
+SU_API_KEY = "6f6b516269686f6439307a4d76666d"
+# 출발역-도착역 소요시간 및 경로 정보
 class SubwayEstimatedTimeView(APIView):
     def get(self, request):
         ## 대전
@@ -68,8 +45,8 @@ class SubwayEstimatedTimeView(APIView):
 
         # 서울
         # http://swopenapi.seoul.go.kr/api/subway/sample/json/shortestRoute/0/5/출발지/도착지
-        start = request.GET["from"]
-        end = request.GET["to"]
+        start = request.GET.get("from")
+        end = request.GET.get("to")
 
         if not start or not end:
             return Response({'data': "NOT ENOUGH PARAMS"}, status=status.HTTP_200_OK)
@@ -86,15 +63,19 @@ class SubwayEstimatedTimeView(APIView):
         response_body = response.read()
         dict = json.loads(response_body.decode('utf-8'))
 
-        return Response({'data': dict["shortestRouteList"][0]}, status=status.HTTP_200_OK)
+        if(dict["total"] == 0):
+            return Response({'data': "NO DATA"}, status=status.HTTP_200_OK)
+
+        else:
+            return Response({'data': dict["shortestRouteList"][0]}, status=status.HTTP_200_OK)
 
 
+# 특정 역에 접근하는 지하철 정보
 class SubwayApproachView(APIView):
     def get(self, request):
         # 서울
         # http://swopenapi.seoul.go.kr/api/subway/sample/xml/realtimeStationArrival/0/5/역이름
-
-        station = request.GET["station"]
+        station = request.GET.get("station")
 
         if not station:
             return Response({'data': "NOT ENOUGH PARAMS"}, status=status.HTTP_200_OK)
@@ -110,12 +91,129 @@ class SubwayApproachView(APIView):
         response_body = response.read()
         dict = json.loads(response_body.decode('utf-8'))
 
-        if 'realtimeArrivalList' in dict:
-            return Response({'data': dict["realtimeArrivalList"]}, status=status.HTTP_200_OK)
-
-        else:
+        if 'realtimeArrivalList' not in dict:
             return Response({'data': "NO DATA"}, status=status.HTTP_200_OK)
 
+        infos = dict["realtimeArrivalList"]
+        return Response({'data': infos}, status=status.HTTP_200_OK)
+
+
+class SubwayTimeTableView(APIView):
+    def get(self, request):
+        # 서울
+        # http://openapi.seoul.go.kr:8088/키/json/SearchSTNTimeTableByIDService/1/300/역코드/요일/상하행/
+        # 평일 : 1, 토요일 : 2, 휴일/일요일 : 3
+        # 상/하행 : 상행내선1, 하행외선2
+
+        station = request.GET.get('station')
+        line = request.GET.get('line')
+        day = request.GET.get('day')
+        days = {'1': '평일', '2': '토요일', '3': '휴일'}
+        types = {'1': '상행', '2': '하행'}
+
+        if not station or not line or not day:
+            return Response({'data': "NOT ENOUGH PARAMS"}, status=status.HTTP_200_OK)
+
+        infos = getStationInfo(station)
+
+        if 'SearchInfoBySubwayNameService' not in infos:
+            return Response({'data': "NO DATA"}, status=status.HTTP_200_OK)
+
+
+        code = ''
+        infos = infos["SearchInfoBySubwayNameService"]["row"]
+        for info in infos:
+            if line in info["LINE_NUM"]:
+                code = info["STATION_CD"]
+
+        if not code:
+            return Response({'data': "NO DATA"}, status=status.HTTP_200_OK)
+
+        timetable = []
+
+        length = 0
+        obj = {}
+        # 상하행별
+        for type, type_value in types.items():
+            if type_value not in obj:
+                obj[type_value] = {}
+            # 요일별
+            URL_SU = []
+            URL_SU.append("http://openapi.seoul.go.kr:8088")
+            URL_SU.append(SU_API_KEY)
+            URL_SU.append("json")
+            URL_SU.append("SearchSTNTimeTableByIDService")
+            URL_SU.append("1")
+            URL_SU.append("250")
+            URL_SU.append(code)
+            URL_SU.append(day)  # 요일
+            URL_SU.append(type)  # 상하행
+            URL_SU.append(quote(station))
+            URL_SU = "/".join(URL_SU)
+            req = Request(URL_SU)
+            response = urlopen(req)
+            response_body = response.read()
+            times = json.loads(response_body.decode('utf-8'))
+            if "SearchSTNTimeTableByIDService" in times:
+                obj[type_value][days[day]] = times["SearchSTNTimeTableByIDService"]["row"]
+        timetable.append(obj)
+
+
+        # 호선별
+        # for info in infos:
+        #     code = info["STATION_CD"]
+        #     line = info["LINE_NUM"]
+        #     obj[line] = {}
+        #
+        #     # 상하행별
+        #     for type, type_value in types.items():
+        #         if type_value not in obj[line]:
+        #             obj[line][type_value] = {}
+        #         # 요일별
+        #         for day, day_value in days.items():
+        #             if day_value not in obj[line][type_value]:
+        #                 obj[line][type_value][day_value] = {}
+        #             URL_SU = []
+        #             URL_SU.append("http://openapi.seoul.go.kr:8088")
+        #             URL_SU.append(SU_API_KEY)
+        #             URL_SU.append("json")
+        #             URL_SU.append("SearchSTNTimeTableByIDService")
+        #             URL_SU.append("1")
+        #             URL_SU.append("250")
+        #             URL_SU.append(code)
+        #             URL_SU.append(day) # 요일
+        #             URL_SU.append(type) # 상하행
+        #             URL_SU.append(quote(station))
+        #             URL_SU = "/".join(URL_SU)
+        #             req = Request(URL_SU)
+        #             response = urlopen(req)
+        #             response_body = response.read()
+        #             times = json.loads(response_body.decode('utf-8'))
+        #
+        #             if "SearchSTNTimeTableByIDService" in times:
+        #                 obj[line][type_value][day_value] = times["SearchSTNTimeTableByIDService"]["row"]
+        #     timetable.append(obj)
+
+        return Response({'data': timetable}, status=status.HTTP_200_OK)
+
+
+
+def getStationInfo(station):
+    # http://openapi.seoul.go.kr:8088/키/json/SearchInfoBySubwayNameService/1/10/역이름/
+    URL_SU = []
+    URL_SU.append("http://openapi.seoul.go.kr:8088")
+    URL_SU.append(SU_API_KEY)
+    URL_SU.append("json")
+    URL_SU.append("SearchInfoBySubwayNameService")
+    URL_SU.append("1")
+    URL_SU.append("10")
+    URL_SU.append(quote(station))
+    URL_SU = "/".join(URL_SU)
+    req = Request(URL_SU)
+    response = urlopen(req)
+    response_body = response.read()
+    dict = json.loads(response_body.decode('utf-8'))
+    return dict
 
 
 
