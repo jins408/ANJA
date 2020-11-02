@@ -1,5 +1,11 @@
 .input-category{
     width: 8rem;
+    height: 3rem;
     border-radius: 5px;
     border: 1px solid black;
+    margin-right: 0.3rem;
+}
+
+.selectbox{
+    height: 3rem;
 }
