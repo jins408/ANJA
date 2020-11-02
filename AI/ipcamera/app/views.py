@@ -24,6 +24,7 @@ from utils.torch_utils import select_device, load_classifier, time_synchronized
 from utils.general import (
     check_img_size, non_max_suppression, apply_classifier, scale_coords,
     xyxy2xywh, plot_one_box, strip_optimizer, set_logging)
+from .firebase import push_data
 # import sys
 # sys.path.insert(0, './yolov5')
 
@@ -35,7 +36,7 @@ filePath = directory + '/app/templates/resources/images/'
 
 class VideoCamera(object):
 	def __init__(self):
-
+		push_data()
 		threading.Thread(target=self.test, args=()).start()
 		# self.video = cv2.VideoCapture(0)
 		# (self.grabbed, self.frame) = self.video.read()
