@@ -16,8 +16,19 @@
 }
 
 .number-input{
-    width: 9rem;
+    width: 10rem;
     height: 3rem;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.content{
+    margin-top: 2rem;
+}
+
+.claim-content{
+    width: 17rem;
+    height: 10rem;
     border-radius: 5px;
     border: 1px solid black;
 }

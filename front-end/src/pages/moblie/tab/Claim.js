@@ -39,7 +39,13 @@ const Claim = () =>{
             </div>
             <div className="subway-number">
                 <span>열차번호: </span>
-                <input className="number-input"></input>
+                <input className="number-input" type="text" placeholder="번호를 입력해주세요."></input>
+            </div>
+            <div className="content d-flex justify-content-start">
+                <span className="mr-1">신고내용: </span>
+                <div>
+                    <textarea className="claim-content" type="text" placeholder="내용을 입력해주세요."></textarea>
+                </div>
             </div>
             
         </div>
