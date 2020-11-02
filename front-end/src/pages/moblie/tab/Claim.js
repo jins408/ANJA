@@ -25,9 +25,11 @@ const Claim = () =>{
       
     return(          
         
-        <div>
-            <h3 className="text-center">신고</h3>
+        <div >
             <div>
+            <h3 className="title-claim">신고</h3>
+            </div>
+            <div className="claim-form">
                 <span className="categoty-claim">신고유형: </span>
                 {(writer && <input className="input-category" value={category || ''} onChange={setcategoryText} type="text" ></input>) || <input className="input-category" value={inputbox} disabled></input> }
                 <select className="selectbox" value={inputbox} onChange={CheckText}>
@@ -40,11 +42,11 @@ const Claim = () =>{
                 </select>
             </div>
             <div className="subway-number">
-                <span>열차번호: </span>
+                <span className="categoty-claim">열차번호: </span>
                 <input className="number-input" type="text" placeholder="번호를 입력해주세요."></input>
             </div>
             <div className="content d-flex justify-content-start">
-                <span className="mr-1">신고내용: </span>
+                <span className="categoty-claim mr-1">신고내용: </span>
                 <div>
                     <textarea className="claim-content" type="text" placeholder="내용을 입력해주세요."></textarea>
                 </div>
