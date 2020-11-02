@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63ea4dae-c0f8-4b88-a4d0-0aaf82b990df" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/subways/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/subways/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -101,38 +100,56 @@
               <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="40" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-                <marker date="1604031658846" expanded="true" signature="308:312" ph="..." />
-                <marker date="1604031658846" expanded="true" signature="523:524" ph="..." />
-                <marker date="1604031658846" expanded="true" signature="523:536" ph="..." />
-                <marker date="1604031658846" expanded="true" signature="1994:1995" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/subways/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="130" selection-start-line="130" selection-end-line="130" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-                <element signature="e#1800#2653#1" />
-                <marker date="1604290927842" expanded="true" signature="2600:2609" ph="..." />
-                <marker date="1604290927842" expanded="true" signature="3505:3506" ph="..." />
-                <marker date="1604290927842" expanded="true" signature="7264:7269" ph="..." />
-                <marker date="1604290927842" expanded="true" signature="7264:7804" ph="..." />
-                <marker date="1604290927842" expanded="true" signature="7801:7802" ph="..." />
+                <marker date="1604292309065" expanded="true" signature="308:312" ph="..." />
+                <marker date="1604292309065" expanded="true" signature="523:524" ph="..." />
+                <marker date="1604292309065" expanded="true" signature="523:536" ph="..." />
+                <marker date="1604292309065" expanded="true" signature="1994:1995" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/subways/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="387">
+              <caret line="69" column="57" selection-start-line="69" selection-start-column="57" selection-end-line="69" selection-end-column="57" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#1800#2653#1" />
+                <marker date="1604297021099" expanded="true" signature="2600:2609" ph="..." />
+                <marker date="1604297021099" expanded="true" signature="3505:3506" ph="..." />
+                <marker date="1604297021099" expanded="true" signature="5616:5621" ph="..." />
+                <marker date="1604297021099" expanded="true" signature="5616:6156" ph="..." />
+                <marker date="1604297021099" expanded="true" signature="6153:6154" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="228">
-              <caret line="163" column="12" lean-forward="true" selection-start-line="163" selection-start-column="12" selection-end-line="163" selection-end-column="12" />
+              <caret line="163" column="6" lean-forward="true" selection-start-line="163" selection-start-column="6" selection-end-line="163" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/myapp/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1095">
+              <caret line="60" column="1" selection-start-line="60" selection-start-column="1" selection-end-line="60" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/manage.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
@@ -208,8 +225,8 @@
         <option value="$PROJECT_DIR$/myapp/settings.py" />
         <option value="$PROJECT_DIR$/myapp/urls.py" />
         <option value="$PROJECT_DIR$/subways/urls.py" />
-        <option value="$PROJECT_DIR$/subways/views.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/subways/views.py" />
       </list>
     </option>
   </component>
@@ -237,17 +254,16 @@
             <path>
               <item name="back-end" type="b2602c69:ProjectViewProjectNode" />
               <item name="back-end" type="462c0819:PsiDirectoryNode" />
+              <item name=".config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="back-end" type="b2602c69:ProjectViewProjectNode" />
+              <item name="back-end" type="462c0819:PsiDirectoryNode" />
               <item name="myapp" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="back-end" type="b2602c69:ProjectViewProjectNode" />
-              <item name="back-end" type="462c0819:PsiDirectoryNode" />
-              <item name="subways" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="back-end" type="b2602c69:ProjectViewProjectNode" />
-              <item name="back-end" type="462c0819:PsiDirectoryNode" />
-              <item name="users" type="462c0819:PsiDirectoryNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -293,10 +309,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="982" height="1047" extended-state="0" />
+    <frame x="-7" y="0" width="974" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4991453" visible="true" weight="0.24788135" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4991453" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.50085473" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -386,8 +402,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/myapp/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="38" lean-forward="true" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+        <state relative-caret-position="-1095">
+          <caret line="60" column="1" selection-start-line="60" selection-start-column="1" selection-end-line="60" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -407,10 +423,10 @@
           <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="40" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
-            <marker date="1604031658846" expanded="true" signature="308:312" ph="..." />
-            <marker date="1604031658846" expanded="true" signature="523:524" ph="..." />
-            <marker date="1604031658846" expanded="true" signature="523:536" ph="..." />
-            <marker date="1604031658846" expanded="true" signature="1994:1995" ph="..." />
+            <marker date="1604292309065" expanded="true" signature="308:312" ph="..." />
+            <marker date="1604292309065" expanded="true" signature="523:524" ph="..." />
+            <marker date="1604292309065" expanded="true" signature="523:536" ph="..." />
+            <marker date="1604292309065" expanded="true" signature="1994:1995" ph="..." />
           </folding>
         </state>
       </provider>
@@ -437,16 +453,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/subways/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="130" selection-start-line="130" selection-end-line="130" />
+        <state relative-caret-position="387">
+          <caret line="69" column="57" selection-start-line="69" selection-start-column="57" selection-end-line="69" selection-end-column="57" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
             <element signature="e#1800#2653#1" />
-            <marker date="1604290927842" expanded="true" signature="2600:2609" ph="..." />
-            <marker date="1604290927842" expanded="true" signature="3505:3506" ph="..." />
-            <marker date="1604290927842" expanded="true" signature="7264:7269" ph="..." />
-            <marker date="1604290927842" expanded="true" signature="7264:7804" ph="..." />
-            <marker date="1604290927842" expanded="true" signature="7801:7802" ph="..." />
+            <marker date="1604297021099" expanded="true" signature="2600:2609" ph="..." />
+            <marker date="1604297021099" expanded="true" signature="3505:3506" ph="..." />
+            <marker date="1604297021099" expanded="true" signature="5616:5621" ph="..." />
+            <marker date="1604297021099" expanded="true" signature="5616:6156" ph="..." />
+            <marker date="1604297021099" expanded="true" signature="6153:6154" ph="..." />
           </folding>
         </state>
       </provider>
@@ -454,7 +470,7 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
-          <caret line="163" column="12" lean-forward="true" selection-start-line="163" selection-start-column="12" selection-end-line="163" selection-end-column="12" />
+          <caret line="163" column="6" lean-forward="true" selection-start-line="163" selection-start-column="6" selection-end-line="163" selection-end-column="9" />
         </state>
       </provider>
     </entry>
