@@ -1,5 +1,46 @@
+
+.title-claim{
+    text-align: center;
+    margin-bottom: 1.5rem;
+    margin-top: 6rem;
+}
+
+.categoty-claim{
+    font-weight: bold;
+    font-size: large;
+}
+
 .input-category{
+    width: 9rem;
+    height: 3rem;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-right: 0.3rem;
+}
+
+.selectbox{
     width: 8rem;
+    height: 3rem;
+}
+
+.subway-number{
+    margin-top: 2rem;
+}
+
+.number-input{
+    width: 10.5rem;
+    height: 3rem;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.content{
+    margin-top: 2rem;
+}
+
+.claim-content{
+    width: 17rem;
+    height: 10rem;
     border-radius: 5px;
     border: 1px solid black;
 }
