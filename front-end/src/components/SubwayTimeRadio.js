@@ -18,9 +18,9 @@ const useStyles = makeStyles({
 
 const SubwayTimeRadio = (props) => {
     const classes = useStyles();
-    const [value, setValue] = useState('daily');
+    const [value, setValue] = useState('1');
 
-    console.log(value)
+    // console.log(value)
 
     const submitvalue =  (e) => {
         e.preventDefault();
@@ -33,21 +33,21 @@ const SubwayTimeRadio = (props) => {
             <RadioGroup value={value} onChange={(e=>setValue(e.target.value))}  row aria-label="position" name="position" defaultValue="top">
                 <FormControlLabel
                     onClick={submitvalue}
-                    value="daily"
+                    value="1"
                     control={<Radio color="primary" />}
                     label="평일"
                     className={classes.label}
                 />
                 <FormControlLabel
                     onClick={submitvalue}
-                    value="weekend"
+                    value="2"
                     control={<Radio color="primary" />}
                     label="주말"
                     className={classes.label}
                 />
                 <FormControlLabel 
                     onClick={submitvalue}
-                    value="holiday" 
+                    value="3" 
                     control={<Radio color="primary" />} 
                     label="공휴일" 
                     className={classes.label}
