@@ -108,7 +108,6 @@ class SubwayTimeTableView(APIView):
         station = request.GET.get('station')
         line = request.GET.get('line')
         day = request.GET.get('day')
-        days = {'1': '평일', '2': '토요일', '3': '휴일'}
         types = {'1': '상행', '2': '하행'}
 
         if not station or not line or not day:
@@ -129,22 +128,22 @@ class SubwayTimeTableView(APIView):
         if not code:
             return Response({'data': "NO DATA"}, status=status.HTTP_200_OK)
 
-        timetable = []
+        timetable = {}
 
         length = 0
-        obj = {}
+        timetable = {}
         # 상하행별
         for type, type_value in types.items():
-            if type_value not in obj:
-                obj[type_value] = {}
-            # 요일별
+            if type_value not in timetable:
+                timetable[type_value] = {}
+
             URL_SU = []
             URL_SU.append("http://openapi.seoul.go.kr:8088")
             URL_SU.append(SU_API_KEY)
             URL_SU.append("json")
             URL_SU.append("SearchSTNTimeTableByIDService")
             URL_SU.append("1")
-            URL_SU.append("250")
+            URL_SU.append("300")
             URL_SU.append(code)
             URL_SU.append(day)  # 요일
             URL_SU.append(type)  # 상하행
@@ -155,44 +154,7 @@ class SubwayTimeTableView(APIView):
             response_body = response.read()
             times = json.loads(response_body.decode('utf-8'))
             if "SearchSTNTimeTableByIDService" in times:
-                obj[type_value][days[day]] = times["SearchSTNTimeTableByIDService"]["row"]
-        timetable.append(obj)
-
-
-        # 호선별
-        # for info in infos:
-        #     code = info["STATION_CD"]
-        #     line = info["LINE_NUM"]
-        #     obj[line] = {}
-        #
-        #     # 상하행별
-        #     for type, type_value in types.items():
-        #         if type_value not in obj[line]:
-        #             obj[line][type_value] = {}
-        #         # 요일별
-        #         for day, day_value in days.items():
-        #             if day_value not in obj[line][type_value]:
-        #                 obj[line][type_value][day_value] = {}
-        #             URL_SU = []
-        #             URL_SU.append("http://openapi.seoul.go.kr:8088")
-        #             URL_SU.append(SU_API_KEY)
-        #             URL_SU.append("json")
-        #             URL_SU.append("SearchSTNTimeTableByIDService")
-        #             URL_SU.append("1")
-        #             URL_SU.append("250")
-        #             URL_SU.append(code)
-        #             URL_SU.append(day) # 요일
-        #             URL_SU.append(type) # 상하행
-        #             URL_SU.append(quote(station))
-        #             URL_SU = "/".join(URL_SU)
-        #             req = Request(URL_SU)
-        #             response = urlopen(req)
-        #             response_body = response.read()
-        #             times = json.loads(response_body.decode('utf-8'))
-        #
-        #             if "SearchSTNTimeTableByIDService" in times:
-        #                 obj[line][type_value][day_value] = times["SearchSTNTimeTableByIDService"]["row"]
-        #     timetable.append(obj)
+                timetable[type_value] = times["SearchSTNTimeTableByIDService"]["row"]
 
         return Response({'data': timetable}, status=status.HTTP_200_OK)
 
