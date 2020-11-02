@@ -1,0 +1,32 @@
+.Mainheader{
+    font-size: 3rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    color: white;
+    position: absolute;
+    top: 0;
+    left:50%; 
+    transform:translateX(-50%);
+}
+
+.intro-video{
+    width: 100%;
+    z-index: -1;
+}
+
+.scroll{
+    font-size: 2rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn_join{
+    position: absolute;
+    top:1rem;
+    right: 1rem;
+}
+
+.skill{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
