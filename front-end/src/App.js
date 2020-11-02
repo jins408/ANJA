@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Route } from 'react-router-dom' 
+import { Route, useLocation } from 'react-router-dom' 
 
 // import Navigation from './components/Navigation'
 // import Introduce from './pages/Introduce'
@@ -30,10 +30,14 @@ const useStyles = makeStyles(() => ({
 
 const App = () => {
   const classes = useStyles();
-  // let location = useLocation()
-  // if(location.pathname === "/"){
-  //   return <Route exact path="/" component={Introduce}></Route>
-  // }
+  const location = useLocation();
+  const [preloc, setPreloc] = React.useState();
+ 
+  useEffect(()=>{
+    setPreloc(location.pathname) 
+    // console.log(preloc)
+  },[preloc, location.pathname])
+  
   return (
     <>
     {/* <Navigation /> */}
@@ -42,7 +46,7 @@ const App = () => {
       <Route exact path="/join" component={Join}></Route>
       {/* <Route exact path="/login" component={Login}></Route>
       <Route exact path="/apply" component={Apply}></Route> */}
-      <Headerbar />
+      <Headerbar location={preloc} />
       <div className={classes.header}>
         <Route exact path='/mobile/favorite' component={Favorites}></Route>
         <Route exact path='/mobile/main' component={Main}></Route>

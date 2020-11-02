@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom'
 
 const Bottombar = () =>{
     const [value, setValue] = React.useState(0);
+
   
     return (
       <BottomNavigation
