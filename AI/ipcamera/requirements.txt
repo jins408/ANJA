@@ -27,10 +27,8 @@ mkl-fft==1.2.0
 mkl-random==1.1.1
 mkl-service==2.3.0
 msgpack==1.0.0
-numpy @ file:///C:/ci/numpy_and_numpy_base_1603468620949/work
 olefile==0.46
 opencv-python==4.4.0.46
-Pillow @ file:///C:/ci/pillow_1603821929285/work
 protobuf==3.13.0
 psycopg2==2.8.6
 psycopg2-binary==2.8.6
@@ -50,7 +48,6 @@ torch==1.6.0
 torchaudio==0.6.0
 torchvision==0.7.0
 tqdm==4.51.0
-typing-extensions @ file:///tmp/build/80754af9/typing_extensions_1598376058250/work
 uritemplate==3.0.1
 urllib3==1.25.11
 wincertstore==0.2
