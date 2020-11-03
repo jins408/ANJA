@@ -26,7 +26,7 @@ SECRET_KEY = '6_ns3(7r==e@%s(13s^a82dm+csgqvw0dbt1-psvvl5nhma5^='
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
+    '*',
 ]
 
 
