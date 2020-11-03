@@ -5,16 +5,17 @@ import Timeline from '@material-ui/lab/Timeline';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
-import TimelineDot from '@material-ui/lab/TimelineDot';//import RepeatIcon from '@material-ui/icons/Repeat';
+import TimelineDot from '@material-ui/lab/TimelineDot';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import SentimentDissatisfiedRoundedIcon from '@material-ui/icons/SentimentDissatisfiedRounded';
 import DirectionsBikeRoundedIcon from '@material-ui/icons/DirectionsBikeRounded';
 import PetsRoundedIcon from '@material-ui/icons/PetsRounded';
 import SmokingRoomsRoundedIcon from '@material-ui/icons/SmokingRoomsRounded';
-
+import Moment from 'react-moment';
 
 import '../../../css/alarm.css' 
+import 'moment/locale/ko';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -148,25 +149,38 @@ const Alarm = () =>{
     }))
     console.log(alarmlist)
 
+
+    // const timestamp = (time) =>{
+    //     var date = new Date(time)
+    //     return date
+    // }
+
+    // var timestamp = 1006268400000;
+    // var date = new Date(timestamp);
+    // console.log(date);
+
+
+
     const listItems = alarmlist.map((alarm ,index) =>
         <div key={index} className="timetitle d-flex justify-content-left ">
             <TimelineSeparator>
                 {alarm.category === 'nomask' && <TimelineDot color="secondary">
                    <SentimentDissatisfiedRoundedIcon />  
-                </TimelineDot> || 
-                alarm.category === 'pet' && <TimelineDot color="primary" variant="outlined">
+                </TimelineDot>}  
+                {alarm.category === 'pet' && <TimelineDot color="primary" variant="outlined">
                     <PetsRoundedIcon /> 
-                </TimelineDot> ||
-                 alarm.category === 'bicycle' && <TimelineDot color="primary" >
+                </TimelineDot>}
+                 {alarm.category === 'bicycle' && <TimelineDot color="primary" >
                     <DirectionsBikeRoundedIcon />
-                </TimelineDot> ||
-                alarm.category === 'smoke' && <TimelineDot color="secondary" variant="outlined" >
+                </TimelineDot> }
+                {alarm.category === 'smoke' && <TimelineDot color="secondary" variant="outlined" >
                     <SmokingRoomsRoundedIcon />
                 </TimelineDot>}
                 <TimelineConnector />
                 </TimelineSeparator>              
                  <Typography  className={classes.timetime} variant="body2" color="textSecondary">
-                    {alarm.sid}
+                    {/* {(alarm.time.seconds * 1000).valueOf("ko-KR")} */}
+                    <Moment fromNow>{(alarm.time.seconds * 1000)}</Moment>
                 </Typography>
 
                 <TimelineContent>
