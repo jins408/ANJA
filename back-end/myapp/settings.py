@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
     'subways',
-    'reports'
+    'reports',
+    'app'
 ]
 
 
