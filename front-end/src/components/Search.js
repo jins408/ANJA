@@ -19,9 +19,9 @@ const Search = () =>{
     }
     const godetail = () =>{
         if(!start){
-            alert("출발지를 입력해주세요")
+            alert("출발역을 입력해주세요")
         }else if(!end){
-            alert("도착지를 입력해주세요")
+            alert("도착역을 입력해주세요")
         }else{
             history.push(`/selectroute/${start}/${end}`)
         }
