@@ -4,11 +4,16 @@ import Button from '@material-ui/core/Button';
 
 import '../../../css/claim.css'
 
+import axios from 'axios'
+
+const baseURL = 'https://k3b101.p.ssafy.io'
+
 const Claim = () =>{
     const [writer, setWriter] = useState(false);
     const [category, setCategory] = useState('');
     const [inputbox, setInputbox] = useState('');
     const [content, setContent] = useState('');
+    const [trainnum, setTrainnum ] = useState('');
 
     const Claimcontent = e =>{
         console.log(e.target.value.length)
@@ -25,6 +30,7 @@ const Claim = () =>{
         if (object.target.value.length > object.target.maxLength) {
             object.target.value = object.target.value.slice(0, object.target.maxLength)
         }
+        setTrainnum(object.target.value)
     }
 
     const setcategoryText = e => {
@@ -39,6 +45,27 @@ const Claim = () =>{
         }
         setWriter(false)
         setInputbox(e.target.value)
+    }
+
+    const goclaim = () =>{
+        axios.post(`${baseURL}/api/reports`,{
+            category: inputbox,
+            sid: trainnum,
+            contents: content
+        }).then((res) =>{
+            console.log(res)
+            alert("등록")
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
+    const oncancle = () =>{
+        setCategory('')
+        setInputbox('')
+        setTrainnum('')
+        setContent('')
     }
       
     return(          
@@ -61,7 +88,7 @@ const Claim = () =>{
             </div>
             <div className="subway-number">
                 <span className="categoty-claim">열차번호: </span>
-                <input className="number-input"  maxLength = "8" onInput={maxLengthCheck} type="number" placeholder="번호를 입력해주세요."></input>
+                <input className="number-input" value={trainnum || ''} maxLength = "8" onChange={maxLengthCheck} type="number" placeholder="번호를 입력해주세요."></input>
             </div>
             <div className="content d-flex justify-content-start">
                 <span className="categoty-claim mr-1">신고내용: </span>
@@ -71,8 +98,8 @@ const Claim = () =>{
                 </div>
             </div>
             <div className="d-flex justify-content-center mt-4">
-                <Button className="mr-3" variant="contained" color="secondary">취소</Button>
-                <Button variant="contained" color="primary">신고하기</Button>
+                <Button className="mr-3" variant="contained" color="secondary" onClick={oncancle}>취소</Button>
+                <Button variant="contained" color="primary" onClick={goclaim}>신고하기</Button>
             </div>
             
         </div>
