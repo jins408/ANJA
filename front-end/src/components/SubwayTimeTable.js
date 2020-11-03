@@ -51,23 +51,29 @@ const SubwayTimeTable = (props) =>{
         const arr =[]
         for (let i = 0; i < maxlen; i++){
             if (!upwardlist[i] && downwardlist[i]){
-                arr.push(['',downwardlist[i].ARRIVETIME])
+                if(downwardlist[i].ARRIVETIME){
+                    arr.push(['',downwardlist[i].ARRIVETIME])
+                }
             }
             else if (upwardlist[i] && !downwardlist[i]){
-                arr.push([upwardlist[i].ARRIVETIME,''])
+                if(upwardlist[i].ARRIVETIME){
+                    arr.push([upwardlist[i].ARRIVETIME,''])
+                }
             }
             else{
-                arr.push([upwardlist[i].ARRIVETIME, downwardlist[i].ARRIVETIME])
+                if(upwardlist[i] && downwardlist[i]){
+                    arr.push([upwardlist[i].ARRIVETIME, downwardlist[i].ARRIVETIME])
+                }
             }
         }
         setArrivetime(arr)
-    },[upwardlist, downwardlist])
+    },[upwardlist, downwardlist, maxlen])
 
     if(radio_value !== props.radio_value){
         setRadio_value(props.radio_value)
     }
-    console.log(radio_value)
-    console.log(arrivetime)
+    // console.log(radio_value)
+    // console.log(arrivetime)
 
     
     return (
@@ -82,8 +88,8 @@ const SubwayTimeTable = (props) =>{
                 <TableBody>
                 {arrivetime.map((time, index) => (
                     <TableRow key={index}>
-                    <TableCell align="center">{time[0]}</TableCell>
-                    <TableCell align="center">{time[1]}</TableCell>
+                    <TableCell align="center">{time[0].slice(0,5)}</TableCell>
+                    <TableCell align="center">{time[1].slice(0,5)}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
@@ -92,4 +98,4 @@ const SubwayTimeTable = (props) =>{
     )
 }
 
-export default React.memo(SubwayTimeTable);
+export default SubwayTimeTable;

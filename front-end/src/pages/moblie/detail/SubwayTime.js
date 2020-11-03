@@ -20,9 +20,11 @@ const SubwayTime = ({match}) =>{
     const [upwardlist, setUpwardlist] = useState([]);
     const [downwardlist, setDownwardlist] = useState([]);
 
+    const subway = match.params.subway
+
     useEffect(()=>{
         axios
-            .get(`http://127.0.0.1:8080/api/subways/timetable?station=${match.params.subway}&line=1&day=${radio}`)
+            .get(`https://k3b101.p.ssafy.io/api/subways/timetable?station=${subway}&line=1&day=${radio}`)
             .then((res)=>{
                 console.log(res.data)
                 setUpwardlist(res.data.data['상행'])
@@ -31,7 +33,7 @@ const SubwayTime = ({match}) =>{
             .catch((err)=>{
                 console.log(err)
             })
-    },[radio])
+    },[radio, subway])
 
 
     return (
@@ -45,4 +47,4 @@ const SubwayTime = ({match}) =>{
       );
 }
 
-export default React.memo(SubwayTime);
+export default SubwayTime;
