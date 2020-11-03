@@ -1,10 +1,3 @@
-.selcetroute_header{
-    text-align: center;
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 0;
-}
-
 .selectroute_box{
     border: 0.5px solid gray;
     padding: 0;
@@ -28,7 +21,7 @@
 }
 
 .selectroute_updown{
-    width: 70%;
+    width: 100%;
 }
 
 .selectroute_box2{
@@ -45,4 +38,12 @@
     margin-left: 1rem;
     font-size: 1.6rem;
     line-height: 80px;
+}
+
+.selectroute_gotarin{
+    font-size: 0.8rem;
+}
+
+button:focus{
+    outline: none;
 }
