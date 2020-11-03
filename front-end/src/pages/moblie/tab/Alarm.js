@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Timeline from '@material-ui/lab/Timeline';
@@ -120,6 +120,7 @@ const useStyles = makeStyles((theme) => ({
 const Alarm = () =>{
     const classes = useStyles();
     const [selectline, setSelectline] = useState(false);
+    const [alarmlist, setAlarmlist] = useState([]);
 
     const changline = () =>{
         if (!selectline){
@@ -128,7 +129,34 @@ const Alarm = () =>{
             setSelectline(false)
         }
     }
-    console.log(selectline)
+
+    // var line = 1
+    // window.db.collection('subway').doc('1').collection('messages').orderBy('time').onSnapshot((snapshot)=>{  
+    //     snapshot.docChanges().forEach(change =>{
+    //         // console.log(doc.id, '=>', doc.data());
+    //         var doc = change.doc.data();
+    //         console.log(doc)
+    //     });
+    // });
+
+    useEffect(()=>{
+        getAlarmData('1')
+    },[])
+    
+    const getAlarmData = ((line=>{
+        const arr =[]
+        window.db.collection('subway').doc(line).collection('messages').orderBy('time').onSnapshot((snapshot)=>{  
+            snapshot.docChanges().forEach(change =>{
+                // console.log(doc.id, '=>', doc.data());
+                // var doc = change.doc;
+                // console.log(doc)
+                arr.push(change.doc.data())
+            });
+        });
+        setAlarmlist(arr)
+    }))
+
+    console.log(alarmlist)
 
     return(
             <div>
