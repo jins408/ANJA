@@ -5,8 +5,7 @@ import Timeline from '@material-ui/lab/Timeline';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
-import TimelineDot from '@material-ui/lab/TimelineDot';
-import RepeatIcon from '@material-ui/icons/Repeat';
+import TimelineDot from '@material-ui/lab/TimelineDot';//import RepeatIcon from '@material-ui/icons/Repeat';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import SentimentDissatisfiedRoundedIcon from '@material-ui/icons/SentimentDissatisfiedRounded';
@@ -147,13 +146,23 @@ const Alarm = () =>{
         });
         setAlarmlist(arr)
     }))
+    console.log(alarmlist)
 
     const listItems = alarmlist.map((alarm ,index) =>
         <div key={index} className="timetitle d-flex justify-content-left ">
             <TimelineSeparator>
-                <TimelineDot color="secondary">
-                    <SentimentDissatisfiedRoundedIcon />
-                </TimelineDot>
+                {alarm.category === 'nomask' && <TimelineDot color="secondary">
+                   <SentimentDissatisfiedRoundedIcon />  
+                </TimelineDot> || 
+                alarm.category === 'pet' && <TimelineDot color="primary" variant="outlined">
+                    <PetsRoundedIcon /> 
+                </TimelineDot> ||
+                 alarm.category === 'bicycle' && <TimelineDot color="primary" >
+                    <DirectionsBikeRoundedIcon />
+                </TimelineDot> ||
+                alarm.category === 'smoke' && <TimelineDot color="secondary" variant="outlined" >
+                    <SmokingRoomsRoundedIcon />
+                </TimelineDot>}
                 <TimelineConnector />
                 </TimelineSeparator>              
                  <Typography  className={classes.timetime} variant="body2" color="textSecondary">
@@ -197,90 +206,15 @@ const Alarm = () =>{
 
             
             {selectline && <div>
-                {listItems}
                 <Timeline align="left" className="timeline">           
+                {listItems}
                 <div className="timetitle d-flex justify-content-left ">
-                <TimelineSeparator>
-                    <TimelineDot color="secondary">
-                        <SentimentDissatisfiedRoundedIcon />
-                    </TimelineDot>
-                    <TimelineConnector />
-                    </TimelineSeparator>              
-                    {alarmlist[5] && <Typography  className={classes.timetime} variant="body2" color="textSecondary">
-                         {alarmlist[5].sid}
-                    </Typography>}
-            
-                    <TimelineContent>
-                    <Paper elevation={3} className={classes.paper}>
-                    {alarmlist[5] && <Typography className="title-h6" variant="h6" component="h1">
-                         {alarmlist[5].sid}번 열차
-                        </Typography>}
-                        {alarmlist[5] && <Typography> {alarmlist[5].message}</Typography>}
-                    </Paper>
-                    </TimelineContent>
-                </div>
-          
-                <div className="timetitle d-flex justify-content-left ">
-                <TimelineSeparator>
-                    <TimelineDot color="primary">
-                        <DirectionsBikeRoundedIcon />
-                    </TimelineDot>
-                    <TimelineConnector />
-                    </TimelineSeparator>                       
-                    <Typography className={classes.timetime} variant="body2" color="textSecondary">
-                        10:00 am
-                    </Typography>
-                    <TimelineContent>
-                    <Paper elevation={3} className={classes.paper}>
-                        <Typography className="title-h6" variant="h6" component="h1">
-                        Code
-                        </Typography>
-                        <Typography>Because it&apos;s awesome!</Typography>
-                    </Paper>
-                    </TimelineContent>
-                </div>           
-                <div className="timetitle d-flex justify-content-left ">
-                    <TimelineSeparator>
-                    <TimelineDot color="primary" variant="outlined">
-                        <PetsRoundedIcon />
-                    </TimelineDot>
-                    <TimelineConnector  />
-                    </TimelineSeparator>
-                    <Typography className={classes.timetime} variant="body2" color="textSecondary">
-                        9:30 am
-                    </Typography>    
-                    <TimelineContent>
-                    <Paper elevation={3} className={classes.paper}>
-                        <Typography className="title-h6" variant="h6" component="h1">
-                        Sleep
-                        </Typography>
-                        <Typography>Because you need rest</Typography>
-                    </Paper>
-                    </TimelineContent>
-                </div>
-                
-                <div  className="timetitle d-flex justify-content-left ">
-                    <TimelineSeparator>
-                    <TimelineDot color="secondary" variant="outlined">
-                        <SmokingRoomsRoundedIcon />
-                    </TimelineDot>
-                    <TimelineConnector />
-                    </TimelineSeparator>   
-                    <Typography className={classes.timetime} variant="body2" color="textSecondary">
-                        9:30 am
-                    </Typography> 
-                    <TimelineContent>
-                    <Paper elevation={3} className={classes.paper}>
-                        <Typography className="title-h6"  variant="h6" component="h1">
-                        Repeat
-                        </Typography>
-                        <Typography>Because this is the life you love!</Typography>
-                    </Paper>
-                    </TimelineContent>
+         
+             
                 </div>
                 </Timeline>
             </div>}
-            </div>
+        </div>
         );
     }
 
