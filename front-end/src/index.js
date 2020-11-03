@@ -16,7 +16,8 @@ var config = { apiKey: "AIzaSyClT8BESKIzQIZuPN0Xw8gks4w6HOTIiLM",
     appId: "1:706725717763:web:7631b8082177166451eb36",
     measurementId: "G-P3SKG9RZF8"};
 firebase.initializeApp(config);
-firebase.firestore().settings({timestampsInSnapshots:true});
+firebase.firestore().settings({});
+// firebase.firestore().settings({timestampsInSnapshots:true});
 
 var db = firebase.firestore();
 
