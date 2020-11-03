@@ -47,8 +47,11 @@ class SubwayEstimatedTimeView(APIView):
         # http://swopenapi.seoul.go.kr/api/subway/sample/json/shortestRoute/0/5/출발지/도착지
         start = request.GET.get("from")
         end = request.GET.get("to")
-        start = start[:-1]
-        end = end[:-1]
+        #서울도 역 빼고 검색해야함
+        # if(start == '서울'):
+        #     start = '서울역'
+        # if(end == '서울'):
+        #     end = '서울역'
 
         if not start or not end:
             return Response({'data': "NOT ENOUGH PARAMS"}, status=status.HTTP_200_OK)
@@ -64,8 +67,10 @@ class SubwayEstimatedTimeView(APIView):
         response = urlopen(req)
         response_body = response.read()
         dict = json.loads(response_body.decode('utf-8'))
+        # print('start',start,'end',end)
+        # print('dict',dict)
 
-        if(dict["total"] == 0):
+        if(dict['errorMessage']["total"] == 0):
             return Response({'data': "NO DATA"}, status=status.HTTP_200_OK)
 
         else:
