@@ -1,5 +1,6 @@
 .bottom{
-    /* width: 100%; */
+    width: 100%;
+    max-width: 375px;
     position: fixed;
     bottom: 0;
 }

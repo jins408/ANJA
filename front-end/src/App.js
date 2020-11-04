@@ -27,11 +27,13 @@ import SubwayTime from './pages/moblie/detail/SubwayTime';
 const useStyles = makeStyles(() => ({
   mobile:{
     width: '375px',
-    height: '812px'
+    height: '812px',
+    margin: 'auto'
   },
   tablet:{
     width: '1024px',
-    height: '768px'
+    height: '768px',
+    margin: 'auto'
   },
   header: {
       paddingTop : '48px'
@@ -56,8 +58,8 @@ const App = () => {
     }
   },[preloc, location.pathname])
   
-  console.log(preloc)
-  console.log(user)
+  // console.log(preloc)
+  // console.log(user)
 
   
   return (
