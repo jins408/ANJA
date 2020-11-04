@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
   root: {
     // flexGrow: 1,
     position: 'fixed',
-    width: '100%',
+    width: '375px',
     top: 0,
     height: '48px',
     zIndex: '2'
