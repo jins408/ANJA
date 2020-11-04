@@ -1,12 +1,12 @@
 import React from 'react';
 
 
-const About = () =>{
+const Cctv = () =>{
     return(
             <div>
-                <h1>Hello About Page</h1>
+                <h1>Hello cctv Page</h1>
             </div>
         );
     }
 
-export default About;
+export default Cctv;
