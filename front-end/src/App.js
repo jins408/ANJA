@@ -33,6 +33,7 @@ const App = () => {
   const location = useLocation();
   const [preloc, setPreloc] = React.useState();
   const [user, setUser] = React.useState('user');
+  const [acount, setAcount] = React.useState(0);
  
   useEffect(()=>{
     setPreloc(location.pathname) 
@@ -59,12 +60,15 @@ const App = () => {
       <div className={classes.header}>
         <Route exact path='/mobile/favorite' component={Favorites}></Route>
         <Route exact path='/mobile/main' component={Main}></Route>
-        <Route exact path='/mobile/alarm' component={Alarm}></Route>
+        <Route exact path={'/mobile/alarm'}
+        render={()=>(
+          <Alarm alarm_count={(value)=>setAcount(value)} />
+        )}/>
         <Route exact path='/mobile/claim' component={Claim}></Route>
         <Route exact path='/mobile/setting' component={Setting}></Route>
         <Route exact path='/selectroute/:start/:end' component={Selectroute}></Route>
         <Route exact path='/subwaytime/:subway' component={SubwayTime}></Route>
-        {user === 'user' && <Bottombar />}
+        {user === 'user' && <Bottombar alarm_count={acount} />}
       </div>
 
     </>
