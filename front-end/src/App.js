@@ -23,6 +23,14 @@ import Headerbar from './components/Headerbar';
 import SubwayTime from './pages/moblie/detail/SubwayTime';
 
 const useStyles = makeStyles(() => ({
+  mobile:{
+    width: '375px',
+    height: '812px'
+  },
+  tablet:{
+    width: '1024px',
+    height: '768px'
+  },
   header: {
       paddingTop : '48px'
   }
@@ -49,7 +57,7 @@ const App = () => {
 
   
   return (
-    <>
+    <div className={classes.mobile}>
     {/* <Navigation /> */}
       {/* <Route exact path="/home" component={Home} />
       <Route path="/about" component={About} /> */}
@@ -71,7 +79,7 @@ const App = () => {
         {user === 'user' && <Bottombar alarm_count={acount} />}
       </div>
 
-    </>
+    </div>
   );
 }
 
