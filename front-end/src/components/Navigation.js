@@ -1,27 +1,75 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
-import '../css/navigation.css'
- 
-const Navigation = () =>{
-    return(
-        <nav className="header navbar navbar-expand-sm ">
-                <ul className="navbar-nav">
-                    <li className="nav-item active">
-                        <Link to="/" className="navbar-brand" >Corona Caps</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/home" className="item mr-3" >Home</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/about" className="item" >About</Link>           
-                    </li>
-                </ul>
-                <ul className="my-auto ml-auto">
-                    <Link to="/Login"><button className="navbar_btn1 btn btn-outline-light mr-2" type="submit">Login</button></Link>     
-                    <button className="navbar_btn2 btn btn-light" type="submit">서비스 신청하기</button>     
-                </ul>
-        </nav>
+// import {Link} from 'react-router-dom'
 
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
+import HomeIcon from '@material-ui/icons/Home';
+import VideocamIcon from '@material-ui/icons/Videocam';
+import ListIcon from '@material-ui/icons/List';
+import HeadsetMicIcon from '@material-ui/icons/HeadsetMic';
+
+import '../css/navigation.css'
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+      maxWidth: 200,
+      backgroundColor: theme.palette.background.paper,
+    },
+  }));
+  
+  function ListItemLink(props) {
+    return <ListItem button component="a" {...props} />;
+  }
+
+const Navigation = () =>{
+    const classes = useStyles();
+
+        return(
+            <div className={classes.root}>
+            <List component="nav" aria-label="main mailbox folders">
+              <ListItem button>
+              <ListItemLink href="/admin/home">
+                <ListItemIcon>
+                  <HomeIcon color="primary" /> 
+                </ListItemIcon>
+                <ListItemText primary="HOME" />
+                </ListItemLink>
+              </ListItem>
+              <ListItem button>
+              <ListItemLink href="/admin/cctv">
+                <ListItemIcon>
+                  <VideocamIcon />
+                </ListItemIcon>
+                <ListItemText primary="CCTV" />
+                </ListItemLink>
+              </ListItem>
+            </List>
+            <Divider />
+            <List component="nav" aria-label="secondary mailbox folders">
+              <ListItem button>
+              <ListItemLink href="/admin/log">
+                <ListItemIcon>
+                  <ListIcon /> 
+                </ListItemIcon>
+                <ListItemText primary="LOG" />
+                </ListItemLink>
+              </ListItem>
+              <ListItem button>
+              <ListItemLink href="/admin/adminclaim">
+                <ListItemIcon>
+                  <HeadsetMicIcon color="secondary"/> 
+                </ListItemIcon>
+                <ListItemText primary="신고" />
+              </ListItemLink>
+              </ListItem>
+            </List>
+          </div>
+      
     )
 }
 
