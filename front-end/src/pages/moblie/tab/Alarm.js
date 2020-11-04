@@ -143,6 +143,7 @@ const Alarm = () =>{
                 // var doc = change.doc;
                 // console.log(doc)
                 arr.push(change.doc.data())
+                console.log('드러와')
             });
         });
         setAlarmlist(arr)
