@@ -36,7 +36,10 @@ const useStyles = makeStyles(() => ({
     margin: 'auto'
   },
   header: {
-      paddingTop : '48px'
+      paddingTop : '48px',
+  },
+  navigation:{
+    paddingLeft: '210px'
   }
 }));
 
@@ -86,12 +89,14 @@ const App = () => {
       {/* 관리자 태블릿(아이패드 사이즈) */}
       {user === 'admin' && <div className={classes.tablet}>
       <Navigation />
-      <Route exact path="/admin/home" component={Home} />
-        <Route exact path="/admin/join" component={Join}></Route>
-        <Route exact path="/admin/cctv" component={Cctv}></Route>
-        <Route exact path="/admin/log" component={Log}></Route>
-        <Route exact path="/admin/adminclaim" component={AdminClaim}></Route>
-        <Route exact path="/admin/login" component={Login}></Route>
+      <div className={classes.navigation}>
+        <Route exact path="/admin/home" component={Home} />
+          <Route exact path="/admin/join" component={Join}></Route>
+          <Route exact path="/admin/cctv" component={Cctv}></Route>
+          <Route exact path="/admin/log" component={Log}></Route>
+          <Route exact path="/admin/adminclaim" component={AdminClaim}></Route>
+          <Route exact path="/admin/login" component={Login}></Route>
+        </div>
       </div>}
     </>
   );
