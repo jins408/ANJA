@@ -49,7 +49,7 @@ const App = () => {
   const [preloc, setPreloc] = React.useState();
   const [user, setUser] = React.useState('user');
   const [acount, setAcount] = React.useState(0);
- 
+
   useEffect(()=>{
     setPreloc(location.pathname) 
     if(preloc){
@@ -61,10 +61,13 @@ const App = () => {
     }
   },[preloc, location.pathname])
   
+  
+  
   // console.log(preloc)
   // console.log(user)
 
   
+
   return (
     <>
       {/* 사용자 모바일(아이폰X 사이즈) */}
@@ -88,7 +91,7 @@ const App = () => {
 
       {/* 관리자 태블릿(아이패드 사이즈) */}
       {user === 'admin' && <div className={classes.tablet}>
-      <Navigation />
+      {location.pathname !== "/admin/login" && <Navigation />}
       <div className={classes.navigation}>
         <Route exact path="/admin/home" component={Home} />
           <Route exact path="/admin/join" component={Join}></Route>
