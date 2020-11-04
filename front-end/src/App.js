@@ -62,30 +62,36 @@ const App = () => {
   
   return (
     <>
-    <Navigation />
-      {/* <Route exact path="/apply" component={Apply}></Route> */}
-      {user === 'user' && <Headerbar location={preloc} />}
-      <Route exact path="/admin/home" component={Home} />
-      <Route exact path="/admin/join" component={Join}></Route>
-      <Route exact path="/admin/cctv" component={Cctv}></Route>
-      <Route exact path="/admin/log" component={Log}></Route>
-      <Route exact path="/admin/adminclaim" component={AdminClaim}></Route>
-      <Route exact path="/admin/login" component={Login}></Route>
-      <div className={classes.header}>
-        <Route exact path='/mobile/favorite' component={Favorites}></Route>
-        <Route exact path='/mobile/main' component={Main}></Route>
-        <Route exact path={'/mobile/alarm'}
-        render={()=>(
-          <Alarm alarm_count={(value)=>setAcount(value)} />
-        )}/>
-        <Route exact path='/mobile/claim' component={Claim}></Route>
-        <Route exact path='/mobile/setting' component={Setting}></Route>
-        <Route exact path='/selectroute/:start/:end' component={Selectroute}></Route>
-        <Route exact path='/subwaytime/:subway' component={SubwayTime}></Route>
-        {user === 'user' && <Bottombar alarm_count={acount} />}
-      </div>
+      {/* 사용자 모바일(아이폰X 사이즈) */}
+      {user === 'user' && <div className={classes.mobile}>
+        {/* <Route exact path="/apply" component={Apply}></Route> */}
+        <Headerbar location={preloc} />
+        <div className={classes.header}>
+          <Route exact path='/mobile/favorite' component={Favorites}></Route>
+          <Route exact path='/mobile/main' component={Main}></Route>
+          <Route exact path={'/mobile/alarm'}
+          render={()=>(
+            <Alarm alarm_count={(value)=>setAcount(value)} />
+          )}/>
+          <Route exact path='/mobile/claim' component={Claim}></Route>
+          <Route exact path='/mobile/setting' component={Setting}></Route>
+          <Route exact path='/selectroute/:start/:end' component={Selectroute}></Route>
+          <Route exact path='/subwaytime/:subway' component={SubwayTime}></Route>
+         <Bottombar alarm_count={acount} />
+        </div>
+      </div>}
 
-    </div>
+      {/* 관리자 태블릿(아이패드 사이즈) */}
+      {user === 'admin' && <div className={classes.tablet}>
+      <Navigation />
+      <Route exact path="/admin/home" component={Home} />
+        <Route exact path="/admin/join" component={Join}></Route>
+        <Route exact path="/admin/cctv" component={Cctv}></Route>
+        <Route exact path="/admin/log" component={Log}></Route>
+        <Route exact path="/admin/adminclaim" component={AdminClaim}></Route>
+        <Route exact path="/admin/login" component={Login}></Route>
+      </div>}
+    </>
   );
 }
 
