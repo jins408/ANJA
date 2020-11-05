@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'users',
     'subways',
     'reports',
-    'app'
+    'passengers'
 ]
 
 

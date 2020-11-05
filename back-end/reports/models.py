@@ -6,3 +6,4 @@ class Report(models.Model):
     category = models.CharField(max_length=45)
     sid = models.CharField(max_length=45)
     contents = models.TextField()
+    time = models.DateTimeField(auto_now=True)
