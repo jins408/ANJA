@@ -137,19 +137,10 @@ const Alarm = (props) =>{
     },[])
     
     const getAlarmData = ((line=>{
-        const arr =[]
-        window.db.collection('subway').doc(line).collection('messages').orderBy('time').onSnapshot((snapshot)=>{  
-            snapshot.docChanges().forEach(change =>{
-                // console.log(doc.id, '=>', doc.data());
-                // var doc = change.doc;
-                // console.log(doc)
-                arr.push(change.doc.data())
-                console.log('드러와')
-            });
+        window.db.collection('subway').doc(line).collection('messages').orderBy('time','desc').onSnapshot((snapshot)=>{  
+                setAlarmlist(snapshot.docs.map(doc=>doc.data()))
         });
-        setAlarmlist(arr)
     }))
-
 
 
     const listItems = alarmlist.map((alarm ,index) =>
