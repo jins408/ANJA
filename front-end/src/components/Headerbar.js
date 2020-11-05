@@ -14,6 +14,7 @@ const useStyles = makeStyles(() => ({
     // flexGrow: 1,
     position: 'fixed',
     width: '100%',
+    maxWidth: '375px',
     top: 0,
     height: '48px',
     zIndex: '2'

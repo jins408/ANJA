@@ -118,19 +118,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Alarm = () =>{
+const Alarm = (props) =>{
     const classes = useStyles();
     const [selectline, setSelectline] = useState(false);
     const [alarmlist, setAlarmlist] = useState([]);
 
     const changline = () =>{
+        props.alarm_count(alarmlist.length)
         if (!selectline){
             setSelectline(true)
         }else{
             setSelectline(false)
         }
     }
-
+    
     useEffect(()=>{
         getAlarmData('1')
     },[])
@@ -143,21 +144,11 @@ const Alarm = () =>{
                 // var doc = change.doc;
                 // console.log(doc)
                 arr.push(change.doc.data())
+                console.log('드러와')
             });
         });
         setAlarmlist(arr)
     }))
-    console.log(alarmlist)
-
-
-    // const timestamp = (time) =>{
-    //     var date = new Date(time)
-    //     return date
-    // }
-
-    // var timestamp = 1006268400000;
-    // var date = new Date(timestamp);
-    // console.log(date);
 
 
 

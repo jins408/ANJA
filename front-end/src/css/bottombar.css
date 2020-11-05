@@ -1,11 +1,6 @@
 .bottom{
     width: 100%;
+    max-width: 375px;
     position: fixed;
     bottom: 0;
-}
-
-.badgecount{
-    position: absolute;
-    right: 5%;
-    top: 20%;
 }
