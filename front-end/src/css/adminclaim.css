@@ -1,0 +1,10 @@
+.card-form{
+    height: 2rem;
+    
+}
+
+.cards{
+    max-width: 50rem;
+    overflow-x: hidden !important;
+   
+}

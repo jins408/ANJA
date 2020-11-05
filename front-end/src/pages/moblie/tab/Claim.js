@@ -18,9 +18,9 @@ const Claim = () =>{
     const Claimcontent = e =>{
         console.log(e.target.value.length)
         setContent(e.target.value)
-        if(e.target.value.length > 100){
+        if(e.target.value.length > 50){
             setContent(content)
-            alert('100자')
+            alert('50자')
             return
         }
     }
@@ -38,7 +38,7 @@ const Claim = () =>{
     }
 
     const CheckText = (e) => {
-        if(e.target.value === "other"){
+        if(e.target.value === "기타"){
             setWriter(true)
             setInputbox(e.target.value)
             return setCategory()
@@ -83,7 +83,7 @@ const Claim = () =>{
                     <option value="에어컨,히터">에어컨,히터</option>
                     <option value="잡상인">잡상인</option>
                     <option value="애완동물">애완동물</option>
-                    <option value="other">직접입력</option>
+                    <option value="기타">직접입력</option>
                 </select>
             </div>
             <div className="subway-number">
