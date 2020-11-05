@@ -51,19 +51,28 @@ const useStyles = makeStyles({
 
         
     useEffect(() => {
-      claimRegist()
+        claimRegist('1')
+        return () =>{
+        };
     },[])
 
-    const claimRegist = () =>{
-        axios.get(`${baseURL}/api/reports`)
-        .then((res)=>{
-            console.log(res.data.data)
-            setClaimlist(res.data.data)
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
-    }
+    
+    const claimRegist = ((line =>{
+        window.db.collection('reports').doc(line).collection('messages').onSnapshot((snapshot)=>{  
+            setClaimlist(snapshot.docs.map(doc=>doc.data()))
+        });
+    }))
+
+    // const claimRegist = () =>{
+    //     axios.get(`${baseURL}/api/reports`)
+    //     .then((res)=>{
+    //         console.log(res.data.data)
+    //         setClaimlist(res.data.data)
+    //     })
+    //     .catch((error)=>{
+    //         console.log(error)
+    //     })
+    // }
     
  
     const claimDelete = (rid) =>{
