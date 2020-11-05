@@ -135,7 +135,9 @@ const Alarm = (props) =>{
     
     useEffect(()=>{
         getAlarmData(selectline)
-    },selectline)
+        return () => {
+          };
+    },[selectline])
     
     const getAlarmData = ((line=>{
         window.db.collection('subway').doc(line).collection('messages').orderBy('time','desc').onSnapshot((snapshot)=>{  
