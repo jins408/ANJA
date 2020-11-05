@@ -14,13 +14,13 @@ from datetime import datetime
 
 cred = credentials.Certificate("taste-ac33e-firebase-adminsdk-u8rj0-fc33c78348.json")
 firebase_admin.initialize_app(cred)
-
+db = firestore.client()
 
 class ReportView(APIView):
     def get(self, reqeust):
         queryset = Report.objects.all()
         serializer = ReportSerializer(queryset, many=True)
-        return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+        return Response({'data': 'test'}, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
         # date_time = datetime.now().strftime("%Y/%m/%d/, %H:%M:%S")
@@ -33,7 +33,7 @@ class ReportView(APIView):
         }
         # serializer = ReportSerializer(data=newReport)
         # if(serializer.is_valid()):
-        db = firestore.client()
+
         doc_ref = db.collection(u'reports').document(newReport['line']).collection(u'messages')
         doc_ref.add({
             u'sid': newReport['sid'],
