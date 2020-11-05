@@ -44,25 +44,35 @@ const useStyles = makeStyles({
 
 });
 
-const AdminClaim = () =>{
-    const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
-    const [claimlist, setClaimlist] = useState([])
+    const AdminClaim = () =>{
+        const classes = useStyles();
+        const bull = <span className={classes.bullet}>•</span>;
+        const [claimlist, setClaimlist] = useState([])
 
-    
-    useEffect(() => {
-        axios.get(`${baseURL}/api/reports`)
-        .then((res)=>{
-            console.log(res.data.data)
-            setClaimlist(res.data.data)
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
+        
+        useEffect(() => {
+            axios.get(`${baseURL}/api/reports`)
+            .then((res)=>{
+                console.log(res.data.data)
+                setClaimlist(res.data.data)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
     },[])
 
+    const climDelete = (rid) =>{
+        axios.delete(`${baseURL}/api/reports/${rid}`)
+        .then((res) =>{
+            console.log(res.data)
+        })
+        .catch((error) =>{
+            console.log(error)
+        })
+    }
+
     const listClaim = claimlist.map((claim, index) => 
-    <Grid claim xs={4} key={index} className="mb-3">
+    <Grid item xs={4} key={index} className="mb-3">
         <Card  className={classes.root} variant="outlined">
             <CardContent>
                 {/* <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -81,7 +91,7 @@ const AdminClaim = () =>{
             </CardContent>
             <div className="d-flex justify-content-end">
             <CardActions >
-                <Button  variant="outlined" color="secondary" size="small" >신고삭제</Button>
+                <Button  variant="outlined" color="secondary" size="small" onClick={()=>climDelete(claim.rid)}>신고삭제</Button>
             </CardActions>
             </div>
         </Card>
