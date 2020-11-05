@@ -54,9 +54,14 @@ const SelectRoute = ({ match }) => {
             }).catch((err) => {
                 console.log(err)
             })
+        axios.get(`https://k3b101.p.ssafy.io/api/app/passenger`)
+            .then((res)=>{
+                console.log(res.data)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
     }, [start, end])
-
-    //
 
 
     useEffect(() => {
@@ -102,6 +107,7 @@ const SelectRoute = ({ match }) => {
         }
     }
 
+    console.log(sinfo)
 
     return (
         <div>
