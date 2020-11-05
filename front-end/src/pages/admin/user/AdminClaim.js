@@ -50,21 +50,27 @@ const useStyles = makeStyles({
         const [claimlist, setClaimlist] = useState([])
 
         
-        useEffect(() => {
-            axios.get(`${baseURL}/api/reports`)
-            .then((res)=>{
-                console.log(res.data.data)
-                setClaimlist(res.data.data)
-            })
-            .catch((error)=>{
-                console.log(error)
-            })
+    useEffect(() => {
+      claimRegist()
     },[])
 
-    const climDelete = (rid) =>{
+    const claimRegist = () =>{
+        axios.get(`${baseURL}/api/reports`)
+        .then((res)=>{
+            console.log(res.data.data)
+            setClaimlist(res.data.data)
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+    }
+    
+ 
+    const claimDelete = (rid) =>{
         axios.delete(`${baseURL}/api/reports/${rid}`)
         .then((res) =>{
             console.log(res.data)
+            claimRegist()
         })
         .catch((error) =>{
             console.log(error)
@@ -91,7 +97,7 @@ const useStyles = makeStyles({
             </CardContent>
             <div className="d-flex justify-content-end">
             <CardActions >
-                <Button  variant="outlined" color="secondary" size="small" onClick={()=>climDelete(claim.rid)}>신고삭제</Button>
+                <Button  variant="outlined" color="secondary" size="small" onClick={()=>claimDelete(claim.rid)}>신고삭제</Button>
             </CardActions>
             </div>
         </Card>
