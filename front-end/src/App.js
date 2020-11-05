@@ -23,19 +23,24 @@ import Bottombar from './components/Bottombar';
 import Selectroute from './pages/moblie/detail/SelectRoute'
 import Headerbar from './components/Headerbar';
 import SubwayTime from './pages/moblie/detail/SubwayTime';
+import Logo from './pages/moblie/Logo'
 
 const useStyles = makeStyles(() => ({
   mobile:{
     width: '375px',
-    height: '812px',
+    minHeight: '812px',
+    height: '100%',
     margin: 'auto',
-    border: '0.5px solid gray'
+    borderRight: '0.5px solid gray',
+    borderLeft: '0.5px solid gray'
   },
   tablet:{
     width: '1024px',
-    height: '768px',
+    minHeight: '768px',
+    height: '100%',
     margin: 'auto',
-    border: '0.5px solid gray'
+    borderRight: '0.5px solid gray',
+    borderLeft: '0.5px solid gray'
   },
   header: {
       paddingTop : '48px',
@@ -55,9 +60,13 @@ const App = () => {
   useEffect(()=>{
     setPreloc(location.pathname) 
     if(preloc){
-      if(preloc !== '/admin/login' && preloc !== '/admin/home' && preloc !== '/admin/cctv' && preloc !== '/admin/log' && preloc !== '/admin/adminclaim'){
+      if(preloc === '/'){
+        setUser('logo')
+      }
+      else if(preloc !== '/admin/login' && preloc !== '/admin/home' && preloc !== '/admin/cctv' && preloc !== '/admin/log' && preloc !== '/admin/adminclaim'){
         setUser('user')
-      }else{
+      }
+      else{
         setUser('admin')
       }
     }
@@ -73,6 +82,9 @@ const App = () => {
   return (
     <>
       {/* 사용자 모바일(아이폰X 사이즈) */}
+      {user === 'logo' && <div className={classes.mobile}>
+      <Route exact path='/' component={Logo}></Route>
+      </div>}
       {user === 'user' && <div className={classes.mobile}>
         {/* <Route exact path="/apply" component={Apply}></Route> */}
         <Headerbar location={preloc} />
