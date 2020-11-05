@@ -120,36 +120,30 @@ const useStyles = makeStyles((theme) => ({
 
 const Alarm = (props) =>{
     const classes = useStyles();
-    const [selectline, setSelectline] = useState(false);
+    const [selectline, setSelectline] = useState('0');
     const [alarmlist, setAlarmlist] = useState([]);
 
-    const changline = () =>{
-        props.alarm_count(alarmlist.length)
-        if (!selectline){
-            setSelectline(true)
-        }else{
-            setSelectline(false)
-        }
+    const changline = (line) =>{
+        setSelectline(line)
+        // props.alarm_count(alarmlist.length)
+        // if (!selectline){
+        //     setSelectline(true)
+        // }else{
+        //     setSelectline(false)
+        // }
     }
     
     useEffect(()=>{
-        getAlarmData('1')
-    },[])
+        getAlarmData(selectline)
+        return () => {
+          };
+    },[selectline])
     
     const getAlarmData = ((line=>{
-        const arr =[]
-        window.db.collection('subway').doc(line).collection('messages').orderBy('time').onSnapshot((snapshot)=>{  
-            snapshot.docChanges().forEach(change =>{
-                // console.log(doc.id, '=>', doc.data());
-                // var doc = change.doc;
-                // console.log(doc)
-                arr.push(change.doc.data())
-                console.log('드러와')
-            });
+        window.db.collection('subway').doc(line).collection('messages').orderBy('time','desc').onSnapshot((snapshot)=>{  
+                setAlarmlist(snapshot.docs.map(doc=>doc.data()))
         });
-        setAlarmlist(arr)
     }))
-
 
 
     const listItems = alarmlist.map((alarm ,index) =>
@@ -189,22 +183,22 @@ const Alarm = (props) =>{
     return(
             <div>
                 <h6 className={classes.root}>지하철 호선</h6>
-                <Button onClick={changline} className={classes.firstline} variant="outlined" size="large" >1호선</Button>
-                <Button className={classes.secondline} variant="outlined" size="large">2호선</Button>
-                <Button className={classes.thirdline} variant="outlined" size="large">3호선</Button>
-                <Button className={classes.fourthline} variant="outlined" size="large">4호선</Button>
-                <Button className={classes.fifthline} variant="outlined" size="large">5호선</Button>
-                <Button className={classes.sixthline} variant="outlined" size="large">6호선</Button>
-                <Button className={classes.seventhline} variant="outlined" size="large">7호선</Button>
-                <Button className={classes.eighthline} variant="outlined" size="large">8호선</Button>
-                <Button className={classes.ninthline} variant="outlined" size="large">9호선</Button>
-                <Button className={classes.gyeongchun} variant="outlined" size="large">경춘</Button>
-                <Button className={classes.gyeonguicenter} variant="outlined" size="large">경의중앙</Button>
-                <Button className={classes.airport} variant="outlined" size="large">공항</Button>
-                <Button className={classes.shinbundang} variant="outlined" size="large">신분당</Button>
-                <Button className={classes.inchone} variant="outlined" size="large">인천</Button>
-                <Button className={classes.wuyihsin} variant="outlined" size="large">우이신설</Button>
-                <Button className={classes.suinbundang} variant="outlined" size="large">수인분당</Button>
+                <Button onClick={()=>changline('1')} className={classes.firstline} variant="outlined" size="large" >1호선</Button>
+                <Button onClick={()=>changline('2')} className={classes.secondline} variant="outlined" size="large">2호선</Button>
+                <Button onClick={()=>changline('3')} className={classes.thirdline} variant="outlined" size="large">3호선</Button>
+                <Button onClick={()=>changline('4')} className={classes.fourthline} variant="outlined" size="large">4호선</Button>
+                <Button onClick={()=>changline('5')} className={classes.fifthline} variant="outlined" size="large">5호선</Button>
+                <Button onClick={()=>changline('6')} className={classes.sixthline} variant="outlined" size="large">6호선</Button>
+                <Button onClick={()=>changline('7')} className={classes.seventhline} variant="outlined" size="large">7호선</Button>
+                <Button onClick={()=>changline('8')} className={classes.eighthline} variant="outlined" size="large">8호선</Button>
+                <Button onClick={()=>changline('9')} className={classes.ninthline} variant="outlined" size="large">9호선</Button>
+                <Button onClick={()=>changline('경춘')} className={classes.gyeongchun} variant="outlined" size="large">경춘</Button>
+                <Button onClick={()=>changline('경의중앙')} className={classes.gyeonguicenter} variant="outlined" size="large">경의중앙</Button>
+                <Button onClick={()=>changline('공항')} className={classes.airport} variant="outlined" size="large">공항</Button>
+                <Button onClick={()=>changline('신분당')} className={classes.shinbundang} variant="outlined" size="large">신분당</Button>
+                <Button onClick={()=>changline('인천')} className={classes.inchone} variant="outlined" size="large">인천</Button>
+                <Button onClick={()=>changline('우이신설')} className={classes.wuyihsin} variant="outlined" size="large">우이신설</Button>
+                <Button onClick={()=>changline('수인분당')} className={classes.suinbundang} variant="outlined" size="large">수인분당</Button>
 
                 <h6 className={classes.root}>지하철 알림 정보</h6>
                 <hr className="mb-1"></hr>
