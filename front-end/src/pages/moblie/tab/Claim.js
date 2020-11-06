@@ -55,6 +55,7 @@ const Claim = () =>{
         }).then((res) =>{
             console.log(res)
             alert("등록")
+            oncancle()
         })
         .catch((error) => {
             console.log(error)
@@ -71,11 +72,11 @@ const Claim = () =>{
     return(          
         
         <div >
-            <div>
+            {/* <div>
             <h2 className="title-claim">신고</h2>
-            </div>
+            </div> */}
             <div className="claim-form">
-                <span className="categoty-claim">신고유형: </span>
+                <p className="categoty-claim">신고유형</p>
                 {(writer && <input className="input-category" value={category || ''} onChange={setcategoryText} type="text" ></input>) || <input className="input-category" value={inputbox} disabled></input> }
                 <select className="selectbox" value={inputbox} onChange={CheckText}>
                     <option value="" disabled>선택해주세요</option>
@@ -87,17 +88,17 @@ const Claim = () =>{
                 </select>
             </div>
             <div className="subway-number">
-                <span className="categoty-claim">열차번호: </span>
+                <p className="categoty-claim">열차번호 </p>
                 <input className="number-input" value={trainnum || ''} maxLength = "6" onChange={maxLengthCheck} type="number" placeholder="번호를 입력해주세요."></input>
             </div>
-            <div className="content d-flex justify-content-start">
-                <span className="categoty-claim mr-1">신고내용: </span>
+            <div className="mt-3">
+                <p className="categoty-claim mr-1">신고내용 </p>
                 <div>
                     <textarea className="claim-content" value={content} onChange={Claimcontent} type="text" placeholder="내용을 입력해주세요."></textarea>
-                    <p className="textcount">글자수100자 이하</p>
+                    <p className="textcount">글자수50자 이하</p>
                 </div>
             </div>
-            <div className="d-flex justify-content-center mt-4">
+            <div className="d-flex justify-content-center ">
                 <Button className="mr-3" variant="contained" color="secondary" onClick={oncancle}>취소</Button>
                 <Button variant="contained" color="primary" onClick={goclaim}>신고하기</Button>
             </div>
