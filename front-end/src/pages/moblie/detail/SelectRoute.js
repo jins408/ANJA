@@ -5,6 +5,7 @@ import StarIcon from '@material-ui/icons/Star';
 import Button from '@material-ui/core/Button';
 import TrainIcon from '@material-ui/icons/Train';
 import ForwardIcon from '@material-ui/icons/Forward';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
 import axios from 'axios'
 
@@ -22,6 +23,9 @@ const useStyles = makeStyles(() => ({
     bad: {
         fontSize: 80,
         color: 'crimson'
+    },
+    arrow:{
+        fontSize: '0.8rem'
     }
 }));
 
@@ -32,12 +36,14 @@ const SelectRoute = ({ match }) => {
     const [id, setId] = useState(0)
     const [traininfo, setTraininfo] = useState();
     const [sinfo, setSinfo] = useState();
-    const [mintime, setMintime] = useState(false);
     const [showtrain, setShowtrain] = useState(false);
+    const [showdetail1, setShowdetail1] = useState(false);
+    const [showdetail2, setShowdetail2] = useState(false);
     var [nextid, setNextid] = useState(0)
 
     const start = match.params.start
     const end = match.params.end
+    
 
     useEffect(() => {
         axios.get(`https://k3b101.p.ssafy.io/api/subways/estimate?from=${start}&to=${end}`)
@@ -82,6 +88,7 @@ const SelectRoute = ({ match }) => {
         if (checkid.length) {
             setStar(true)
         }
+
     }, [star, start, end])
 
 
@@ -99,15 +106,7 @@ const SelectRoute = ({ match }) => {
         }
     }
 
-    const mintimeHandler = () => {
-        if (!mintime) {
-            setMintime(true)
-        } else {
-            setMintime(false)
-        }
-    }
 
-    console.log(sinfo)
 
     return (
         <div>
@@ -116,19 +115,44 @@ const SelectRoute = ({ match }) => {
                     {/* <Button href={`/subwaytime/${start}`} color="primary">TIME</Button> */}
                     {star ? <StarIcon className="selectroute_star" onClick={starHandler} /> : <StarBorderIcon className="selectroute_star" onClick={starHandler} />}
                 </div>
-                <p className="selectroute_location mb-0">{start} <ForwardIcon /> {end}</p>
-                <div className="d-flex justify-content-between">
-                    {mintime ? <Button className="ml-2" onClick={mintimeHandler} color="secondary">최단시간</Button> : <Button className="ml-2" onClick={mintimeHandler} color="secondary">최소환승</Button>}
+                <p className="selectroute_location mb-0">{start} <ForwardIcon className="mb-1" /> {end}</p>
+                <div className="d-flex justify-content-end">
+                    {/* {mintime ? <Button className="ml-2" onClick={mintimeHandler} color="secondary">최단시간</Button> : <Button className="ml-2" onClick={mintimeHandler} color="secondary">최소환승</Button>} */}
                     <Button href={`/subwaytime/${start}`} color="primary">TIME</Button>
                 </div>
                 {/* 최단시간 */}
-                {mintime && traininfo && <p className="sleectroute_time mb-4">{traininfo.shtTravelMsg}</p>}
+                {/* {mintime && traininfo && <p className="sleectroute_time mb-4">{traininfo.shtTravelMsg}</p>} */}
                 {/* 최소환승 */}
-                {!mintime && traininfo && <p className="sleectroute_time mb-4">{traininfo.minTravelMsg}</p>}
+                {/* {!mintime && traininfo && <p className="sleectroute_time mb-4">{traininfo.minTravelMsg}</p>} */}
+                {traininfo && 
                 <div className="mx-auto mb-3 selectroute_updown">
-                    {sinfo && <p className="text-center mb-1 selectroute_gotarin"><TrainIcon /> {sinfo[0].trainLineNm} : {parseInt(sinfo[0].barvlDt / 60)}분{sinfo[0].barvlDt % 60}초</p>}
-                    {sinfo && <p className="text-center selectroute_gotarin"><TrainIcon /> {sinfo[1].trainLineNm} : {parseInt(sinfo[1].barvlDt / 60)}분{sinfo[1].barvlDt % 60}초</p>}
-                </div>
+                <Button className="ml-2" onClick={()=>setShowdetail1(!showdetail1)} color="secondary">최단시간</Button>
+                    <p className="ml-3">소요시간 : {traininfo.shtTravelTm}분({traininfo.shtTransferCnt}회 환승)</p>
+                    {/* {traininfo.shtTransferMsg !== null && <p>환승역 : {traininfo.shtTransferMsg}</p>} */}
+                    {showdetail1 && 
+                    <div className="ml-3">
+                        {traininfo.shtStatnNm.split(',').map((shttrain, index)=>
+                        <span key={index}>
+                            {shttrain !== '' && index !== traininfo.shtStatnNm.split(',').length-2 && <span>{shttrain} <ArrowRightAltIcon className={classes.arrow}/></span>}
+                            {index === traininfo.shtStatnNm.split(',').length-2 && <span>{shttrain} </span>}
+                        </span>
+                    )}({traininfo.shtStatnCnt}개)
+                    </div>}
+                <Button className="ml-2" onClick={()=>setShowdetail2(!showdetail2)} color="secondary">최소환승</Button>
+                    <p className="ml-3">소요시간 : {traininfo.minTravelTm}분({traininfo.minTransferCnt}회 환승)</p>
+                    {/* {traininfo.minTransferMsg !== null &&<p>환승역 : {traininfo.minTransferMsg}</p>} */}
+                    {showdetail2 && 
+                    <div className="ml-3">
+                        {traininfo.minStatnNm.split(',').map((mintrain, index)=>
+                        <span key={index}>
+                            {mintrain !== '' && index !== traininfo.minStatnNm.split(',').length-2 && <span>{mintrain} <ArrowRightAltIcon className={classes.arrow}/></span>}
+                            {index === traininfo.minStatnNm.split(',').length-2 && <span>{mintrain}</span>}
+                        </span>
+                    )}({traininfo.minStatnCnt}개)
+                    </div>}
+                    {/* {sinfo && <p className="text-center mb-1 selectroute_gotarin"><TrainIcon /> {sinfo[0].trainLineNm} : {parseInt(sinfo[0].barvlDt / 60)}분{sinfo[0].barvlDt % 60}초</p>}
+                    {sinfo && <p className="text-center selectroute_gotarin"><TrainIcon /> {sinfo[1].trainLineNm} : {parseInt(sinfo[1].barvlDt / 60)}분{sinfo[1].barvlDt % 60}초</p>} */}
+                </div>}
             </div>
             <div className="selectroute_box2">
                 <div className="d-flex justify-content-end">

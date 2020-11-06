@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -39,6 +39,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () =>{
     const classes = useStyles();
+    const [id, setId] = useState('');
+    const [password, setPassword] = useState('');
+    
+    const gologin = ()=> {
+      sessionStorage.setItem('id', id)
+    }
 
     return(
             <Container component="main" maxWidth="xs">
@@ -57,9 +63,11 @@ const Login = () =>{
                   margin="normal"
                   required
                   fullWidth
-                  label="Email Address"
-                  autoComplete="email"
+                  label="ID"
+                  autoComplete="id"
                   autoFocus
+                  value={id}
+                  onChange={(e)=>setId(e.target.value)}
                 />
                 <TextField
                   className="text-form"
@@ -70,6 +78,8 @@ const Login = () =>{
                   label="Password"
                   type="password"
                   autoComplete="current-password"
+                  value={password}
+                  onChange={(e)=>setPassword(e.target.value)}
                 />
 
                 <Button
@@ -78,6 +88,7 @@ const Login = () =>{
                   variant="contained"
                   color="primary"
                   className={classes.submit}
+                  onClick={gologin}
                 >
                   로그인
                 </Button>

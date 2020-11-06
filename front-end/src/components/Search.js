@@ -17,13 +17,16 @@ const Search = () =>{
     const changeend = (e) => {
         setEnd(e.target.value)
     }
-    const godetail = () =>{
-        if(!start){
-            alert("출발역을 입력해주세요")
-        }else if(!end){
-            alert("도착역을 입력해주세요")
-        }else{
-            history.push(`/selectroute/${start}/${end}`)
+
+    const godetail = (e) =>{
+        if (e.key === 'Enter' || e.type === 'click') {
+            if(!start){
+                alert("출발역을 입력해주세요")
+            }else if(!end){
+                alert("도착역을 입력해주세요")
+            }else{
+                history.push(`/selectroute/${start}/${end}`)
+        }
         }
     }
 
@@ -50,6 +53,7 @@ const Search = () =>{
                 color="secondary"
                 value={end}
                 onChange={changeend}
+                onKeyPress={godetail}
             /></div>
         </div>
         <div>
