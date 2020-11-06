@@ -1,19 +1,22 @@
 
-.title-claim{
-    text-align: center;
-    margin-bottom: 3rem;
-    margin-top: 5rem;
+.claim-form{
+    /* text-align: center; */
+    margin-bottom: 1.5rem;
+    margin-top: 6rem;
 }
 
 .textcount{
     text-align: right;
     font-size: small;
     color: gray;
+    margin-right: 3rem;
+    margin-bottom: 2.5rem;
 }
 
 .categoty-claim{
     font-weight: bold;
     font-size: large;
+    margin-left: 3rem;
 }
 
 .input-category{
@@ -22,6 +25,7 @@
     border-radius: 5px;
     border: 1px solid black;
     margin-right: 0.3rem;
+    margin-left: 3rem;
 }
 
 .selectbox{
@@ -38,6 +42,8 @@
     height: 3rem;
     border-radius: 5px;
     border: 1px solid black;
+    margin-left: 3rem;
+    margin-bottom: 1rem;
 }
 
 .content{
@@ -45,8 +51,9 @@
 }
 
 .claim-content{
-    width: 17rem;
+    width: 18rem;
     height: 10rem;
     border-radius: 5px;
     border: 1px solid black;
+    margin-left: 3rem;
 }
