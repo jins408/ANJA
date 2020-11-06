@@ -80,7 +80,7 @@ const App = () => {
   
 
   return (
-    <>
+    <div className="app">
       {/* 사용자 모바일(아이폰X 사이즈) */}
       {user === 'logo' && <div className={classes.mobile}>
       <Route exact path='/' component={Logo}></Route>
@@ -115,7 +115,7 @@ const App = () => {
           <Route exact path="/admin/adminclaim" component={AdminClaim}></Route>
         </div>
       </div>}
-    </>
+    </div>
   );
 }
 

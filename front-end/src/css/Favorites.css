@@ -1,14 +1,9 @@
-.Favorite_header{
-    text-align: center;
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 0;
-}
-
 .Favorite_edit{
-    font-size: 1rem;
-    margin-right: 1rem;
-    color: red !important;
+    position: absolute;
+    right: 1%;
+    top: 0.5%;
+    z-index: 6;
+    color: white !important;
 }
 
 .Favorite_edit:focus{
@@ -22,4 +17,8 @@
 
 .listname{
     width: 70vw;
+}
+
+.listname span{
+    font-size: 1.5rem !important;
 }

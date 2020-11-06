@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom' 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -27,7 +28,9 @@ const useStyles = makeStyles(() => ({
 
 const  Headerbar = ({location}) =>{
     const classes = useStyles();
+    const nowlocation = useLocation();
     const [back, setBack] = useState(false);
+    const [title, setTitle] = useState('Subway Alimi');
     let history = useHistory();
      
     const goback = () =>{
@@ -42,6 +45,21 @@ const  Headerbar = ({location}) =>{
         setBack(false)
       }
     },[location])
+
+    useEffect(()=>{
+      if(nowlocation.pathname === '/mobile/favorite'){
+        setTitle('즐겨찾기')
+      }else if(nowlocation.pathname === '/mobile/alarm'){
+        setTitle('알림')
+      }else if(nowlocation.pathname === '/mobile/claim'){
+        setTitle('신고')
+      }else if(nowlocation.pathname === '/mobile/setting'){
+        setTitle('설정')
+      }else{
+        setTitle('Subway Alimi')
+      }
+    },[nowlocation])
+
   
     
     return (
@@ -53,7 +71,8 @@ const  Headerbar = ({location}) =>{
               </IconButton>}
               <div className="d-flex justify-content-center w-100">
                 <Typography  variant="h6" color="inherit">
-                  Subway Alimi
+                  {/* Subway Alimi */}
+                  {title}
                 </Typography>
               </div>
             </Toolbar>
