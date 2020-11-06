@@ -88,7 +88,7 @@ const Claim = () =>{
             </div>
             <div className="subway-number">
                 <span className="categoty-claim">열차번호: </span>
-                <input className="number-input" value={trainnum || ''} maxLength = "8" onChange={maxLengthCheck} type="number" placeholder="번호를 입력해주세요."></input>
+                <input className="number-input" value={trainnum || ''} maxLength = "6" onChange={maxLengthCheck} type="number" placeholder="번호를 입력해주세요."></input>
             </div>
             <div className="content d-flex justify-content-start">
                 <span className="categoty-claim mr-1">신고내용: </span>
