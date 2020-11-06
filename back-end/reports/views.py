@@ -27,6 +27,7 @@ class ReportView(APIView):
         # 01 / 01 / 01 => 호선 / 열차 / 칸
         # date_time = datetime.now().strftime("%Y/%m/%d/, %H:%M:%S")
         newReport = {
+            'id': request.data["id"],
             'line': request.data["id"][:2],
             'sid': request.data["id"][2:4],
             'ssid': request.data["id"][4:6],
