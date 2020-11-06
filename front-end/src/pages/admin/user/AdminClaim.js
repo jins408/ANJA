@@ -37,7 +37,7 @@ const useStyles = makeStyles({
         height: 95
         
     },
-    categoty:{
+    category:{
         fontSize: 16,
         fontWeight: "bold"
     },
@@ -51,15 +51,32 @@ const useStyles = makeStyles({
 
         
     useEffect(() => {
-        claimRegist('1')
+        claimRegist('01')
         return () =>{
         };
     },[])
 
     
     const claimRegist = ((line =>{
-        window.db.collection('reports').doc(line).collection('messages').onSnapshot((snapshot)=>{  
-            setClaimlist(snapshot.docs.map(doc=>doc.data()))
+        // window.db.collection('reports').doc(line).collection('messages').onSnapshot((snapshot)=>{  
+        //     setClaimlist(snapshot.docs.map(doc=>doc.data()))
+        // });
+    
+        window.db.collection("reports").doc(line).collection("messages").orderBy('time','desc').onSnapshot(
+            querySnapshot => {
+                // setClaimlist(querySnapshot.docs.map(doc=>doc.data()))
+                var list = []
+                querySnapshot.forEach(doc => {
+                //     // list.push(doc.data())
+                    var obj = {};
+                    obj = doc.data();
+                    obj["key"] = doc.id;
+                    list.push(obj)
+                    // console.log(doc.id, " => " , doc.data())
+                });
+                console.log(list)
+                setClaimlist(list)
+
         });
     }))
 
@@ -75,8 +92,8 @@ const useStyles = makeStyles({
     // }
     
  
-    const claimDelete = (rid) =>{
-        axios.delete(`${baseURL}/api/reports/${rid}`)
+    const claimDelete = (claim) =>{
+        axios.delete(`${baseURL}/api/reports?id=${claim.id}&reportDocId=${claim.key}`)
         .then((res) =>{
             console.log(res.data)
             claimRegist()
@@ -97,7 +114,7 @@ const useStyles = makeStyles({
                     {bull}{claim.sid}
                 </Typography>
                 <Typography className={classes.pos} variant="body2" component="p">
-                    <span className={classes.categoty}>신고유형:</span> {claim.category}
+                    <span className={classes.category}>신고유형:</span> {claim.category}
                 </Typography>
                 <br />
                 <Typography className={classes.content}>
@@ -106,7 +123,7 @@ const useStyles = makeStyles({
             </CardContent>
             <div className="d-flex justify-content-end">
             <CardActions >
-                <Button  variant="outlined" color="secondary" size="small" onClick={()=>claimDelete(claim.rid)}>신고삭제</Button>
+                <Button  variant="outlined" color="secondary" size="small" onClick={()=>claimDelete(claim)}>신고삭제</Button>
             </CardActions>
             </div>
         </Card>
