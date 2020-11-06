@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles({
     tablecon: {
         width: '345px',
-        margin: '0 15px 5rem 15px',
+        margin: '0 15px 0 15px',
     },
     table: {
         width: '100%',
