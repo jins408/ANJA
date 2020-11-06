@@ -1,25 +1,66 @@
 import React from 'react';
-import {  fade,makeStyles, ThemeProvider  } from '@material-ui/core/styles';
+import {  fade,makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-import Pagination from '@material-ui/lab/Pagination';
 import Button from '@material-ui/core/Button';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
-// import { green } from '@material-ui/core/colors';
+import VideocamIcon from '@material-ui/icons/Videocam';
 
 
+
+const columns = [
+    { id: 'data', label: '날짜/시간', minWidth: 170 },
+    { id: 'category', label: '경보유형', minWidth: 100 },
+    {
+      id: 'subnumber',
+      label: '열차번호(칸)',
+      minWidth: 170,
+      align: 'right',
+    },
+    {
+      id: 'cctv',
+      label: '영상보기',
+      minWidth: 170,
+      align: 'right',
+        
+    },
+   
+  ];
+
+  function createData(data, category, subnumber, cctv) {
+    return { data, category, subnumber, cctv};
+  }
+  const rows = [
+    createData('India', 'IN', 1324171354, <VideocamIcon/>),
+    createData('China', 'CN', 1403500365, <VideocamIcon/>),
+    createData('Italy', 'IT', 60483973, <VideocamIcon/>),
+    createData('United States', 'US', 327167434, <VideocamIcon/>),
+    createData('Canada', 'CA', 37602103, <VideocamIcon/>),
+    createData('Australia', 'AU', 25475400, <VideocamIcon/>),
+    createData('Germany', 'DE', 83019200, <VideocamIcon/>),
+    createData('Ireland', 'IE', 4857000, <VideocamIcon/>),
+    createData('Mexico', 'MX', 126577691, <VideocamIcon/>),
+    createData('Japan', 'JP', 126317000, <VideocamIcon/>),
+    createData('France', 'FR', 67022000, <VideocamIcon/>),
+    createData('United Kingdom', 'GB', 6702220, <VideocamIcon/>),
+    createData('Russia', 'RU', 146793744, <VideocamIcon/>),
+    createData('Nigeria', 'NG', 200962417,<VideocamIcon/>),
+    createData('Brazil', 'BR', 210147125, <VideocamIcon/>),
+  ];
 
 const useStyles = makeStyles((theme) =>({
-    table: {
-      minWidth: 650,
-      width: 200,
-      marginTop:60, 
+    container: {
+        maxHeight: 440,
+        width: '90%',
+        marginLeft: 40,
+        marginTop: 20
     },
     root: {
         '& > *': {
@@ -30,7 +71,7 @@ const useStyles = makeStyles((theme) =>({
     },
     button: {
         margin: theme.spacing(1),
-        marginRight: 80,
+        marginRight: 40,
         backgroundColor: '#4caf50 !important',
         color:"white"
       
@@ -46,7 +87,7 @@ const useStyles = makeStyles((theme) =>({
         marginLeft: 0,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-          marginLeft: theme.spacing(11),
+          marginLeft: theme.spacing(5),
           width: 'auto',
         },
         paddingTop: 70,
@@ -81,27 +122,21 @@ const useStyles = makeStyles((theme) =>({
         margin: theme.spacing(1),
       },
  }));
-
-//  const theme = createMuiTheme({
-//     palette: {
-//         success : green,
-//     },
-//   });
     
-  function createData(name, calories, fat, carbs) {
-    return { name, calories, fat, carbs };
-  }
-  
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
 
 const Log = () =>{
     const classes = useStyles();
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+      };
+    
+      const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+      };
 
     return(
             <div>
@@ -119,7 +154,6 @@ const Log = () =>{
                     />
                 </div>
                 <div className="d-flex justify-content-end">
-                    <ThemeProvider>
                     <Button
                         variant="contained"
                         // color="primary"
@@ -128,36 +162,52 @@ const Log = () =>{
                     >
                         Excel
                     </Button>
-                    </ThemeProvider>
+                  
                 </div>
 
-                <TableContainer className="d-flex justify-content-center">
-                <Table className={classes.table} aria-label="simple table">
+                <TableContainer className={classes.container}>
+                    <Table stickyHeader aria-label="sticky table">
                     <TableHead>
-                    <TableRow>
-                        <TableCell>날짜/시간</TableCell>
-                        <TableCell align="right">경보유형</TableCell>
-                        <TableCell align="right">열차번호(칸)</TableCell>
-                        <TableCell align="right">영상보기</TableCell>
-                    </TableRow>
+                        <TableRow>
+                        {columns.map((column) => (
+                            <TableCell
+                            key={column.id}
+                            align={column.align}
+                            style={{ minWidth: column.minWidth }}
+                            >
+                            {column.label}
+                            </TableCell>
+                        ))}
+                        </TableRow>
                     </TableHead>
                     <TableBody>
-                    {rows.map((row) => (
-                        <TableRow key={row.name}>
-                        <TableCell component="th" scope="row">
-                            {row.name}
-                        </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        </TableRow>
-                    ))}
+                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                        return (
+                            <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                            {columns.map((column) => {
+                                const value = row[column.id];
+                                return (
+                                <TableCell key={column.id} align={column.align}>
+                                    {column.format && typeof value === 'number' ? column.format(value) : value}
+                                </TableCell>
+                                );
+                            })}
+                            </TableRow>
+                        );
+                        })}
                     </TableBody>
-                </Table>
+                    </Table>
                 </TableContainer>
-                <div className={classes.root}>
-                    <Pagination count={10} variant="outlined" />
-                </div>
+                <TablePagination
+                    className="mr-4"
+                    rowsPerPageOptions={[10, 25, 100]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
             </div>
         );
     }
