@@ -19,6 +19,11 @@ const useStyles = makeStyles((theme) => ({
     },
     trash:{
         color: 'crimson'
+    },
+    nonefavor:{
+        fontSize: '2rem',
+        paddingTop: '15rem',
+        textAlign: 'center'
     }
 }));
 
@@ -27,7 +32,6 @@ const Favorites = () => {
     let history = useHistory();
     const classes = useStyles();
     const [hidden, setHidden] = useState(false);
-    const [input, setInput] = useState('');
     const [favname, setFavname] = useState([]);
 
     useEffect(() => {
@@ -46,26 +50,11 @@ const Favorites = () => {
         }
     }
 
-    const setInputText = e => {
-        setInput(e.target.value)
-    }
-
-    const setFavnameText = e => {
-        if (e.key === 'Enter' || e.type === 'click') {
-            const addfavname = {
-                id: ++nextid,
-                content: input
-            };
-            localStorage.setItem(addfavname.id, addfavname.content)
-            setFavname(favname.concat(addfavname))
-            setInput('')
-        }
-    }
-
 
     const onRemove = (id) => {
         setFavname(favname.filter(favn => favn.id !== id));
         localStorage.removeItem(id)
+        alert('삭제되었습니다')
     }
 
     const godetail = (content) => {
@@ -76,10 +65,10 @@ const Favorites = () => {
 
     const favlist = favname.map((favn) =>
         <ListItem key={favn.id} onClick={() => godetail(favn.content)}>
-            <StarIcon className="favorite_star" />
+            <StarIcon className="favorite_star ml-2" />
             <ListItemText
                 primary={favn.content.split(',')[0] + '->' + favn.content.split(',')[1]}
-                className="listname"
+                className="listname mb-3 ml-3"
             />
             {hidden && <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label="delete" onClick={() => onRemove(favn.id)}>
@@ -99,16 +88,16 @@ const Favorites = () => {
 
     return (
         <div>
-            <p className="Favorite_header">즐겨찾기</p>
-            <div className="d-flex justify-content-end">
-                {hidden ? <button className="btn btn-outline Favorite_edit" onClick={edit}>완료</button> : <button className="btn btn-outline Favorite_edit" onClick={edit}>편집</button>}
+            <div className="d-flex justify-content-end mt-3">
+                {nextid !== 0 && <div>{hidden ? <button className="btn btn-outline Favorite_edit" onClick={edit}>완료</button> : <button className="btn btn-outline Favorite_edit" onClick={edit}>편집</button>}</div>}
             </div>
-            <input type="text" value={input} onChange={setInputText} onKeyPress={setFavnameText}></input><button onClick={setFavnameText}>추가</button>
             <Grid item xs={12} md={6}>
                 <div className={classes.demo}>
-                    <List>
-                        {favlist}
-                    </List>
+                {nextid !== 0 ?<List>
+                         {favlist} 
+                    </List> : 
+                    <div className={classes.nonefavor}>즐겨찾기를 추가해주세요!</div>
+                    }
                 </div>
             </Grid>
 
