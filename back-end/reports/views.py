@@ -51,14 +51,14 @@ class ReportDetailView(APIView):
         else:
             return Response({'data': 'NOT FOUND REPORT'}, status=status.HTTP_200_OK)
 
-    def delete(self, request, doc_id, format=None):
-        doc_ref = getCollection(newReport["sid"])
-        # report = Report.objects.get(rid=report_pk)
-        if report:
-            report.delete()
-            return Response({'data': 'SUCCESS'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'data': 'NOT FOUND REPORT'}, status=status.HTTP_200_OK)
+    # def delete(self, request, doc_id, format=None):
+        # doc_ref = getCollection(newReport["sid"])
+        # # report = Report.objects.get(rid=report_pk)
+        # if report:
+        #     report.delete()
+        #     return Response({'data': 'SUCCESS'}, status=status.HTTP_200_OK)
+        # else:
+        #     return Response({'data': 'NOT FOUND REPORT'}, status=status.HTTP_200_OK)
 
 
 def getCollection(sid):
