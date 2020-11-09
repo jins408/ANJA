@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 import '../../../css/Login.css'
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -37,11 +39,32 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () =>{
     const classes = useStyles();
+    const history = useHistory();
     const [uid, setUid] = useState('');
     const [password, setPassword] = useState('');
     
     const gologin = ()=> {
-      sessionStorage.setItem('uid', uid)
+      axios.post('http://127.0.0.1:8080/api/users/sign',{
+        uid: uid,
+        password: password
+      })
+      .then((res)=>{
+        if(res.data.data === 'NOT FOUND USER'){
+          alert('등록되지 않은 사용자입니다.')
+          setUid('')
+          setPassword('')
+        }else if(res.data.data === 'INVALID PW'){
+          alert('비밀번호를 다시 확인해주세요.')
+          setPassword('')
+        }else{
+          sessionStorage.setItem('uid', uid)
+          alert('로그인 성공')
+          history.push('/admin/home')
+        }
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
     }
 
     return(
@@ -81,7 +104,6 @@ const Login = () =>{
                 />
 
                 <Button
-                  type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
