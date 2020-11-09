@@ -140,9 +140,17 @@ const Alarm = (props) =>{
     const getAlarmData = ((line=>{
         window.db.collection("logs").doc(line).collection("messages").orderBy('time','desc').onSnapshot
         (snapshot =>{
+            // var test = []
+            // snapshot.forEach(change => {
+            //     if(change.data().time.seconds<timestamp){
+            //         // console.log('data',change.data().time.seconds)
+            //         test.push(change.data())
+            //     }
                 setAlarmlist(snapshot.docs.map(doc=>doc.data()))
-            });
-        }))
+            // })
+            // setAlarmlist(test)
+        });
+    }))
 
     const listItems = alarmlist.map((alarm ,index) =>
         <div key={index} className="timetitle d-flex justify-content-left ">
@@ -171,7 +179,7 @@ const Alarm = (props) =>{
                 <Typography className="title-h6" variant="h6" component="h1">
                         {alarm.sid}번 열차
                     </Typography>
-                        <Typography> {alarm.category} 의심 문제 발생 </Typography>
+                        <Typography> {alarm.message} </Typography>
                 </Paper>
             </TimelineContent>
         </div>
@@ -202,7 +210,7 @@ const Alarm = (props) =>{
                 <hr className="mb-1"></hr>
 
             
-            {selectline && <div>
+            {selectline !== '0' ? <div>{selectline && <div>
                 <Timeline align="left" className="timeline">           
                 {listItems}
                 <div className="timetitle d-flex justify-content-left ">
@@ -210,7 +218,7 @@ const Alarm = (props) =>{
              
                 </div>
                 </Timeline>
-            </div>}
+            </div>}</div> : <div></div>}
         </div>
         );
     }

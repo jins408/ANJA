@@ -33,8 +33,13 @@ const Bottombar = (props) =>{
       if(location.pathname === '/mobile/alarm'){
         handleBadgeVisibility(true);
         setCount(0)
-      }else
-      handleBadgeVisibility(false);
+      }else{
+        if( count === 0 ){
+        handleBadgeVisibility(true);
+        }else{
+          handleBadgeVisibility(false);
+        }
+      }
   },[location.pathname, count,line])
 
   const getCount = ((line=>{
@@ -66,7 +71,7 @@ const Bottombar = (props) =>{
       >
         <BottomNavigationAction label="Home" icon={<HomeIcon />} component={Link} to='/mobile/main'/>
         <BottomNavigationAction label="즐겨찾기" icon={<StarIcon />} component={Link} to='/mobile/favorite'/>
-        <BottomNavigationAction onChange={handleBadgeVisibility}  label="알림" icon={<Badge color="secondary" badgeContent={count} invisible={invisible}><NotificationsActiveIcon/></Badge>} component={Link} to='/mobile/alarm'/>
+        <BottomNavigationAction onChange={handleBadgeVisibility}  label="알림" icon={<Badge color="secondary" className="alarmcount" badgeContent={count} invisible={invisible}><NotificationsActiveIcon/></Badge>} component={Link} to='/mobile/alarm'/>
         <BottomNavigationAction label="신고" icon={<RingVolumeIcon/>} component={Link} to='/mobile/claim'/>
         <BottomNavigationAction label="설정" icon={<SettingsIcon/>} component={Link} to='/mobile/setting'/>
         </BottomNavigation>
