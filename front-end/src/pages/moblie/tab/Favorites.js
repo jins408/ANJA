@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     nonefavor:{
         fontSize: '2rem',
         paddingTop: '15rem',
-        textAlign: 'center'
+        textAlign: 'center',
+        textShadow: '2px 2px 2px gray'
     }
 }));
 
