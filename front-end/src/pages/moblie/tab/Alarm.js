@@ -140,17 +140,10 @@ const Alarm = (props) =>{
     const getAlarmData = ((line=>{
         window.db.collection("logs").doc(line).collection("messages").orderBy('time','desc').onSnapshot
         (snapshot =>{
-            // var test = []
-            // snapshot.forEach(change => {
-            //     if(change.data().time.seconds<timestamp){
-            //         // console.log('data',change.data().time.seconds)
-            //         test.push(change.data())
-            //     }
                 setAlarmlist(snapshot.docs.map(doc=>doc.data()))
-            // })
-            // setAlarmlist(test)
-        });
-    }))
+            });
+        }))
+        console.log(alarmlist)
 
     const listItems = alarmlist.map((alarm ,index) =>
         <div key={index} className="timetitle d-flex justify-content-left ">
@@ -179,7 +172,7 @@ const Alarm = (props) =>{
                 <Typography className="title-h6" variant="h6" component="h1">
                         {alarm.sid}번 열차
                     </Typography>
-                        <Typography> {alarm.message} </Typography>
+                        <Typography> {alarm.category} 의심 문제 발생 </Typography>
                 </Paper>
             </TimelineContent>
         </div>
