@@ -46,7 +46,7 @@ const useStyles = makeStyles({
 
     const AdminClaim = () =>{
         const classes = useStyles();
-        const bull = <span className={classes.bullet}>•</span>;
+        // const bull = <span className={classes.bullet}>•</span>;
         const [claimlist, setClaimlist] = useState([])
 
         

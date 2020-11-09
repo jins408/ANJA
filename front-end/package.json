@@ -20,7 +20,10 @@
     "react-player": "^2.6.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.4"
+    "react-scripts": "3.4.4",
+    "react-slick": "^0.27.13",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^5.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
