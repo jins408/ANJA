@@ -143,7 +143,6 @@ const Alarm = (props) =>{
                 setAlarmlist(snapshot.docs.map(doc=>doc.data()))
             });
         }))
-        console.log(alarmlist)
 
     const listItems = alarmlist.map((alarm ,index) =>
         <div key={index} className="timetitle d-flex justify-content-left ">
