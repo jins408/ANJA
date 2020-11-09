@@ -54,9 +54,11 @@ const App = () => {
   const classes = useStyles();
   const location = useLocation();
   const [preloc, setPreloc] = React.useState();
-  const [user, setUser] = React.useState('user');
+  const [user, setUser] = React.useState();
   const [acount, setAcount] = React.useState('0');
   const [lastReadTime, setLastReadTime] = React.useState('0');
+  const [edit, setEdit] = React.useState(false);
+
 
   useEffect(()=>{
     setPreloc(location.pathname) 
@@ -82,9 +84,12 @@ const App = () => {
       </div>}
       {user === 'user' && <div className={classes.mobile}>
         {/* <Route exact path="/apply" component={Apply}></Route> */}
-        <Headerbar location={preloc} />
+        <Headerbar location={preloc} favorite_edit={(value)=>setEdit(value)} />
         <div className={classes.header}>
-          <Route exact path='/mobile/favorite' component={Favorites}></Route>
+          <Route exact path={'/mobile/favorite'}
+          render={()=>(
+            <Favorites favorite_edit={edit} />
+          )}/>
           <Route exact path='/mobile/main' component={Main}></Route>
           <Route exact path={'/mobile/alarm'}
           render={()=>(

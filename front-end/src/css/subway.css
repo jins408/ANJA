@@ -5,10 +5,12 @@
 
 .subway{
     position: relative;
-    overflow: hidden;
+    overflow: scroll;
     padding-bottom: 10%;
-    /* overflow-y:scroll; */
-    overflow-x:scroll;
+    /* overflow-y:hidden; */
+    height: 600px;
+    /* margin-bottom: 50px; */
+    /* overflow-x:scroll; */
     /* white-space:nowrap; */
 }
 
