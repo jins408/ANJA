@@ -5,13 +5,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Route, useLocation } from 'react-router-dom' 
 
 import Navigation from './components/Navigation'
-// import Introduce from './pages/Introduce'
 import Join from './pages/admin/user/Join'
 import Home from './pages/admin/user/Home'
 import Cctv from './pages/admin/user/Cctv'
 import Log from './pages/admin/user/Log'
 import AdminClaim from './pages/admin/user/AdminClaim'
 import Login from './pages/admin/user/Login'
+import Introduce from './pages/admin/user/Introduce'
 // import Apply from './pages/Apply'
 
 import Favorites from './pages/moblie/tab/Favorites'
@@ -64,7 +64,7 @@ const App = () => {
       if(preloc === '/'){
         setUser('logo')
       }
-      else if(preloc !== '/admin/login' && preloc !== '/admin/home' && preloc !== '/admin/cctv' && preloc !== '/admin/log' && preloc !== '/admin/adminclaim'){
+      else if(preloc !== '/admin/login' && preloc !== '/admin/home' && preloc !== '/admin/cctv' && preloc !== '/admin/log' && preloc !== '/admin/adminclaim' && preloc !== '/admin/introduce'){
         setUser('user')
       }
       else{
@@ -100,8 +100,9 @@ const App = () => {
 
       {/* 관리자 태블릿(아이패드 사이즈) */}
       {user === 'admin' && <div className={classes.tablet}>
-      {location.pathname !== "/admin/login" && <Navigation />}
+      {location.pathname !== "/admin/login" && location.pathname !== "/admin/introduce" && <Navigation />}
       <Route exact path="/admin/login" component={Login}></Route>
+      <Route exact path="/admin/introduce" component={Introduce}></Route>
       <div className={classes.navigation}>
         <Route exact path="/admin/home" component={Home} />
           <Route exact path="/admin/join" component={Join}></Route>
