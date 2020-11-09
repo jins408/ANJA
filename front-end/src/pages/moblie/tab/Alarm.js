@@ -125,13 +125,11 @@ const Alarm = (props) =>{
 
     const changline = (line) =>{
         setSelectline(line)
-        // props.alarm_count(alarmlist.length)
-        // if (!selectline){
-        //     setSelectline(true)
-        // }else{
-        //     setSelectline(false)
-        // }
+        props.alarm_line(line)
+        props.lastReadTime(timestamp)
     }
+
+    var timestamp = + new Date();
     
     useEffect(()=>{
         getAlarmData(selectline)
@@ -140,11 +138,19 @@ const Alarm = (props) =>{
     },[selectline])
     
     const getAlarmData = ((line=>{
-        window.db.collection('subway').doc(line).collection('messages').orderBy('time','desc').onSnapshot((snapshot)=>{  
+        window.db.collection("logs").doc(line).collection("messages").orderBy('time','desc').onSnapshot
+        (snapshot =>{
+            // var test = []
+            // snapshot.forEach(change => {
+            //     if(change.data().time.seconds<timestamp){
+            //         // console.log('data',change.data().time.seconds)
+            //         test.push(change.data())
+            //     }
                 setAlarmlist(snapshot.docs.map(doc=>doc.data()))
+            // })
+            // setAlarmlist(test)
         });
     }))
-
 
     const listItems = alarmlist.map((alarm ,index) =>
         <div key={index} className="timetitle d-flex justify-content-left ">
@@ -183,15 +189,15 @@ const Alarm = (props) =>{
     return(
             <div>
                 <h6 className={classes.root}>지하철 호선</h6>
-                <Button onClick={()=>changline('1')} className={classes.firstline} variant="outlined" size="large" >1호선</Button>
-                <Button onClick={()=>changline('2')} className={classes.secondline} variant="outlined" size="large">2호선</Button>
-                <Button onClick={()=>changline('3')} className={classes.thirdline} variant="outlined" size="large">3호선</Button>
-                <Button onClick={()=>changline('4')} className={classes.fourthline} variant="outlined" size="large">4호선</Button>
-                <Button onClick={()=>changline('5')} className={classes.fifthline} variant="outlined" size="large">5호선</Button>
-                <Button onClick={()=>changline('6')} className={classes.sixthline} variant="outlined" size="large">6호선</Button>
-                <Button onClick={()=>changline('7')} className={classes.seventhline} variant="outlined" size="large">7호선</Button>
-                <Button onClick={()=>changline('8')} className={classes.eighthline} variant="outlined" size="large">8호선</Button>
-                <Button onClick={()=>changline('9')} className={classes.ninthline} variant="outlined" size="large">9호선</Button>
+                <Button onClick={()=>changline('01')} className={classes.firstline} variant="outlined" size="large" >1호선</Button>
+                <Button onClick={()=>changline('02')} className={classes.secondline} variant="outlined" size="large">2호선</Button>
+                <Button onClick={()=>changline('03')} className={classes.thirdline} variant="outlined" size="large">3호선</Button>
+                <Button onClick={()=>changline('04')} className={classes.fourthline} variant="outlined" size="large">4호선</Button>
+                <Button onClick={()=>changline('05')} className={classes.fifthline} variant="outlined" size="large">5호선</Button>
+                <Button onClick={()=>changline('06')} className={classes.sixthline} variant="outlined" size="large">6호선</Button>
+                <Button onClick={()=>changline('07')} className={classes.seventhline} variant="outlined" size="large">7호선</Button>
+                <Button onClick={()=>changline('08')} className={classes.eighthline} variant="outlined" size="large">8호선</Button>
+                <Button onClick={()=>changline('09')} className={classes.ninthline} variant="outlined" size="large">9호선</Button>
                 <Button onClick={()=>changline('경춘')} className={classes.gyeongchun} variant="outlined" size="large">경춘</Button>
                 <Button onClick={()=>changline('경의중앙')} className={classes.gyeonguicenter} variant="outlined" size="large">경의중앙</Button>
                 <Button onClick={()=>changline('공항')} className={classes.airport} variant="outlined" size="large">공항</Button>

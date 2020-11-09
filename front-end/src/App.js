@@ -55,7 +55,8 @@ const App = () => {
   const location = useLocation();
   const [preloc, setPreloc] = React.useState();
   const [user, setUser] = React.useState('user');
-  const [acount, setAcount] = React.useState(0);
+  const [acount, setAcount] = React.useState('0');
+  const [lastReadTime, setLastReadTime] = React.useState('0');
 
   useEffect(()=>{
     setPreloc(location.pathname) 
@@ -70,13 +71,7 @@ const App = () => {
         setUser('admin')
       }
     }
-  },[preloc, location.pathname])
-  
-  
-  
-  // console.log(preloc)
-  // console.log(user)
-
+  },[preloc, location.pathname,acount])
   
 
   return (
@@ -93,13 +88,13 @@ const App = () => {
           <Route exact path='/mobile/main' component={Main}></Route>
           <Route exact path={'/mobile/alarm'}
           render={()=>(
-            <Alarm alarm_count={(value)=>setAcount(value)} />
+            <Alarm alarm_line={(value)=>setAcount(value)} lastReadTime={(value)=>setLastReadTime(value)} />
           )}/>
           <Route exact path='/mobile/claim' component={Claim}></Route>
           <Route exact path='/mobile/setting' component={Setting}></Route>
           <Route exact path='/selectroute/:start/:end' component={Selectroute}></Route>
           <Route exact path='/subwaytime/:subway' component={SubwayTime}></Route>
-         <Bottombar alarm_count={acount} />
+         <Bottombar alarm_line={acount} lastReadTime={lastReadTime} />
         </div>
       </div>}
 
