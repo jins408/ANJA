@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from app import views
+from passengers import views
 
-app_name = 'app'
+app_name = 'passengers'
 
 urlpatterns = [
 	url(r'^$', views.live, name='live'),

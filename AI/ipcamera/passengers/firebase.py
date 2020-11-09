@@ -11,9 +11,12 @@ db = firestore.client()
 # taste-ac33e-firebase-adminsdk-u8rj0-fc33c78348
 
 def push_data(data):
-    doc_ref = db.collection(u'subway').document(str(data['line'])).collection(u'messages')
+    doc_ref = db.collection(u'logs').document(data['line']).collection(u'messages')
     doc_ref.add({
+        u'id': data['id'],
+        u'line': data['line'],
         u'sid': data['sid'],
-        u'message': data['message'],
+        u'ssid': data['ssid'],
+        u'category': data['category'],
         u'time': datetime.now()
     })

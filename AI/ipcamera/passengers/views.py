@@ -10,7 +10,7 @@ from django.http import StreamingHttpResponse
 from datetime import datetime
 import os
 import cv2
-from app.models import Image
+from passengers.models import Image
 from numpy import random
 import time
 from .serializers import PsSerializer
@@ -27,10 +27,12 @@ from utils.general import (
 from .firebase import push_data
 
 directory = os.getcwd()
-filePath = directory + '/app/templates/resources/images/'
+filePath = directory + '/passengers/templates/resources/images/'
 subway_data = {
-	'sid' : 12345,
-	'line' : 1,
+	'line' : '01',
+	'sid' : '01',
+	'ssid' : '01',
+	'id' : '010101',
 }
 
 class VideoCamera(object):
@@ -47,7 +49,7 @@ class VideoCamera(object):
 		# Load model
 
 		device = select_device('')
-		weights = './app/utils/best.pt'
+		weights = './passengers/utils/best.pt'
 		model = attempt_load(weights, map_location=device)  # load FP32 model
 		imgsz = check_img_size(640, s=model.stride.max())  # check img_size
 
@@ -121,14 +123,26 @@ class VideoCamera(object):
 							nowPS += int(n)
 						if (names[int(c)] == 'no-mask'):
 							nowPS += int(n)
-						if(names[int(c)] == 'smoking' and dangerTime>0):
+
+						# firestore에 6초에 한번씩 Log 보냄
+						if(names[int(c)] !='mask' and dangerTime>=0):
+							print('파이어스토어입력')
 							alarm = subway_data
-							alarm['message'] = str(alarm['line'])+'호선의 '+str(alarm['sid'])+'번 열차에서 흡연 의심 문제 발생'
+							timeToSave = int(datetime.now().timestamp())
+							alarm['category'] = names[int(c)]
+							if(alarm['category'] == 'no-mask'):
+								alarm['category'] = 'nomask'
+							alarm['time'] = timeToSave
+							# firestore에 저장 (영상은 id와 timestamp 값으로 찾는다)
 							push_data(alarm)
-							# 6초
+							##########
+							#영상녹화 함수 들어갈 부분
+							##########
+							# 6초 타이머 on
 							dangerTime = -180
 
 					if saveTime%900==0:
+						print('now',int(datetime.now().timestamp()))
 						passenger = {
 							'sid': subway_data['sid'],
 							'nowPS': nowPS,
