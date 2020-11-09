@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(() => ({
     back: {
         backgroundColor : '#3f51b5',
-        height: '100%',
+        height: '812px',
     },
     mid : {
         paddingTop: '310px'

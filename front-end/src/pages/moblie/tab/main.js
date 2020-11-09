@@ -22,7 +22,7 @@ const Main = () =>{
                 <Search />
                 <div className="subway-wrapper">
                     <div className="subway">
-                        <img name="subway" onClick={changeimg} src={require('../../../images/img_subway.png')} alt="이미지"  ></img>
+                        <img onClick={changeimg} src={require('../../../images/img_subway.png')} alt="이미지"  ></img>
                     </div>
                 </div>
             </div>

@@ -26,39 +26,54 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-const  Headerbar = ({location}) =>{
+const  Headerbar = ({location, favorite_edit}) =>{
     const classes = useStyles();
     const nowlocation = useLocation();
     const [back, setBack] = useState(false);
-    const [title, setTitle] = useState('Subway Alimi');
+    const [showedit, setShowedit] = useState(false);
+    const [edit, setEdit] = useState(false);
+    const [title, setTitle] = useState('A N J A');
+    const editnum = localStorage.length
     let history = useHistory();
      
     const goback = () =>{
       history.goBack()
     }
-
+    
     
     useEffect(()=>{
       if( location !== '/mobile/main' && location !== '/mobile/favorite' && location !== '/mobile/alarm' && location !== '/mobile/claim'){
         setBack(true)
+        setShowedit(false)
       }else{
         setBack(false)
+        setShowedit(false)
+        if( location === '/mobile/favorite'){
+          setShowedit(true)
+        }
       }
     },[location])
 
+
     useEffect(()=>{
       if(nowlocation.pathname === '/mobile/favorite'){
-        setTitle('즐겨찾기')
+        setTitle('즐 겨 찾 기')
       }else if(nowlocation.pathname === '/mobile/alarm'){
-        setTitle('알림')
+        setTitle('알 림')
       }else if(nowlocation.pathname === '/mobile/claim'){
-        setTitle('신고')
+        setTitle('신 고')
       }else if(nowlocation.pathname === '/mobile/setting'){
-        setTitle('설정')
+        setTitle('설 정')
       }else{
-        setTitle('Subway Alimi')
+        setTitle('A N J A')
       }
     },[nowlocation])
+
+
+    const goedit = () =>{
+      setEdit(!edit)
+      favorite_edit(!edit)
+    }
 
   
     
@@ -71,8 +86,8 @@ const  Headerbar = ({location}) =>{
               </IconButton>}
               <div className="d-flex justify-content-center w-100">
                 <Typography  variant="h6" color="inherit">
-                  {/* Subway Alimi */}
                   {title}
+                  {editnum !== 0 && <div>{showedit && <div>{edit ? <button className="btn btn-outline Favorite_edit" onClick={goedit}>완료</button> : <button className="btn btn-outline Favorite_edit" onClick={goedit} >편집</button>}</div>}</div>}
                 </Typography>
               </div>
             </Toolbar>

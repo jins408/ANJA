@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles({
     tablecon: {
         width: '345px',
-        margin: '0 15px 0 15px',
+        margin: '0 15px 5rem 15px',
     },
     table: {
         width: '100%',
@@ -40,6 +40,8 @@ const SubwayTimeTable = (props) =>{
     const [maxlen, setMaxlen] = useState(0);
     const [arrivetime, setArrivetime] = useState([]);
 
+    console.log(upwardlist)
+    console.log(downwardlist)
 
     useEffect(()=>{
         if(upwardlist.length < downwardlist.length){

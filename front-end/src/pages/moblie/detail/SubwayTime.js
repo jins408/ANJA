@@ -26,7 +26,7 @@ const SubwayTime = ({match}) =>{
         axios
             .get(`https://k3b101.p.ssafy.io/api/subways/timetable?station=${subway}&line=1&day=${radio}`)
             .then((res)=>{
-                // console.log(res.data)
+                console.log(res.data)
                 setUpwardlist(res.data.data['상행'])
                 setDownwardlist(res.data.data['하행'])
             })

@@ -16,41 +16,30 @@ const Bottombar = (props) =>{
     const [value, setValue] = React.useState(0);
     // const [count, setCount] = React.useState(props.alarm_count);
     const [invisible, setInvisible] = React.useState(false);
-    const [count, setCount] = React.useState(0)
-    const [line, setLine] = React.useState(props.alarm_line)
+    const [count, setCount] = React.useState(props.alarm_count)
 
-    // if(count !== props.alarm_count){
-    //   setCount(props.alarm_count)
-    // }
+    if(count !== props.alarm_count){
+      setCount(props.alarm_count)
+    }
 
-    const handleBadgeVisibility = (is) => {
-      setInvisible(is);
+    const handleBadgeVisibility = () => {
+      setInvisible(true);
     };
-    // console.log('line',props.alarm_line,'time',props.lastReadTime,'time',timestamp)
-    useEffect(()=>{
-      getCount(props.alarm_line)
-      if(location.pathname === '/mobile/alarm'){
-        handleBadgeVisibility(true);
-        setCount(0)
-      }
-      else
-        handleBadgeVisibility(false);
-    },[location.pathname, count,line])
 
-    const getCount = ((line=>{
-      window.db.collection('logs').doc(line).collection('messages').orderBy('time','desc').onSnapshot((snapshot)=>{ 
-        var i = 0
-        var date2 = props.lastReadTime / 100000
-        snapshot.forEach(change=>{
-          //마지막으로 알림에 들어온 시간보다 뒤에 있는것만
-            var date1 =change.data().time.seconds/100
-            if(date1>date2){
-              i += 1
-            }
-          }) 
-          setCount(i)
-        });
-  }))
+
+    useEffect(()=>{
+      if(location.pathname === '/mobile/alarm'){
+        handleBadgeVisibility();
+        setCount(0)
+      }else{
+        if( count === 0 ){
+          setInvisible(true)
+        }else{
+          setInvisible(false)
+        }
+      }
+    },[location.pathname, count])
+
 
     return (
       <BottomNavigation
