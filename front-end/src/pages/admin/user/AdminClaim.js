@@ -38,7 +38,7 @@ const useStyles = makeStyles({
         
     },
     category:{
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: "bold"
     },
 
@@ -58,39 +58,20 @@ const useStyles = makeStyles({
 
     
     const claimRegist = ((line =>{
-        // window.db.collection('reports').doc(line).collection('messages').onSnapshot((snapshot)=>{  
-        //     setClaimlist(snapshot.docs.map(doc=>doc.data()))
-        // });
-    
         window.db.collection("reports").doc(line).collection("messages").orderBy('time','desc').onSnapshot(
             querySnapshot => {
-                // setClaimlist(querySnapshot.docs.map(doc=>doc.data()))
                 var list = []
                 querySnapshot.forEach(doc => {
-                //     // list.push(doc.data())
                     var obj = {};
                     obj = doc.data();
                     obj["key"] = doc.id;
                     list.push(obj)
-                    // console.log(doc.id, " => " , doc.data())
                 });
                 console.log(list)
                 setClaimlist(list)
-
         });
     }))
 
-    // const claimRegist = () =>{
-    //     axios.get(`${baseURL}/api/reports`)
-    //     .then((res)=>{
-    //         console.log(res.data.data)
-    //         setClaimlist(res.data.data)
-    //     })
-    //     .catch((error)=>{
-    //         console.log(error)
-    //     })
-    // }
-    
  
     const claimDelete = (claim) =>{
         axios.delete(`${baseURL}/api/reports?id=${claim.id}&reportDocId=${claim.key}`)
@@ -104,14 +85,14 @@ const useStyles = makeStyles({
     }
 
     const listClaim = claimlist.map((claim, index) => 
-    <Grid item xs={4} key={index} className="mb-3">
+    <Grid item xs={4} key={index} className="mb-3 ml-4">
         <Card  className={classes.root} variant="outlined">
             <CardContent>
                 {/* <Typography className={classes.title} color="textSecondary" gutterBottom>
                     Word of the Day
                 </Typography> */}
                 <Typography variant="h5" component="h2">
-                    {bull}{claim.sid}
+                    열차번호: {claim.sid}
                 </Typography>
                 <Typography className={classes.pos} variant="body2" component="p">
                     <span className={classes.category}>신고유형:</span> {claim.category}
