@@ -223,7 +223,7 @@ class SubwayTimeTableView(APIView):
 
         return Response({'data': timetable}, status=status.HTTP_200_OK)
 
-
+# 지하철역이름(키워드)으로 {호선, 지하철역ID, 지하철역이름} 찾기
 class SubwayStationView(APIView):
     def get(self, request):
         station = request.GET.get("station")
@@ -233,7 +233,7 @@ class SubwayStationView(APIView):
         return Response({'data': stations}, status=status.HTTP_200_OK)
 
 
-# 지하철역이름(키워드)으로 {호선, 지하철역ID, 지하철역이름} 찾기
+# 지하철역이름(키워드)으로 {호선, 지하철역ID, 지하철역이름} 찾는 함수
 def getStationInfo(station):
     URL_SU = []
     URL_SU.append("http://openapi.tago.go.kr/openapi/service/SubwayInfoService/getKwrdFndSubwaySttnList")
