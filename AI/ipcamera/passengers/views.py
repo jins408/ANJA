@@ -10,7 +10,7 @@ from django.http import StreamingHttpResponse
 from datetime import datetime
 import os
 import cv2
-from app.models import Image
+from passengers.models import Image
 from numpy import random
 import time
 from .serializers import PsSerializer
@@ -24,13 +24,15 @@ from utils.torch_utils import select_device, load_classifier, time_synchronized
 from utils.general import (
     check_img_size, non_max_suppression, apply_classifier, scale_coords,
     xyxy2xywh, plot_one_box, strip_optimizer, set_logging)
-from .firebase import push_data
+from .firebase import push_data,push_passenger
 
 directory = os.getcwd()
-filePath = directory + '/app/templates/resources/images/'
+filePath = directory + '/passengers/templates/resources/images/'
 subway_data = {
-	'sid' : 12345,
-	'line' : 1,
+	'line' : '01',
+	'sid' : '01',
+	'ssid' : '01',
+	'id' : '010101',
 }
 
 class VideoCamera(object):
@@ -47,7 +49,7 @@ class VideoCamera(object):
 		# Load model
 
 		device = select_device('')
-		weights = './app/utils/best.pt'
+		weights = './passengers/utils/best.pt'
 		model = attempt_load(weights, map_location=device)  # load FP32 model
 		imgsz = check_img_size(640, s=model.stride.max())  # check img_size
 
@@ -121,26 +123,36 @@ class VideoCamera(object):
 							nowPS += int(n)
 						if (names[int(c)] == 'no-mask'):
 							nowPS += int(n)
-						if(names[int(c)] == 'smoking' and dangerTime>0):
+
+						# firestore에 6초에 한번씩 Log 보냄
+						if(names[int(c)] !='mask' and dangerTime>=0):
+							print('파이어스토어입력')
 							alarm = subway_data
-							alarm['message'] = str(alarm['line'])+'호선의 '+str(alarm['sid'])+'번 열차에서 흡연 의심 문제 발생'
+							timeToSave = int(datetime.now().timestamp())
+							alarm['category'] = names[int(c)]
+							if(alarm['category'] == 'no-mask'):
+								alarm['category'] = 'nomask'
+							alarm['time'] = timeToSave
+							# firestore에 저장 (영상은 id와 timestamp 값으로 찾는다)
 							push_data(alarm)
-							# 6초
+							##########
+							#영상녹화 함수 들어갈 부분
+							##########
+							# 6초 타이머 on
 							dangerTime = -180
 
+					# 30초에 한번씩 좌석 및 승객 수 파이어 스토어에 저장
 					if saveTime%900==0:
-						passenger = {
-							'sid': subway_data['sid'],
-							'nowPS': nowPS,
-							'fullPS': fullPS,
-							'time': datetime.now()
-						}
-						serializer = PsSerializer(data=passenger)
-						print('시리얼라이저', serializer)
-
-						if (serializer.is_valid()):
-							serializer.save()
-							print('성공',saveTime)
+						print('now',int(datetime.now().timestamp()))
+						passenger = subway_data
+						passenger['current'] = nowPS
+						push_passenger(passenger)
+						# serializer = PsSerializer(data=passenger)
+						# print('시리얼라이저', serializer)
+						#
+						# if (serializer.is_valid()):
+						# 	serializer.save()
+						# 	print('성공',saveTime)
 
 					# Write results
 					for *xyxy, conf, cls in reversed(det):
