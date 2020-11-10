@@ -19,7 +19,7 @@ const columns = [
     { id: 'data', label: '날짜/시간', minWidth: 170 },
     { id: 'category', label: '경보유형', minWidth: 100 },
     {
-      id: 'sid',
+      id: 'id',
       label: '열차번호(칸)',
       minWidth: 170,
       align: 'right',
@@ -120,7 +120,6 @@ const Log = () =>{
       };
 
 
-
     useEffect(()=>{
       getLogData(sessionStorage.getItem('uid').slice(0,2))
       return () => {
@@ -190,7 +189,7 @@ const Log = () =>{
                                   
                                 <TableCell key={column.id} align={column.align}>
                                   {column.format && typeof value === 'number' ? column.format(value) : value}
-                                  {column.id === "data" && <Moment format="YYYY/MM/DD HH:mm">{loglist.time}</Moment>}
+                                  {column.id === "data" && <Moment format="YYYY-MM-DD HH:mm">{log.time.seconds}</Moment>}
                                 </TableCell>                    
                                 );
                             })}
