@@ -24,7 +24,7 @@ from utils.torch_utils import select_device, load_classifier, time_synchronized
 from utils.general import (
     check_img_size, non_max_suppression, apply_classifier, scale_coords,
     xyxy2xywh, plot_one_box, strip_optimizer, set_logging)
-from .firebase import push_data
+from .firebase import push_data,push_passenger
 
 directory = os.getcwd()
 filePath = directory + '/passengers/templates/resources/images/'
@@ -141,20 +141,18 @@ class VideoCamera(object):
 							# 6초 타이머 on
 							dangerTime = -180
 
+					# 30초에 한번씩 좌석 및 승객 수 파이어 스토어에 저장
 					if saveTime%900==0:
 						print('now',int(datetime.now().timestamp()))
-						passenger = {
-							'sid': subway_data['sid'],
-							'nowPS': nowPS,
-							'fullPS': fullPS,
-							'time': datetime.now()
-						}
-						serializer = PsSerializer(data=passenger)
-						print('시리얼라이저', serializer)
-
-						if (serializer.is_valid()):
-							serializer.save()
-							print('성공',saveTime)
+						passenger = subway_data
+						passenger['current'] = nowPS
+						push_passenger(passenger)
+						# serializer = PsSerializer(data=passenger)
+						# print('시리얼라이저', serializer)
+						#
+						# if (serializer.is_valid()):
+						# 	serializer.save()
+						# 	print('성공',saveTime)
 
 					# Write results
 					for *xyxy, conf, cls in reversed(det):

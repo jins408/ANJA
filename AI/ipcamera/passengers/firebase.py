@@ -20,3 +20,16 @@ def push_data(data):
         u'category': data['category'],
         u'time': datetime.now()
     })
+
+def push_passenger(data):
+    doc_ref = db.collection(u'passengers').document(data['line']).collection(u'messages').document(data['id'])
+    doc_ref.set({
+        u'id': data['id'],
+        u'line': data['line'],
+        u'sid': data['sid'],
+        u'ssid': data['ssid'],
+        u'time': datetime.now(),
+        u'full': 48,
+        u'current':data['current'],
+        u'seat': 48-data['current']
+    })
