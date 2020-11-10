@@ -5,6 +5,21 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Cafe24Simplehae';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Simplehae.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 *{
-  font-family: 'CookieRunOTF-Bold' !important;
+  /* font-family: 'CookieRunOTF-Bold' !important; */
+  font-family: 'Cafe24Simplehae' !important;
+  /* color: white; */
+}
+.app{
+  /* background-image: url('images/subway1.png');
+  background-size: cover;
+  background-position: center; */
+  /* filter: brightness(70%); */
 }

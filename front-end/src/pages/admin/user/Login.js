@@ -44,7 +44,7 @@ const Login = () =>{
     const [password, setPassword] = useState('');
     
     const gologin = ()=> {
-      axios.post('http://127.0.0.1:8080/api/users/sign',{
+      axios.post('https://k3b101.p.ssafy.io/api/users/sign',{
         uid: uid,
         password: password
       })

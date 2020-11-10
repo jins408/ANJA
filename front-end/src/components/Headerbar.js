@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useHistory } from 'react-router-dom'
+import subway1 from '../images/subway1.png';
 
 import '../css/Header.css'
 
@@ -15,14 +16,25 @@ const useStyles = makeStyles(() => ({
     // flexGrow: 1,
     position: 'fixed',
     width: '100%',
-    maxWidth: '375px',
+    maxWidth: '373px',
     top: 0,
     height: '48px',
-    zIndex: '2'
+    zIndex: '2',
+    // border: 'none !important'
   },
   menuButton: {
     position: 'absolute !important'
   },
+  menuback: {
+    // backgroundImage: `url(${subway1})`,
+    // backgroundSize: 'cover',
+    // backgroundPosition: 'center',
+    // height: '100%'
+    // backgroundColor: 'white'
+  },
+  font:{
+    fontWeight: 'bold'
+  }
 }));
 
 
@@ -79,13 +91,13 @@ const  Headerbar = ({location, favorite_edit}) =>{
     
     return (
         <div className={classes.root }>
-          <AppBar position="static">
+          <AppBar className={classes.menuback} position="static">
             <Toolbar variant="dense">
               {back && <IconButton edge="start" className={classes.menuButton} onClick={goback} color="inherit" aria-label="menu">
                 <ArrowBackIosIcon />
               </IconButton>}
               <div className="d-flex justify-content-center w-100">
-                <Typography  variant="h6" color="inherit">
+                <Typography className={classes.font}  variant="h6" color="inherit">
                   {title}
                   {editnum !== 0 && <div>{showedit && <div>{edit ? <button className="btn btn-outline Favorite_edit" onClick={goedit}>완료</button> : <button className="btn btn-outline Favorite_edit" onClick={goedit} >편집</button>}</div>}</div>}
                 </Typography>

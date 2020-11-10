@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Route, useLocation } from 'react-router-dom' 
+import { Route, useLocation, useHistory } from 'react-router-dom' 
 
 import Navigation from './components/Navigation'
 import Join from './pages/admin/user/Join'
@@ -47,12 +47,13 @@ const useStyles = makeStyles(() => ({
   },
   navigation:{
     paddingLeft: '200px'
-  }
+  },
 }));
 
 const App = () => {
   const classes = useStyles();
   const location = useLocation();
+  const history = useHistory();
   const [preloc, setPreloc] = React.useState();
   const [user, setUser] = React.useState();
   const [acount, setAcount] = React.useState('0');
@@ -73,7 +74,16 @@ const App = () => {
         setUser('admin')
       }
     }
-  },[preloc, location.pathname,acount])
+  },[preloc, location.pathname, acount])
+
+  useEffect(()=>{
+    if(user === 'admin'){
+      if(sessionStorage.length === 0 && preloc !== '/admin/login'){
+        alert('로그인 후 사용해주세요!')
+        history.push('/admin/login')
+      }
+    }
+  },[user, history, preloc])
   
 
   return (
