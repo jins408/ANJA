@@ -227,9 +227,14 @@ class SubwayTimeTableView(APIView):
 class SubwayStationView(APIView):
     def get(self, request):
         station = request.GET.get("station")
-        stations = getStationInfo(station)
-        if not stations:
+        items = getStationInfo(station)
+        if not items:
             return Response({'data': "NO DATA"}, status=status.HTTP_200_OK)
+
+        stations = []
+        for item in items:
+            if item["station"] not in stations:
+                stations.append(item["station"])
         return Response({'data': stations}, status=status.HTTP_200_OK)
 
 
