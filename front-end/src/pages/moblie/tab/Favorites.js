@@ -11,12 +11,13 @@ import StarIcon from '@material-ui/icons/Star';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import '../../../css/Favorites.css'
+// import subway1 from '../images/subway1.png';
 
 
 const useStyles = makeStyles((theme) => ({
-    demo: {
-        backgroundColor: theme.palette.background.paper,
-    },
+    // demo: {
+    //     backgroundColor: 'none',
+    // },
     trash:{
         color: 'crimson'
     },
@@ -25,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: '15rem',
         textAlign: 'center',
         textShadow: '2px 2px 2px gray'
+    },
+    back:{
+        // background: 'rgba(255,255,255,1) !important',
     }
 }));
 
@@ -94,7 +98,7 @@ const Favorites = ( props ) => {
             </div>
             <Grid item xs={12}>
                 <div className={classes.demo}>
-                {nextid !== 0 ?<List>
+                {nextid !== 0 ?<List className={classes.back}>
                          {favlist} 
                     </List> : 
                     <div className={classes.nonefavor}>즐겨찾기를 추가해주세요!</div>

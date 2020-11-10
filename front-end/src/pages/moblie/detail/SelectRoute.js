@@ -3,9 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
 import Button from '@material-ui/core/Button';
-import TrainIcon from '@material-ui/icons/Train';
+// import TrainIcon from '@material-ui/icons/Train';
 import ForwardIcon from '@material-ui/icons/Forward';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import TrainIcon from '../../../images/train_885831.png'
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 import axios from 'axios'
 
@@ -13,19 +15,45 @@ import '../../../css/selectroute.css'
 
 const useStyles = makeStyles(() => ({
     good: {
-        fontSize: 80,
-        color: 'green'
+        width:'80px !important',
+        height: '80px !important',
+        margin:'0.5em',
+        marginLeft: '2rem',
+        backgroundColor: '#6be96b69',
+        borderRadius: '50%'
     },
     soso: {
-        fontSize: 80,
-        color: '#FFD700'
+        width:'80px !important',
+        height: '80px !important',
+        margin:'0.5em',
+        marginLeft: '2rem',
+        backgroundColor: '#f8f82a85',
+        borderRadius: '50%'
     },
     bad: {
-        fontSize: 80,
-        color: 'crimson'
+        width:'80px !important',
+        height: '80px !important',
+        margin:'0.5em',
+        marginLeft: '2rem',
+        backgroundColor: '#ff0000a3',
+        borderRadius: '50%'
     },
     arrow:{
+        marginTop:'0.3em',
+        marginLeft:'0.5em',
         fontSize: '0.8rem'
+    },
+    font:{
+        fontSize: '1.3rem'
+    },
+    dot1:{
+        color: '#6be96b69'
+    },
+    dot2:{
+        color: '#f8f82a85'
+    },
+    dot3:{
+        color: '#ff0000a3'
     }
 }));
 
@@ -39,6 +67,8 @@ const SelectRoute = ({ match }) => {
     const [showtrain, setShowtrain] = useState(false);
     const [showdetail1, setShowdetail1] = useState(false);
     const [showdetail2, setShowdetail2] = useState(false);
+    const [chairs, setChairs] = useState([]);
+    const [rechairs, setRechairs] = useState([]);
     var [nextid, setNextid] = useState(0)
 
     const start = match.params.start
@@ -60,13 +90,7 @@ const SelectRoute = ({ match }) => {
             }).catch((err) => {
                 console.log(err)
             })
-        axios.get(`https://k3b101.p.ssafy.io/api/app/passenger`)
-            .then((res)=>{
-                console.log(res.data)
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
+        getchairs()
     }, [start, end])
 
 
@@ -88,8 +112,44 @@ const SelectRoute = ({ match }) => {
         if (checkid.length) {
             setStar(true)
         }
-
     }, [star, start, end])
+
+    const getchairs = (()=>{
+        const arr = []
+        window.db.collection("passengers").doc("01").collection("messages").get
+        ().then(snapshot =>{
+                setChairs(snapshot.docs.map(doc=>doc.data()))
+        })
+        window.db.collection("passengers").doc("01").collection("messages").orderBy("seat","desc").get
+        ().then(snapshot =>{
+                setRechairs(snapshot.docs.map(doc=>doc.data()))
+        })
+        setChairs(arr)
+    })
+
+    const order = chairs.map((chair)=>
+    <div className="d-flex justify-content-start mb-3 chairdiv" key={chair.ssid}>
+        {(chair.seat >= 30 && <img src={TrainIcon} className={classes.good}/>) || 
+        (chair.seat < 30 && chair.seat >= 6 && <img src={TrainIcon} className={classes.soso}/>) ||
+        (chair.seat <= 5 && <img src={TrainIcon} className={classes.bad}/>)}
+        <div className="chairs">
+            <p className="selectroute_chair">열차번호 : {chair.id}</p> 
+            <p className="selectroute_chair">남은 좌석 수 : {chair.seat}</p>
+        </div>
+    </div>
+    ) 
+
+    const recommend = rechairs.map((rechair)=>
+        <div className="d-flex justify-content-start mb-3 chairdiv" key={rechair.ssid}>
+            {(rechair.seat >= 30 && <img src={TrainIcon} className={classes.good}/>) || 
+            (rechair.seat < 30 && rechair.seat >= 6 && <img src={TrainIcon} className={classes.soso}/>) ||
+            (rechair.seat <= 5 && <img src={TrainIcon} className={classes.bad}/>)}
+            <div className="chairs">
+                <p className="selectroute_chair">열차번호 : {rechair.id}</p> 
+                <p className="selectroute_chair">남은 좌석 수 : {rechair.seat}</p>
+            </div>
+        </div>
+    )
 
 
     const starHandler = () => {
@@ -111,14 +171,15 @@ const SelectRoute = ({ match }) => {
     return (
         <div>
             <div className="selectroute_box">
-                <div className="d-flex justify-content-end mr-2 mt-2">
+                <div className="d-flex justify-content-center mr-2 mt-2">
                     {/* <Button href={`/subwaytime/${start}`} color="primary">TIME</Button> */}
+                    <p className="selectroute_location mb-0">{start} <ForwardIcon className="mb-1" /> {end}</p>
                     {star ? <StarIcon className="selectroute_star" onClick={starHandler} /> : <StarBorderIcon className="selectroute_star" onClick={starHandler} />}
                 </div>
-                <p className="selectroute_location mb-0">{start} <ForwardIcon className="mb-1" /> {end}</p>
+                {/* <p className="selectroute_location mb-0">{start} <ForwardIcon className="mb-1" /> {end}</p> */}
                 <div className="d-flex justify-content-end">
                     {/* {mintime ? <Button className="ml-2" onClick={mintimeHandler} color="secondary">최단시간</Button> : <Button className="ml-2" onClick={mintimeHandler} color="secondary">최소환승</Button>} */}
-                    <Button href={`/subwaytime/${start}`} color="primary">TIME</Button>
+                    <Button href={`/subwaytime/${start}`} color="primary" className="timebtn">TIME</Button>
                 </div>
                 {/* 최단시간 */}
                 {/* {mintime && traininfo && <p className="sleectroute_time mb-4">{traininfo.shtTravelMsg}</p>} */}
@@ -155,17 +216,27 @@ const SelectRoute = ({ match }) => {
                 </div>}
             </div>
             <div className="selectroute_box2">
-                <div className="d-flex justify-content-end">
-                    {showtrain ? 
-                        <Button className="p-0" onClick={() => setShowtrain(false)}>추천</Button> : 
-                        <Button className="p-0" color="secondary" onClick={() => setShowtrain(false)}>추천</Button>
-                    }
-                    {showtrain ? 
-                    <Button className="p-0" color="secondary" onClick={() => setShowtrain(true)}>순서</Button> : 
-                    <Button className="p-0" onClick={() => setShowtrain(true)}>순서</Button>
-                    }
+            <div className="d-flex justify-content-end">
+                    <p><FiberManualRecordIcon className={classes.dot1}/>원활 <FiberManualRecordIcon className={classes.dot2}/>보통 <FiberManualRecordIcon className={classes.dot3}/>혼잡</p>
                 </div>
-                {showtrain ?
+                <div className="d-flex justify-content-between pb-3">
+                    <div>
+                        <span className={classes.font}>실시간 좌석 현황</span>
+                    </div>
+                    <div className="d-flex justify-content-end pt-1">
+                        {showtrain ? 
+                            <Button className="p-0" onClick={() => setShowtrain(false)}>추천</Button> : 
+                            <Button className="p-0" color="secondary" onClick={() => setShowtrain(false)}>추천</Button>
+                        }
+                        {showtrain ? 
+                        <Button className="p-0" color="secondary" onClick={() => setShowtrain(true)}>순서</Button> : 
+                        <Button className="p-0" onClick={() => setShowtrain(true)}>순서</Button>
+                        }
+                    </div>
+                </div>
+                
+                {showtrain ? <div>{order}<br/></div> : <div> {recommend}<br/></div>}
+                {/* {showtrain ?
                     <div>
                         <div className="d-flex justify-content-start mb-3">
                             <span className="selectroute_num">1</span>
@@ -197,7 +268,7 @@ const SelectRoute = ({ match }) => {
                             <TrainIcon className={classes.bad} />
                             <span className="selectroute_chair">31289(잔여:0석)</span>
                         </div>
-                    </div> : <div> 여긴 추천 </div>}
+                    </div> : <div> {order} </div>} */}
             </div>
         </div>
     )
