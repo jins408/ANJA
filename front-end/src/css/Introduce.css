@@ -1,32 +1,44 @@
-.Mainheader{
-    font-size: 3rem;
-    font-weight: bold;
-    margin-top: 2rem;
-    color: white;
-    position: absolute;
-    top: 0;
-    left:50%; 
-    transform:translateX(-50%);
-}
-
-.intro-video{
-    width: 100%;
-    z-index: -1;
-}
-
-.scroll{
-    font-size: 2rem;
-    cursor: pointer;
+.circle{
+    width: 500px;
+    height: 500px;
+    margin: 100px auto;
+    border-radius: 50%;
+    font-size: 30px;
     text-align: center;
+    color: aliceblue;
+    line-height: 100px;
+    background: no-repeat;
+    background-repeat: no-repeat;
+    border: 3px solid gray;
+    box-shadow: 0 0 16px rgb(221,221,221);
+    background-color: rgba(236, 230, 230, 0) !important;
+  
+    
+   
 }
 
-.btn_join{
+
+.background-bg{
+    background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
-    top:1rem;
-    right: 1rem;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
 }
 
-.skill{
-    font-size: 1.5rem;
-    font-weight: bold;
+.title{
+    font-size: 50px;
+    margin-top: 110px;
+    -webkit-text-stroke: 2px red;
+
+
 }
+
+.text-title{
+    text-align: center;
+
+}
+
+
