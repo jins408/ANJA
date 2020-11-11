@@ -72,25 +72,29 @@ class SubwayEstimatedTimeView(APIView):
         shortRoute = copy.deepcopy(sorted(items, key=lambda item: (item['shtTravelTm']))[0])
 
         # 최소환승 노선 구하기
-        key = lineDict[minRoute["minStatnId"][:4]]
-        minLines = [key, ]
-        for minStation in minRoute["minStatnId"][:-1].split(","):
+        minStationNames = minRoute["minStatnId"][:-1].split(",")
+        minStationIDs = minRoute["minStatnId"][:-1].split(",")
+        # minStationIDs = lineDict[minRoute["minStatnId"][:4]]
+        minLines = {'line': [], 'station': []}
+        # minLines = {lineDict[minStationIDs[0][:4]]: minStationNames[0]}
+        for minStation in minStationNames:
             stationID = minStation[:4]
             line = lineDict[stationID]
-            if key != line and line not in minLines:
-                minLines.append(line)
+            if line not in minLines['line']:
+                minLines['line'].append(line)
+                minLines['station'].append(minStation)
 
-        # 최단거리 노선 구하기
-        key = lineDict[shortRoute["shtStatnId"][:4]]
-        shortLines = [key, ]
-        for shortStation in shortRoute["shtStatnId"][:-1].split(","):
-            stationID = shortStation[:4]
-            line = lineDict[stationID]
-            if key != line and line not in shortLines:
-                shortLines.append(line)
+        # # 최단거리 노선 구하기
+        # key = lineDict[shortRoute["shtStatnId"][:4]]
+        # shortLines = [key, ]
+        # for shortStation in shortRoute["shtStatnId"][:-1].split(","):
+        #     stationID = shortStation[:4]
+        #     line = lineDict[stationID]
+        #     if key != line and line not in shortLines:
+        #         shortLines.append(line)
 
         minRoute["minLines"] = minLines
-        shortRoute["shortLines"] = shortLines
+        # shortRoute["shortLines"] = shortLines
 
         return Response({'data': {'최소환승': minRoute, '최단거리': shortRoute}}, status=status.HTTP_200_OK)
 
