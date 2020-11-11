@@ -97,7 +97,7 @@ const Claim = () =>{
             </div>
             <div className="mt-3">
                 <p className="categoty-claim mr-1">신고내용 </p>
-                <div>
+                <div className="subway-claim">
                     <textarea className="claim-content" value={content} onChange={Claimcontent} type="text" placeholder="내용을 입력해주세요."></textarea>
                     <p className="textcount">글자수50자 이하</p>
                 </div>
