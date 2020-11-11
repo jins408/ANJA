@@ -48,9 +48,12 @@ class SubwayEstimatedTimeView(APIView):
         # 발산 -> 서울     * 역 붙이면 안됨
         start = request.GET.get("from")
         end = request.GET.get("to")
-        
+
         if not start or not end:
             return Response({'data': "NOT ENOUGH PARAMS"}, status=status.HTTP_200_OK)
+
+        if start == '서울역':
+            start = '서울'
 
         URL_SU = []
         URL_SU.append("http://swopenapi.seoul.go.kr/api/subway/sample/json/shortestRoute")
@@ -72,22 +75,27 @@ class SubwayEstimatedTimeView(APIView):
         shortRoute = copy.deepcopy(sorted(items, key=lambda item: (item['shtTravelTm']))[0])
 
         # 최소환승 노선 구하기
-        key = lineDict[minRoute["minStatnId"][:4]]
-        minLines = [key, ]
-        for minStation in minRoute["minStatnId"][:-1].split(","):
+        minStationIDs = minRoute["minStatnId"][:-1].split(",")
+        minStationNames = minRoute["minStatnNm"][:-1].split(", ")
+        pprint(minStationNames)
+        minLines = {'line': [], 'station': []}
+        for index, minStation in enumerate(minStationIDs):
             stationID = minStation[:4]
             line = lineDict[stationID]
-            if key != line and line not in minLines:
-                minLines.append(line)
+            if line not in minLines['line']:
+                minLines['line'].append(line)
+                minLines['station'].append(minStationNames[index])
 
         # 최단거리 노선 구하기
-        key = lineDict[shortRoute["shtStatnId"][:4]]
-        shortLines = [key, ]
-        for shortStation in shortRoute["shtStatnId"][:-1].split(","):
+        shortStationIDs = minRoute["shtStatnId"][:-1].split(",")
+        shortStationNames = minRoute["shtStatnNm"][:-1].split(", ")
+        shortLines = {'line': [], 'station': []}
+        for index, shortStation in enumerate(shortStationIDs):
             stationID = shortStation[:4]
             line = lineDict[stationID]
-            if key != line and line not in shortLines:
-                shortLines.append(line)
+            if line not in shortLines['line']:
+                shortLines['line'].append(line)
+                shortLines['station'].append(shortStationNames[index])
 
         minRoute["minLines"] = minLines
         shortRoute["shortLines"] = shortLines

@@ -4,6 +4,7 @@
     <list default="true" id="63ea4dae-c0f8-4b88-a4d0-0aaf82b990df" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/subways/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/subways/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/moblie/detail/SelectRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/moblie/detail/SelectRoute.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -106,18 +107,20 @@
     <session id="-328192198">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1190" />
+          <entry key="py" value="1498" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1190" />
+          <entry key="Python" value="1498" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -140,11 +143,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/subways/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="236" column="45" selection-start-line="236" selection-start-column="45" selection-end-line="236" selection-end-column="45" />
+            <state relative-caret-position="1844">
+              <caret line="104" lean-forward="true" selection-start-line="104" selection-end-line="104" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1604991777352" expanded="false" signature="11413:11482" ph="..." />
+                <marker date="1605076802147" expanded="false" signature="11812:11881" ph="..." />
               </folding>
             </state>
           </provider>
@@ -519,21 +522,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/subways/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1844">
+          <caret line="104" lean-forward="true" selection-start-line="104" selection-end-line="104" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <marker date="1605076802147" expanded="false" signature="11812:11881" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/subways/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/subways/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="236" column="45" selection-start-line="236" selection-start-column="45" selection-end-line="236" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <marker date="1604991777352" expanded="false" signature="11413:11482" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
