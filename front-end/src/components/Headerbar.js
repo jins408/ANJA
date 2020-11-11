@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useHistory } from 'react-router-dom'
-import subway1 from '../images/subway1.png';
 
 import '../css/Header.css'
 
@@ -30,7 +29,7 @@ const useStyles = makeStyles(() => ({
     // backgroundSize: 'cover',
     // backgroundPosition: 'center',
     // height: '100%'
-    // backgroundColor: 'white'
+    backgroundColor: '#fcfcfc !important'
   },
   font:{
     fontWeight: 'bold'

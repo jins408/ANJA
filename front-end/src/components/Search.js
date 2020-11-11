@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 
 import '../css/search.css'
+import axios from 'axios';
 
 const Search = () =>{
     let history = useHistory();
@@ -13,6 +14,13 @@ const Search = () =>{
 
     const changestart = (e) =>{
         setStart(e.target.value)
+        axios.get(`http://127.0.0.1:8080/api/subways/station?station=${e.target.value}`)
+        .then((res)=>{
+            console.log(res.data.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
     }
     const changeend = (e) => {
         setEnd(e.target.value)
@@ -43,7 +51,8 @@ const Search = () =>{
                 color="secondary"
                 value={start}
                 onChange={changestart}
-            /></div>
+            >
+                </TextField></div>
             
             <div><span className="mr-2 ml-2">도착:</span>  
             <TextField
