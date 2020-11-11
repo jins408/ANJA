@@ -81,9 +81,10 @@ const Favorites = ( props ) => {
               });
             } else {
               swal("취소되었습니다!",{
-                  buttons:{
-                      confirm: "완료"
-                  }
+                icon: "error",
+                buttons:{
+                    confirm: "완료"
+                }
               });
               
             }

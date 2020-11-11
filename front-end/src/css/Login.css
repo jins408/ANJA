@@ -3,6 +3,12 @@
     /* background-color: #ffffff; */
 }
 
+.text-form2 input{
+    height: 2.5rem !important;
+    font-family: sans-serif !important;
+    /* background-color: #ffffff; */
+}
+
 .login_bg{
     background: url('../images/LOGIN.jpg') no-repeat;
     position: absolute;
@@ -37,4 +43,5 @@
     color: black !important;
     font-size: 1.2em;
     font-weight: bold;
+    font-family: 'Cafe24Simplehae' !important;
 }
