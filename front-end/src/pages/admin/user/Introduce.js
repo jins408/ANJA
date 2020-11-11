@@ -23,14 +23,17 @@ const Introduce = () => {
                   duration={3} transition={2} />
         </div>
      
-        <div className="circle"> 
+        <div className="sub-content">
           <h6 className="title"> ANJA </h6>
           <div className="text-title">안전한 자리, 앉아서 가자</div>
-          <Button variant="contained" color="secondary" size="large" onClick={gologin}>
+          <Button  variant="contained" color="secondary" size="large" onClick={gologin}>
             로그인
           </Button>
-          <h6>관리자로 로그인해서 이용해주세요.</h6>
-          
+          <h6 className="sub">관리자로 로그인해서 이용해주세요.</h6>
+        </div>
+        <div className="loadingBox">
+          <div className="circle"> 
+        </div>
         </div>
      </div>
     );
