@@ -25,6 +25,7 @@ from utils.general import (
     check_img_size, non_max_suppression, apply_classifier, scale_coords,
     xyxy2xywh, plot_one_box, strip_optimizer, set_logging)
 from .firebase import push_data,push_passenger
+import requests
 
 directory = os.getcwd()
 filePath = directory + '/passengers/templates/resources/images/'
@@ -49,7 +50,7 @@ class VideoCamera(object):
 		# Load model
 
 		device = select_device('')
-		weights = './passengers/utils/best.pt'
+		weights = 'best.pt'
 		model = attempt_load(weights, map_location=device)  # load FP32 model
 		imgsz = check_img_size(640, s=model.stride.max())  # check img_size
 
@@ -200,11 +201,17 @@ class VideoCamera(object):
 		out = cv2.VideoWriter('./video/'+saveName,fcc,30,(640,480))
 		while True:
 			out.write(self.frame)
-			if(int(time.time()-start>7)):
+			if(int(time.time()-start>1)):
 				break;
 			time.sleep(0.03)
 		
-		out.release()	
+		out.release()
+		with open("./video/"+saveName, "rb") as a_file:
+			file_dict = {'file': a_file,
+						 'name':saveName}
+			response = requests.post("http://localhost:8000/api/passengers/passenger", files=file_dict)
+
+			print(response.text)
 
 	def save_passenger(data):
 		serializer = PsSerializer(data=data)
