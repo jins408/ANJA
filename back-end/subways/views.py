@@ -188,12 +188,14 @@ class SubwayTimeTableView(APIView):
             for item in dict:
                 if item["depTime"].startswith("00"):
                     continue
+                # pprint(item)
                 item["depTime"] = item["depTime"][:2] + ":" + item["depTime"][2:4] + ":" + item["depTime"][4:6]
                 item["arrTime"] = item["arrTime"][:2] + ":" + item["arrTime"][2:4] + ":" + item["arrTime"][4:6]
-                foo = {
-                    "depTime": item["depTime"]
+                time = {
+                    "depTime": item["depTime"],
+                    "endSubwayStationNm": item["endSubwayStationNm"]
                 }
-                items.append(foo)
+                items.append(time)
             timetable[type_value] = items
             # if type_value not in timetable:
             #     timetable[type_value] = {}
