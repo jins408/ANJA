@@ -87,8 +87,8 @@ class SubwayEstimatedTimeView(APIView):
                 minLines['station'].append(minStationNames[index])
 
         # 최단거리 노선 구하기
-        shortStationIDs = minRoute["shtStatnId"][:-1].split(",")
-        shortStationNames = minRoute["shtStatnNm"][:-1].split(", ")
+        shortStationIDs = shortRoute["shtStatnId"][:-1].split(",")
+        shortStationNames = shortRoute["shtStatnNm"][:-1].split(", ")
         shortLines = {'line': [], 'station': []}
         for index, shortStation in enumerate(shortStationIDs):
             stationID = shortStation[:4]
@@ -97,8 +97,8 @@ class SubwayEstimatedTimeView(APIView):
                 shortLines['line'].append(line)
                 shortLines['station'].append(shortStationNames[index])
 
-        minRoute["minLines"] = minLines
-        shortRoute["shortLines"] = shortLines
+        minRoute["transLines"] = minLines
+        shortRoute["transLines"] = shortLines
 
         return Response({'data': {'최소환승': minRoute, '최단거리': shortRoute}}, status=status.HTTP_200_OK)
 
@@ -149,20 +149,19 @@ class SubwayTimeTableView(APIView):
         types = {'U': '상행', 'D': '하행'}
         days = {'01': '평일', '02': '토요일', '03': '휴일'}
 
-        # if not station or not line or not day:
-        #     return Response({'data': "NOT ENOUGH PARAMS"}, status=status.HTTP_200_OK)
+        if not station or not line or not day:
+            return Response({'data': "NOT ENOUGH PARAMS"}, status=status.HTTP_200_OK)
 
 
-        pprint(station + " " + line + "호선")
-        # stations = getStationInfo(station)
-        # pprint(stations)
-        # dict = next((item for item in stations if line in item['line']), None)
-        # if not dict:
-        #     return Response({'data': 'NOT FOUND STATION'}, status=status.HTTP_200_OK)
-        #
-        # pprint(dict)
-        # stationID = dict["stationCode"]
-        stationID = "SUB133"
+        # pprint(station + " " + line)
+        stations = getStationInfo(station)
+        dict = next((item for item in stations if line in item['line']), None)
+        if not dict:
+            return Response({'data': 'NOT FOUND STATION'}, status=status.HTTP_200_OK)
+        stationID = dict["stationCode"]
+        pprint(stations)
+        # stationID = "SUB133"
+
         timetable = {}
         # 상하행별
         for type, type_value in types.items():
@@ -190,12 +189,14 @@ class SubwayTimeTableView(APIView):
             for item in dict:
                 if item["depTime"].startswith("00"):
                     continue
+                # pprint(item)
                 item["depTime"] = item["depTime"][:2] + ":" + item["depTime"][2:4] + ":" + item["depTime"][4:6]
                 item["arrTime"] = item["arrTime"][:2] + ":" + item["arrTime"][2:4] + ":" + item["arrTime"][4:6]
-                foo = {
-                    "depTime": item["depTime"]
+                time = {
+                    "ARRIVETIME": item["depTime"],
+                    "endSubwayStationNm": item["endSubwayStationNm"]
                 }
-                items.append(foo)
+                items.append(time)
             timetable[type_value] = items
             # if type_value not in timetable:
             #     timetable[type_value] = {}
@@ -230,6 +231,7 @@ class SubwayTimeTableView(APIView):
             #     timetable[type_value][day_value] = items
 
         return Response({'data': timetable}, status=status.HTTP_200_OK)
+
 
 # 지하철역이름(키워드)으로 {호선, 지하철역ID, 지하철역이름} 찾기
 class SubwayStationView(APIView):
@@ -270,6 +272,8 @@ def getStationInfo(station):
     items = dict["item"]
     subways = []
     for item in items:
+        if station != item["subwayStationName"]:
+            continue
         type = item["subwayRouteName"]
         info = {}
         if (type.startswith("서울")):
@@ -284,33 +288,21 @@ def getStationInfo(station):
     return subways
 
 
-# class StationInfoView(APIView):
-#     # 키워드에 맞는 서울 지하철 찾기
-#     def get(self, request):
-#         seouls = ['경춘선', '경의중앙선', '공항철도', '신분당선', '인천 1호선', '인천 2호선', '우이신설', '수인선']
-#         data = getStationInfo(request.GET.get("station"))
-#         # pprint(json.dumps(items, ensure_ascii=False))
-#
-#         if not data:
-#             return Response({"data": "NO DATA"}, status=status.HTTP_200_OK)
-#
-#         items = data["item"]
-#
-#         subways = []
-#         for item in items:
-#             print(item)
-#             type = item["subwayRouteName"]
-#             info = {}
-#             if(type.startswith("서울")):
-#                 info['line'] = item["subwayRouteName"][3:]
-#             elif type in seouls:
-#                 info['line'] = item["subwayRouteName"]
-#             else:
-#                 continue
-#             info["stationCode"] = item["subwayStationId"]
-#             info["station"] = item["subwayStationName"]
-#             subways.append(info)
-#         return Response({"data": subways}, status=status.HTTP_200_OK)
+class StationInfoView(APIView):
+    # 키워드에 맞는 서울 지하철 찾기
+    def get(self, request):
+        infos = getStationInfo(request.GET.get("station"))
+        if not infos:
+            return Response({"data": "NO DATA"}, status=status.HTTP_200_OK)
+
+        stations = []
+        for info in infos:
+            stations.append(info["line"])
+        stations.sort()
+
+        return Response({"data": stations}, status=status.HTTP_200_OK)
+
+        return Response({"data": subways}, status=status.HTTP_200_OK)
 
 
 
