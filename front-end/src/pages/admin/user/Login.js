@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import swal from 'sweetalert';
 import '../../../css/Login.css'
 import axios from 'axios';
 
@@ -47,29 +48,57 @@ const Login = () =>{
     const [uid, setUid] = useState('');
     const [password, setPassword] = useState('');
     
-    const gologin = ()=> {
-      axios.post('https://k3b101.p.ssafy.io/api/users/sign',{
-        uid: uid,
-        password: password
-      })
-      .then((res)=>{
-        if(res.data.data === 'NOT FOUND USER'){
-          alert('등록되지 않은 사용자입니다.')
-          setUid('')
-          setPassword('')
-        }else if(res.data.data === 'INVALID PW'){
-          alert('비밀번호를 다시 확인해주세요.')
-          setPassword('')
+    const gologin = (e)=> {
+      if (e.key === 'Enter' || e.type === 'click') {
+        if(uid === '' && password === ''){
+          swal("아이디와 비밀번호를 입력해주세요!", {
+            buttons: false,
+            timer: 1500,
+          });
+        }else if(uid === ''){
+          swal("아이디를 입력해주세요!", {
+            buttons: false,
+            timer: 1500,
+          });
+        }else if(password === ''){
+          swal("비밀번호를 입력해주세요!", {
+            buttons: false,
+            timer: 1500,
+          });
         }else{
-          sessionStorage.setItem('uid', uid)
-          alert('로그인 성공')
-          history.push('/admin/home')
+          axios.post('https://k3b101.p.ssafy.io/api/users/sign',{
+            uid: uid,
+            password: password
+          })
+          .then((res)=>{
+            if(res.data.data === 'NOT FOUND USER'){
+              swal("등록되지 않은 사용자입니다!", {
+                buttons: false,
+                timer: 1500,
+              });
+              setUid('')
+              setPassword('')
+            }else if(res.data.data === 'INVALID PW'){
+              swal("비밀번호를 다시 확인해주세요!", {
+                buttons: false,
+                timer: 1500,
+              });
+              setPassword('')
+            }else{
+              sessionStorage.setItem('uid', uid)
+              swal("로그인 성공!", {
+                buttons: false,
+                timer: 1500,
+              });
+              history.push('/admin/home')
+            }
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
         }
-      })
-      .catch((err)=>{
-        console.log(err)
-      })
     }
+  }
 
     return(
             <div className="login_bg">
@@ -100,7 +129,7 @@ const Login = () =>{
                     onChange={(e)=>setUid(e.target.value)}
                   />
                   <TextField
-                    className="text-form"
+                    className="text-form2"
                     // variant="outlined"
                     placeholder=" 비밀번호를 입력해주세요."
                     margin="normal"
@@ -111,6 +140,7 @@ const Login = () =>{
                     autoComplete="current-password"
                     value={password}
                     onChange={(e)=>setPassword(e.target.value)}
+                    onKeyPress={gologin}
                   />
 
                   <Button

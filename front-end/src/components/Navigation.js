@@ -15,6 +15,7 @@ import HeadsetMicIcon from '@material-ui/icons/HeadsetMic';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 // import Button from '@material-ui/core/Button';
 
+import swal from 'sweetalert';
 import '../css/navigation.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -55,8 +56,36 @@ const Navigation = () =>{
 
     
     const onLogout = () =>{
-      sessionStorage.removeItem('uid')
-      history.push('/admin/introduce')
+      swal({
+        title: "로그아웃 하시겠습니까?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        buttons: {
+            cancel: "취소",
+            confirm: "확인"
+          },
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          sessionStorage.removeItem('uid')
+          swal("로그아웃 되었습니다!", {
+            icon: "success",
+            buttons:false,
+            timer: 1500
+          });
+          setTimeout(()=>{
+            history.push('/admin/introduce')
+          },1600)
+        } else {
+          swal("취소되었습니다!",{
+              icon: "error",
+              buttons:false,
+              timer:1500
+          });
+          
+        }
+      });
     }
         return(
             <div className={classes.root}>
