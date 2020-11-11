@@ -126,9 +126,17 @@ class VideoCamera(object):
 
 						# firestore에 6초에 한번씩 Log 보냄
 						if(names[int(c)] !='mask' and dangerTime>=0):
+
+							# self.save_clip()
 							print('파이어스토어입력')
 							alarm = subway_data
 							timeToSave = int(datetime.now().timestamp())
+
+							# 영상저장 쓰레드 생성
+							self.timeToSave = timeToSave
+							threading.Thread(target=self.save_clip, args=()).start()
+
+
 							alarm['category'] = names[int(c)]
 							if(alarm['category'] == 'no-mask'):
 								alarm['category'] = 'nomask'
@@ -180,6 +188,23 @@ class VideoCamera(object):
 		# 	cv2.imshow(p, im0)
 		# 	if cv2.waitKey(1) == ord('q'):  # q to quit
 		# 		raise StopIteration
+	
+	# 영상 클립 저장
+	def save_clip(self):
+		print('영상저장 들어옴')
+		start = time.time()
+		print(start)
+		saveTime = self.timeToSave
+		saveName = subway_data['id']+str(saveTime)+'.avi'
+		fcc = cv2.VideoWriter_fourcc('D','I','V','X')
+		out = cv2.VideoWriter('./video/'+saveName,fcc,30,(640,480))
+		while True:
+			out.write(self.frame)
+			if(int(time.time()-start>7)):
+				break;
+			time.sleep(0.03)
+		
+		out.release()	
 
 	def save_passenger(data):
 		serializer = PsSerializer(data=data)
@@ -199,6 +224,7 @@ class VideoCamera(object):
 		fileName = filePath + now.strftime('%y%m%d_%H%M%S') + '.png'
 		print (fileName)
 		cv2.imwrite(fileName, self.frame)
+		
 
 		db = Image(image_name=now.strftime('%y%m%d_%H%M%S'), pub_date=timezone.now())
 		db.save()
