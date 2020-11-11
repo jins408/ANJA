@@ -20,7 +20,7 @@ const Introduce = () => {
         <div >     
                 <BackgroundSlider 
                   images ={[image1, image2, image3]}
-                  duration={6} transition={2} />
+                  duration={3} transition={2} />
         </div>
      
         <div className="circle"> 
