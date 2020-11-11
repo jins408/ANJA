@@ -213,7 +213,7 @@ class VideoCamera(object):
 		with open("./video/"+saveName, "rb") as a_file:
 			print(saveName)
 			file_dict = {'file': a_file}
-			response = requests.post("http://localhost:8000/api/passengers/passenger", files=file_dict)
+			response = requests.post("https://k3b101.p.ssafy.io/api/passengers/passenger", files=file_dict)
 
 			print(response.text)
 		self.endtime = time.time()
