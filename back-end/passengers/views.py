@@ -13,3 +13,10 @@ class AppPassenger(APIView):
         serializer = PsSerializer(queryset)
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
 
+    def post(self,request):
+        file = request.data['file']
+        print(file)
+        f=open(request.data['name'],'w+')
+        f.write('file')
+        return Response({'good':'good'},status=status.HTTP_200_OK)
+
