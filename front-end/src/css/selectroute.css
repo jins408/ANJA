@@ -7,14 +7,17 @@
 }
 
 .selectroute_star{
-    position: absolute;
+    /* position: absolute;
     top: 9%;
-    left: 83%;
+    left: 83%; */
+    /* margin-left: 3rem; */
     font-size: 2rem !important;
     color: crimson;
 }
 
 .selectroute_location{
+    width: 280px;
+    transform: translate(5%);
     text-align: center;
     font-size: 1.3rem;
     font-weight: bold;

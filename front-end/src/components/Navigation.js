@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft:"1.3rem"
     },
     logout:{
-      marginTop: '15rem',
+      marginTop: '16rem',
       paddingBottom:0
     }
   }));
@@ -55,7 +55,6 @@ const Navigation = () =>{
 
     
     const onLogout = () =>{
-      // sessionStorage.removeItem(uid)
       sessionStorage.removeItem('uid')
       history.push('/admin/introduce')
     }
@@ -105,7 +104,7 @@ const Navigation = () =>{
                 로그아웃
               </Button> */}
               <ListItem className={classes.logout} onClick={onLogout} button>
-              <ListItemLink className="pb-0" href="/admin/adminclaim">
+              <ListItemLink className="pb-1">
                 <ListItemIcon>
                   <ExitToAppIcon  fontSize="large" color="secondary"/> 
                 </ListItemIcon>

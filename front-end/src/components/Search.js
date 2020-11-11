@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 
 import '../css/search.css'
+import swal from 'sweetalert';
 import axios from 'axios';
 
 const Search = () =>{
@@ -29,9 +30,17 @@ const Search = () =>{
     const godetail = (e) =>{
         if (e.key === 'Enter' || e.type === 'click') {
             if(!start){
-                alert("출발역을 입력해주세요")
+                swal("출발역을 입력해주세요!", {
+                    icon: "warning",
+                    buttons: false,
+                    timer: 1000,
+                  });
             }else if(!end){
-                alert("도착역을 입력해주세요")
+                swal("도착역을 입력해주세요!", {
+                    icon: "warning",
+                    buttons: false,
+                    timer: 1000,
+                  });
             }else{
                 history.push(`/selectroute/${start}/${end}`)
         }

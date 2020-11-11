@@ -10,8 +10,8 @@ import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
     tablecon: {
-        width: '345px',
-        margin: '0 15px 5rem 15px',
+        width: '355px',
+        margin: '0 10px 5rem 10px',
     },
     table: {
         width: '100%',
@@ -21,7 +21,8 @@ const useStyles = makeStyles({
     },
     headfont:{
         fontWeight: 'bold',
-        fontSize: '1.1rem'
+        fontSize: '1.1rem',
+        width: '177px'
     },
     subwaytime_header: {
         textAlign: 'center',
@@ -40,8 +41,8 @@ const SubwayTimeTable = (props) =>{
     const [maxlen, setMaxlen] = useState(0);
     const [arrivetime, setArrivetime] = useState([]);
 
-    console.log(upwardlist)
-    console.log(downwardlist)
+    // console.log(upwardlist)
+    // console.log(downwardlist)
 
     useEffect(()=>{
         if(upwardlist.length < downwardlist.length){
@@ -54,17 +55,17 @@ const SubwayTimeTable = (props) =>{
         for (let i = 0; i < maxlen; i++){
             if (!upwardlist[i] && downwardlist[i]){
                 if(downwardlist[i].ARRIVETIME){
-                    arr.push(['',downwardlist[i].ARRIVETIME])
+                    arr.push(['', downwardlist[i].endSubwayStationNm + ' - ' + downwardlist[i].ARRIVETIME])
                 }
             }
             else if (upwardlist[i] && !downwardlist[i]){
                 if(upwardlist[i].ARRIVETIME){
-                    arr.push([upwardlist[i].ARRIVETIME,''])
+                    arr.push([upwardlist[i].endSubwayStationNm +' - ' + upwardlist[i].ARRIVETIME,''])
                 }
             }
             else{
                 if(upwardlist[i] && downwardlist[i]){
-                    arr.push([upwardlist[i].ARRIVETIME, downwardlist[i].ARRIVETIME])
+                    arr.push([upwardlist[i].endSubwayStationNm +' - ' + upwardlist[i].ARRIVETIME, downwardlist[i].endSubwayStationNm +' - ' + downwardlist[i].ARRIVETIME])
                 }
             }
         }
@@ -90,8 +91,8 @@ const SubwayTimeTable = (props) =>{
                 <TableBody>
                 {arrivetime.map((time, index) => (
                     <TableRow key={index}>
-                    <TableCell align="center">{time[0].slice(0,5)}</TableCell>
-                    <TableCell align="center">{time[1].slice(0,5)}</TableCell>
+                    <TableCell align="center">{time[0].slice(0,-3)}</TableCell>
+                    <TableCell align="center">{time[1].slice(0,-3)}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>

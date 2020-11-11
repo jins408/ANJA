@@ -58,7 +58,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-const SelectRoute = ({ match }) => {
+const SelectRoute = ({ match }, props) => {
     const classes = useStyles();
     const [star, setStar] = useState(false);
     const [id, setId] = useState(0)
@@ -69,7 +69,10 @@ const SelectRoute = ({ match }) => {
     const [showdetail2, setShowdetail2] = useState(false);
     const [chairs, setChairs] = useState([]);
     const [rechairs, setRechairs] = useState([]);
+    // const [station, setStation] = useState();
+    const [line, setLine] = useState();
     var [nextid, setNextid] = useState(0)
+
 
     const start = match.params.start
     const end = match.params.end
@@ -78,8 +81,10 @@ const SelectRoute = ({ match }) => {
     useEffect(() => {
         axios.get(`http://127.0.0.1:8080/api/subways/estimate?from=${start}&to=${end}`)
             .then((res) => {
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 setTraininfo(res.data.data)
+                // setStation(res.data.data['최단거리'].transLines.station[0])
+                setLine(res.data.data['최단거리'].transLines.line[0])
             }).catch((err) => {
                 console.log(err)
             })
@@ -172,15 +177,15 @@ const SelectRoute = ({ match }) => {
         <div>
             <div className="selectroute_box">
                 {traininfo && 
-                <div className="d-flex justify-content-center mr-2 mt-2">
+                <div className="d-flex justify-content-end mr-2 mt-2">
                     {/* <Button href={`/subwaytime/${start}`} color="primary">TIME</Button> */}
-                    <p className="selectroute_location mb-0">{start}({traininfo['최단거리'].shortLines[0]}) <ForwardIcon className="mb-1" /> {end}</p>
+                    <p className="selectroute_location mb-0">{start}({traininfo['최단거리'].transLines.line[0]}) <ForwardIcon className="mb-1" /> {end}</p>
                     {star ? <StarIcon className="selectroute_star" onClick={starHandler} /> : <StarBorderIcon className="selectroute_star" onClick={starHandler} />}
                 </div>}
                 {/* <p className="selectroute_location mb-0">{start} <ForwardIcon className="mb-1" /> {end}</p> */}
                 <div className="d-flex justify-content-end">
                     {/* {mintime ? <Button className="ml-2" onClick={mintimeHandler} color="secondary">최단시간</Button> : <Button className="ml-2" onClick={mintimeHandler} color="secondary">최소환승</Button>} */}
-                    <Button href={`/subwaytime/${start}`} color="primary" className="timebtn">TIME</Button>
+                    <Button href={`/subwaytime/${start}/${line}`}  color="primary" className="timebtn">TIME</Button>
                 </div>
                 {/* 최단시간 */}
                 {/* {mintime && traininfo && <p className="sleectroute_time mb-4">{traininfo.shtTravelMsg}</p>} */}
