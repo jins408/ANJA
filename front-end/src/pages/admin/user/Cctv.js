@@ -58,11 +58,11 @@ const Cctv = () => {
             <div className={classes.traininfo}>
                 <div className="d-flex justify-content-between">
                     <img className={classes.vdeio} onClick={()=>gocctv(1)} src={'http://localhost:8000/stream2/'} alt="cctv1"></img>
-                    <img className={classes.vdeio} src={'http://localhost:8000/stream2/'} alt="cctv2"></img>
+                    <img className={classes.vdeio} src={'http://183.107.25.170:8001/stream2/'} alt="cctv2"></img>
                 </div>
                 <div className="d-flex justify-content-between">
-                    <img className={classes.vdeio} src={'http://localhost:8000/stream2/'} alt="cctv3"></img>
-                    <img className={classes.vdeio} src={'http://localhost:8000/stream2/'} alt="cctv4"></img>
+                    <img className={classes.vdeio} src={'http://125.242.221.85:8000/stream2/'} alt="cctv3"></img>
+                    <img className={classes.vdeio} src={'http://118.217.60.147:8000/stream2/'} alt="cctv4"></img>
                 </div>
             </div>
         </div>

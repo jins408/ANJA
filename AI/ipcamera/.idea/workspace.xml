@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b057960-838b-48ae-8492-455d6c0ab229" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/best.pt" beforeDir="false" afterPath="$PROJECT_DIR$/best.pt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/passengers/utils/best.pt" beforeDir="false" afterPath="$PROJECT_DIR$/passengers/utils/best.pt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/passengers/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/passengers/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../front-end/src/images/LOGIN.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../back-end/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../back-end/passengers/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/passengers/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../back-end/passengers/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/passengers/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/subways/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/subways/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../back-end/subways/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../back-end/subways/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front-end/src/css/Introduce.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../front-end/src/css/Introduce.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front-end/src/css/Login.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../front-end/src/css/Login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front-end/src/pages/admin/user/Introduce.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../front-end/src/pages/admin/user/Introduce.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../front-end/src/pages/admin/user/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../front-end/src/pages/admin/user/Login.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -250,7 +252,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="761" y="-7" width="782" height="838" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24832214" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
