@@ -26,6 +26,8 @@ from utils.general import (
     xyxy2xywh, plot_one_box, strip_optimizer, set_logging)
 from .firebase import push_data,push_passenger
 import requests
+#firestore timezone 변경하기위함
+from pytz import timezone
 
 directory = os.getcwd()
 filePath = directory + '/passengers/templates/resources/images/'
@@ -35,6 +37,7 @@ subway_data = {
 	'ssid' : '01',
 	'id' : '010101',
 }
+KST = timezone('Asia/Seoul')
 
 class VideoCamera(object):
 	def __init__(self):
@@ -52,6 +55,7 @@ class VideoCamera(object):
 		self.endtime = time.time()
 		logEndTime = time.time()
 		passengerSaveTime = time.time()
+		# print('시간',datetime.now(KST))
 
 		device = select_device('')
 		weights = 'best.pt'
@@ -129,16 +133,17 @@ class VideoCamera(object):
 						if (names[int(c)] == 'no-mask'):
 							nowPS += int(n)
 
-						# firestore에 6초에 한번씩 Log 보냄
+						# firestore에 30초에 한번씩 Log 및 영상보냄
 						if(names[int(c)] !='mask' and time.time()-logEndTime>30):
 
 							# self.save_clip()
-							print('파이어스토어입력',time.time()-logEndTime)
+							# print('파이어스토어입력',time.time()-logEndTime)
 							alarm = subway_data
-							timeToSave = int(datetime.now().timestamp())
+							timeToSave = datetime.now(KST)
+							# print(timeToSave,'타이이이임',timeToSave.timestamp())
 
 							# 영상저장 쓰레드 생성
-							self.timeToSave = timeToSave
+							self.timeToSave = int(timeToSave.timestamp())
 							threading.Thread(target=self.save_clip, args=()).start()
 
 							# firestore에 저장 (영상은 id와 timestamp 값으로 찾는다)
@@ -153,7 +158,7 @@ class VideoCamera(object):
 
 					# 30초에 한번씩 좌석 및 승객 수 파이어 스토어에 저장
 					if time.time()-passengerSaveTime>30:
-						print('now',int(datetime.now().timestamp()))
+						# print('now',int(datetime.now().timestamp()))
 						passenger = subway_data
 						passenger['current'] = nowPS
 						push_passenger(passenger)
@@ -194,13 +199,13 @@ class VideoCamera(object):
 	
 	# 영상 클립 저장
 	def save_clip(self):
-		print('영상저장 들어옴')
+		print('영상저장')
 		start = time.time()
-		print('다시 시작되는데 걸린 시간', time.time()-self.endtime)
+		# print('다시 시작되는데 걸린 시간', time.time()-self.endtime)
 		self.endtime=time.time()
 		saveTime = self.timeToSave
-		saveName = subway_data['id']+str(saveTime)+'.avi'
-		fcc = cv2.VideoWriter_fourcc('D','I','V','X')
+		saveName = subway_data['id']+str(saveTime)+'.mp4'
+		fcc = cv2.VideoWriter_fourcc(*'X264')
 		out = cv2.VideoWriter('./video/'+saveName,fcc,30,(640,480))
 		while True:
 			out.write(self.frame)
@@ -211,11 +216,10 @@ class VideoCamera(object):
 		
 		out.release()
 		with open("./video/"+saveName, "rb") as a_file:
-			print(saveName)
 			file_dict = {'file': a_file}
 			response = requests.post("https://k3b101.p.ssafy.io/api/passengers/passenger", files=file_dict)
 
-			print(response.text)
+			print(saveName,response.text)
 		self.endtime = time.time()
 
 	def save_passenger(data):

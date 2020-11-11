@@ -13,7 +13,8 @@ import Button from '@material-ui/core/Button';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import Moment from 'react-moment'
-
+import Modal from '@material-ui/core/Modal';
+import Card from '@material-ui/core/Card';
 
 const columns = [
     { id: 'data', label: '날짜/시간', minWidth: 170 },
@@ -101,6 +102,10 @@ const useStyles = makeStyles((theme) =>({
     margin: {
         margin: theme.spacing(1),
       },
+    modal:{
+      display: 'flex',
+      justifyContent: 'center',
+    }
  }));
     
 
@@ -109,6 +114,12 @@ const Log = () =>{
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [loglist, setLoglist] = React.useState([]);
+    const [showModal, setShowModal] = React.useState(false);
+    const [videoUrl, setVideoUrl] = React.useState('');
+
+    const onClose= () =>{
+      setShowModal(false);
+    }
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -134,6 +145,16 @@ const Log = () =>{
       }))
 
       console.log(loglist)
+
+    const openModal = ((data)=>{
+      setShowModal(true)
+      setVideoUrl('https://k3b101.p.ssafy.io/video/'+data.id+data.time.seconds+'.mp4')
+      // alert('https://k3b101.p.ssafy.io/video/'+data.id+data.time.seconds+'.mp4');
+    })
+
+    const setCloseModal =(()=>{
+      setShowModal(false)
+    })
     
 
 
@@ -152,7 +173,7 @@ const Log = () =>{
                     inputProps={{ 'aria-label': 'search' }}
                     />
                 </div>
-                <div className="d-flex justify-content-end">
+                <Card>
                     <Button
                         variant="contained"
                         // color="primary"
@@ -162,7 +183,7 @@ const Log = () =>{
                         Excel
                     </Button>
                   
-                </div>
+                </Card>
 
                 <TableContainer className={classes.container}>
                     <Table stickyHeader aria-label="sticky table">
@@ -189,8 +210,10 @@ const Log = () =>{
                                   
                                 <TableCell key={column.id} align={column.align}>
                                   {column.format && typeof value === 'number' ? column.format(value) : value}
-                                  {column.id === "data" && <Moment format="YYYY-MM-DD HH:mm">{log.time.seconds}</Moment>}
-                                </TableCell>                    
+                                  {column.id === "data" && <Moment format="YYYY-MM-DD HH:mm">{log.time.seconds*1000}</Moment>}
+                                  {column.id === "cctv" ? <button onClick={()=>openModal(log)} ><VideocamIcon></VideocamIcon></button> :''}      
+     
+                                </TableCell>  
                                 );
                             })}
                             </TableRow>
@@ -209,6 +232,20 @@ const Log = () =>{
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
+                <Modal
+                  className={classes.modal} variant="outlined"
+                  open={showModal}
+                  onClose={setCloseModal}
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                >
+                  <div>
+                    <video
+                        controls
+                        autoPlay
+                    ><source src={videoUrl} type="video/mp4" /></video>
+                  </div>
+                </Modal>    
     
             </div>
         );
