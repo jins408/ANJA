@@ -46,6 +46,14 @@
     margin-bottom: 1rem;
 }
 
+.subway-number ::placeholder{
+    font-size: 1rem;
+}
+
+.subway-claim ::placeholder{
+    font-size: 1rem;
+}
+
 .content{
     margin-top: 2rem;
 }
