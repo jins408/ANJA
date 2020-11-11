@@ -192,7 +192,7 @@ class SubwayTimeTableView(APIView):
                 item["depTime"] = item["depTime"][:2] + ":" + item["depTime"][2:4] + ":" + item["depTime"][4:6]
                 item["arrTime"] = item["arrTime"][:2] + ":" + item["arrTime"][2:4] + ":" + item["arrTime"][4:6]
                 time = {
-                    "depTime": item["depTime"],
+                    "ARRIVETIME": item["depTime"],
                     "endSubwayStationNm": item["endSubwayStationNm"]
                 }
                 items.append(time)
