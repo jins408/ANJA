@@ -48,6 +48,10 @@ class VideoCamera(object):
 
 	def test(self):
 		# Load model
+		# 시작시간 설정
+		self.endtime = time.time()
+		logEndTime = time.time()
+		passengerSaveTime = time.time()
 
 		device = select_device('')
 		weights = 'best.pt'
@@ -120,16 +124,16 @@ class VideoCamera(object):
 						# n => 개수 names[int(c)] => 클래스 이름
 						n = (det[:, -1] == c).sum()  # detections per class
 						s += '%g %ss, ' % (n, names[int(c)])  # add to string
-						if (names[int(c)] == 'mask'and dangerTime>0):
+						if (names[int(c)] == 'mask'):
 							nowPS += int(n)
 						if (names[int(c)] == 'no-mask'):
 							nowPS += int(n)
 
 						# firestore에 6초에 한번씩 Log 보냄
-						if(names[int(c)] !='mask' and dangerTime>=0):
+						if(names[int(c)] !='mask' and time.time()-logEndTime>30):
 
 							# self.save_clip()
-							print('파이어스토어입력')
+							print('파이어스토어입력',time.time()-logEndTime)
 							alarm = subway_data
 							timeToSave = int(datetime.now().timestamp())
 
@@ -137,25 +141,23 @@ class VideoCamera(object):
 							self.timeToSave = timeToSave
 							threading.Thread(target=self.save_clip, args=()).start()
 
-
+							# firestore에 저장 (영상은 id와 timestamp 값으로 찾는다)
 							alarm['category'] = names[int(c)]
-							if(alarm['category'] == 'no-mask'):
+							if (alarm['category'] == 'no-mask'):
 								alarm['category'] = 'nomask'
 							alarm['time'] = timeToSave
-							# firestore에 저장 (영상은 id와 timestamp 값으로 찾는다)
 							push_data(alarm)
-							##########
-							#영상녹화 함수 들어갈 부분
-							##########
-							# 6초 타이머 on
-							dangerTime = -180
+							logEndTime = time.time()
+
+
 
 					# 30초에 한번씩 좌석 및 승객 수 파이어 스토어에 저장
-					if saveTime%900==0:
+					if time.time()-passengerSaveTime>30:
 						print('now',int(datetime.now().timestamp()))
 						passenger = subway_data
 						passenger['current'] = nowPS
 						push_passenger(passenger)
+						passengerSaveTime = time.time()
 						# serializer = PsSerializer(data=passenger)
 						# print('시리얼라이저', serializer)
 						#
@@ -194,24 +196,27 @@ class VideoCamera(object):
 	def save_clip(self):
 		print('영상저장 들어옴')
 		start = time.time()
-		print(start)
+		print('다시 시작되는데 걸린 시간', time.time()-self.endtime)
+		self.endtime=time.time()
 		saveTime = self.timeToSave
 		saveName = subway_data['id']+str(saveTime)+'.avi'
 		fcc = cv2.VideoWriter_fourcc('D','I','V','X')
 		out = cv2.VideoWriter('./video/'+saveName,fcc,30,(640,480))
 		while True:
 			out.write(self.frame)
-			if(int(time.time()-start>1)):
+			print(time.time()-start)
+			if(time.time()-start>7):
 				break;
 			time.sleep(0.03)
 		
 		out.release()
 		with open("./video/"+saveName, "rb") as a_file:
-			file_dict = {'file': a_file,
-						 'name':saveName}
+			print(saveName)
+			file_dict = {'file': a_file}
 			response = requests.post("http://localhost:8000/api/passengers/passenger", files=file_dict)
 
 			print(response.text)
+		self.endtime = time.time()
 
 	def save_passenger(data):
 		serializer = PsSerializer(data=data)
