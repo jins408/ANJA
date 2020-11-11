@@ -87,8 +87,8 @@ class SubwayEstimatedTimeView(APIView):
                 minLines['station'].append(minStationNames[index])
 
         # 최단거리 노선 구하기
-        shortStationIDs = minRoute["shtStatnId"][:-1].split(",")
-        shortStationNames = minRoute["shtStatnNm"][:-1].split(", ")
+        shortStationIDs = shortRoute["shtStatnId"][:-1].split(",")
+        shortStationNames = shortRoute["shtStatnNm"][:-1].split(", ")
         shortLines = {'line': [], 'station': []}
         for index, shortStation in enumerate(shortStationIDs):
             stationID = shortStation[:4]
@@ -159,6 +159,7 @@ class SubwayTimeTableView(APIView):
         if not dict:
             return Response({'data': 'NOT FOUND STATION'}, status=status.HTTP_200_OK)
         stationID = dict["stationCode"]
+        pprint(stations)
         # stationID = "SUB133"
 
         timetable = {}
@@ -285,33 +286,21 @@ def getStationInfo(station):
     return subways
 
 
-# class StationInfoView(APIView):
-#     # 키워드에 맞는 서울 지하철 찾기
-#     def get(self, request):
-#         seouls = ['경춘선', '경의중앙선', '공항철도', '신분당선', '인천 1호선', '인천 2호선', '우이신설', '수인선']
-#         data = getStationInfo(request.GET.get("station"))
-#         # pprint(json.dumps(items, ensure_ascii=False))
-#
-#         if not data:
-#             return Response({"data": "NO DATA"}, status=status.HTTP_200_OK)
-#
-#         items = data["item"]
-#
-#         subways = []
-#         for item in items:
-#             print(item)
-#             type = item["subwayRouteName"]
-#             info = {}
-#             if(type.startswith("서울")):
-#                 info['line'] = item["subwayRouteName"][3:]
-#             elif type in seouls:
-#                 info['line'] = item["subwayRouteName"]
-#             else:
-#                 continue
-#             info["stationCode"] = item["subwayStationId"]
-#             info["station"] = item["subwayStationName"]
-#             subways.append(info)
-#         return Response({"data": subways}, status=status.HTTP_200_OK)
+class StationInfoView(APIView):
+    # 키워드에 맞는 서울 지하철 찾기
+    def get(self, request):
+        infos = getStationInfo(request.GET.get("station"))
+        if not infos:
+            return Response({"data": "NO DATA"}, status=status.HTTP_200_OK)
+
+        stations = []
+        for info in infos:
+            stations.append(info["line"])
+        stations.sort()
+
+        return Response({"data": stations}, status=status.HTTP_200_OK)
+
+        return Response({"data": subways}, status=status.HTTP_200_OK)
 
 
 
