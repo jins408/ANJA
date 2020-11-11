@@ -272,6 +272,8 @@ def getStationInfo(station):
     items = dict["item"]
     subways = []
     for item in items:
+        if station != item["subwayStationName"]:
+            continue
         type = item["subwayRouteName"]
         info = {}
         if (type.startswith("서울")):
