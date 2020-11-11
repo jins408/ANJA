@@ -97,8 +97,8 @@ class SubwayEstimatedTimeView(APIView):
                 shortLines['line'].append(line)
                 shortLines['station'].append(shortStationNames[index])
 
-        minRoute["minLines"] = minLines
-        shortRoute["shortLines"] = shortLines
+        minRoute["transLines"] = minLines
+        shortRoute["transLines"] = shortLines
 
         return Response({'data': {'최소환승': minRoute, '최단거리': shortRoute}}, status=status.HTTP_200_OK)
 
@@ -149,20 +149,18 @@ class SubwayTimeTableView(APIView):
         types = {'U': '상행', 'D': '하행'}
         days = {'01': '평일', '02': '토요일', '03': '휴일'}
 
-        # if not station or not line or not day:
-        #     return Response({'data': "NOT ENOUGH PARAMS"}, status=status.HTTP_200_OK)
+        if not station or not line or not day:
+            return Response({'data': "NOT ENOUGH PARAMS"}, status=status.HTTP_200_OK)
 
 
-        pprint(station + " " + line + "호선")
-        # stations = getStationInfo(station)
-        # pprint(stations)
-        # dict = next((item for item in stations if line in item['line']), None)
-        # if not dict:
-        #     return Response({'data': 'NOT FOUND STATION'}, status=status.HTTP_200_OK)
-        #
-        # pprint(dict)
-        # stationID = dict["stationCode"]
-        stationID = "SUB133"
+        # pprint(station + " " + line)
+        stations = getStationInfo(station)
+        dict = next((item for item in stations if line in item['line']), None)
+        if not dict:
+            return Response({'data': 'NOT FOUND STATION'}, status=status.HTTP_200_OK)
+        stationID = dict["stationCode"]
+        # stationID = "SUB133"
+
         timetable = {}
         # 상하행별
         for type, type_value in types.items():
@@ -190,12 +188,14 @@ class SubwayTimeTableView(APIView):
             for item in dict:
                 if item["depTime"].startswith("00"):
                     continue
+                # pprint(item)
                 item["depTime"] = item["depTime"][:2] + ":" + item["depTime"][2:4] + ":" + item["depTime"][4:6]
                 item["arrTime"] = item["arrTime"][:2] + ":" + item["arrTime"][2:4] + ":" + item["arrTime"][4:6]
-                foo = {
-                    "depTime": item["depTime"]
+                time = {
+                    "ARRIVETIME": item["depTime"],
+                    "endSubwayStationNm": item["endSubwayStationNm"]
                 }
-                items.append(foo)
+                items.append(time)
             timetable[type_value] = items
             # if type_value not in timetable:
             #     timetable[type_value] = {}
@@ -230,6 +230,7 @@ class SubwayTimeTableView(APIView):
             #     timetable[type_value][day_value] = items
 
         return Response({'data': timetable}, status=status.HTTP_200_OK)
+
 
 # 지하철역이름(키워드)으로 {호선, 지하철역ID, 지하철역이름} 찾기
 class SubwayStationView(APIView):
