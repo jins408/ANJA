@@ -14,7 +14,7 @@ import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-      paddingTop: theme.spacing(20),
+      paddingTop: theme.spacing(15),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -32,8 +32,12 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      height: '3rem'
+      height: '3rem',
     },
+    login_form:{
+      color: 'black',
+      fontWeight: "bold",
+    }
   }));
 
 
@@ -68,66 +72,76 @@ const Login = () =>{
     }
 
     return(
+            <div className="login_bg">
+            <div className="img-cover"></div>
+            <div className="login-form">
             <Container component="main" maxWidth="xs">
+            <div className="lglg">
             <CssBaseline />
-            <div className={classes.paper}>
-              <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                로그인
-              </Typography>
-              <form className={classes.form} noValidate>
-                <TextField
-                  className="text-form"
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="ID"
-                  autoComplete="id"
-                  autoFocus
-                  value={uid}
-                  onChange={(e)=>setUid(e.target.value)}
-                />
-                <TextField
-                  className="text-form"
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Password"
-                  type="password"
-                  autoComplete="current-password"
-                  value={password}
-                  onChange={(e)=>setPassword(e.target.value)}
-                />
-
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                  onClick={gologin}
-                >
+              <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                  <LockOutlinedIcon />
+                </Avatar>
+                <Typography className={classes.login_form} component="h1" variant="h5">
                   로그인
-                </Button>
-                {/* <Grid container>
-                  <Grid item xs>
-                    <Link href="#" variant="body2">
-                    비밀번호를 잊으셨나요?
-                    </Link>
-                  </Grid>
-                  <Grid item>
-                    <Link href="/Join" variant="body2">
-                        아직 회원이 아니신가요?
-                      {"Don't have an account? Sign Up"}
-                    </Link>
-                  </Grid>
-                </Grid> */}
-              </form>
-            </div>
+                </Typography>
+                <form className={classes.form} noValidate>
+                  <TextField
+                    className="text-form"
+                    // variant="outlined"
+                    placeholder=" 아이디를 입력해주세요."
+                    margin="normal"
+                    required
+                    fullWidth
+                    // label="ID"
+                    autoComplete="id"
+                    autoFocus
+                    value={uid}
+                    onChange={(e)=>setUid(e.target.value)}
+                  />
+                  <TextField
+                    className="text-form"
+                    // variant="outlined"
+                    placeholder=" 비밀번호를 입력해주세요."
+                    margin="normal"
+                    required
+                    fullWidth
+                    // label="Password"
+                    type="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(e)=>setPassword(e.target.value)}
+                  />
+
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={gologin}
+                  >
+                    로그인
+                  </Button>
+                  {/* <Grid container>
+                    <Grid item xs>
+                      <Link href="#" variant="body2">
+                      비밀번호를 잊으셨나요?
+                      </Link>
+                    </Grid>
+                    <Grid item>
+                      <Link href="/Join" variant="body2">
+                          아직 회원이 아니신가요?
+                        {"Don't have an account? Sign Up"}
+                      </Link>
+                    </Grid>
+                  </Grid> */}
+                </form>
+          </div>
+              </div>
+          
           </Container>
+            </div>
+            </div>
         );
     }
 
