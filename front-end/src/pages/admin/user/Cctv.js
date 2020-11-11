@@ -53,7 +53,7 @@ const Cctv = () => {
 
     return (
         <div>
-            <h1 className="text-center pt-5" >서울행 급행열차</h1>
+            <h1 className="text-center pt-5 mb-5" >{sessionStorage.getItem('uid')}번 열차</h1>
             {cctvsize===1 && <img className={classes.maxvdeio} onClick={closecctv} src={'http://localhost:8000/stream2/'} alt="cctv1"></img> }
             <div className={classes.traininfo}>
                 <div className="d-flex justify-content-between">

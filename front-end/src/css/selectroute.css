@@ -2,10 +2,16 @@
     border: 0.5px solid gray;
     padding: 0;
     margin:3% 5%;
+    background: #fff4f42e;
+    border-radius: 10%;
 }
 
 .selectroute_star{
+    position: absolute;
+    top: 9%;
+    left: 83%;
     font-size: 2rem !important;
+    color: crimson;
 }
 
 .selectroute_location{
@@ -25,18 +31,28 @@
 }
 
 .selectroute_box2{
-    padding:5% 5%;
+    padding:8% 5%;
 }
 
 .selectroute_num{
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 80px;
 }
 
-.selectroute_chair{
-    margin-left: 1rem;
-    font-size: 1.6rem;
+/* .selectroute_chair{
+    margin-left: 1.5rem;
+    font-size: 1rem;
     line-height: 80px;
+} */
+
+.chairs{
+    margin: auto;
+    line-height: 30px;
+}
+.selectroute_chair{
+    margin: 0rem;
+    font-size: 1rem;
+    /* line-height: 80px; */
 }
 
 .selectroute_gotarin{
@@ -45,4 +61,13 @@
 
 button:focus{
     outline: none;
+}
+
+.chairdiv{
+    border-bottom: 0.5px solid gray;
+}
+
+.timebtn{
+    font-size: 1rem !important;
+    font-weight: bold !important;
 }

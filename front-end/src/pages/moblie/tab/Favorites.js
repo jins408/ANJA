@@ -11,28 +11,33 @@ import StarIcon from '@material-ui/icons/Star';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import '../../../css/Favorites.css'
+// import subway1 from '../images/subway1.png';
 
 
 const useStyles = makeStyles((theme) => ({
-    demo: {
-        backgroundColor: theme.palette.background.paper,
-    },
+    // demo: {
+    //     backgroundColor: 'none',
+    // },
     trash:{
         color: 'crimson'
     },
     nonefavor:{
         fontSize: '2rem',
         paddingTop: '15rem',
-        textAlign: 'center'
+        textAlign: 'center',
+        textShadow: '2px 2px 2px gray'
+    },
+    back:{
+        // background: 'rgba(255,255,255,1) !important',
     }
 }));
 
 
-const Favorites = () => {
+const Favorites = ( props ) => {
     let history = useHistory();
     const classes = useStyles();
-    const [hidden, setHidden] = useState(false);
     const [favname, setFavname] = useState([]);
+    const hidden = props.favorite_edit;
 
     useEffect(() => {
         const store = []
@@ -68,7 +73,7 @@ const Favorites = () => {
             <StarIcon className="favorite_star ml-2" />
             <ListItemText
                 primary={favn.content.split(',')[0] + '->' + favn.content.split(',')[1]}
-                className="listname mb-3 ml-3"
+                className="listname mb-1 ml-3"
             />
             {hidden && <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label="delete" onClick={() => onRemove(favn.id)}>
@@ -78,22 +83,22 @@ const Favorites = () => {
         </ListItem>
     )
 
-    const edit = () => {
-        if (hidden) {
-            setHidden(false)
-        } else {
-            setHidden(true)
-        }
-    }
+    // const edit = () => {
+    //     if (hidden) {
+    //         setHidden(false)
+    //     } else {
+    //         setHidden(true)
+    //     }
+    // }
 
     return (
         <div>
             <div className="d-flex justify-content-end mt-3">
-                {nextid !== 0 && <div>{hidden ? <button className="btn btn-outline Favorite_edit" onClick={edit}>완료</button> : <button className="btn btn-outline Favorite_edit" onClick={edit}>편집</button>}</div>}
+                {/* {nextid !== 0 && <div>{hidden ? <button className="btn btn-outline Favorite_edit" onClick={edit}>완료</button> : <button className="btn btn-outline Favorite_edit" onClick={edit}>편집</button>}</div>} */}
             </div>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
                 <div className={classes.demo}>
-                {nextid !== 0 ?<List>
+                {nextid !== 0 ?<List className={classes.back}>
                          {favlist} 
                     </List> : 
                     <div className={classes.nonefavor}>즐겨찾기를 추가해주세요!</div>

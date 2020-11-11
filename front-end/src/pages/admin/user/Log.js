@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useEffect }from 'react';
 import {  fade,makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,14 +12,14 @@ import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import VideocamIcon from '@material-ui/icons/Videocam';
-
+import Moment from 'react-moment'
 
 
 const columns = [
     { id: 'data', label: '날짜/시간', minWidth: 170 },
     { id: 'category', label: '경보유형', minWidth: 100 },
     {
-      id: 'subnumber',
+      id: 'id',
       label: '열차번호(칸)',
       minWidth: 170,
       align: 'right',
@@ -33,27 +33,7 @@ const columns = [
     },
    
   ];
-
-  function createData(data, category, subnumber, cctv) {
-    return { data, category, subnumber, cctv};
-  }
-  const rows = [
-    createData('India', 'IN', 1324171354, <VideocamIcon/>),
-    createData('China', 'CN', 1403500365, <VideocamIcon/>),
-    createData('Italy', 'IT', 60483973, <VideocamIcon/>),
-    createData('United States', 'US', 327167434, <VideocamIcon/>),
-    createData('Canada', 'CA', 37602103, <VideocamIcon/>),
-    createData('Australia', 'AU', 25475400, <VideocamIcon/>),
-    createData('Germany', 'DE', 83019200, <VideocamIcon/>),
-    createData('Ireland', 'IE', 4857000, <VideocamIcon/>),
-    createData('Mexico', 'MX', 126577691, <VideocamIcon/>),
-    createData('Japan', 'JP', 126317000, <VideocamIcon/>),
-    createData('France', 'FR', 67022000, <VideocamIcon/>),
-    createData('United Kingdom', 'GB', 6702220, <VideocamIcon/>),
-    createData('Russia', 'RU', 146793744, <VideocamIcon/>),
-    createData('Nigeria', 'NG', 200962417,<VideocamIcon/>),
-    createData('Brazil', 'BR', 210147125, <VideocamIcon/>),
-  ];
+  
 
 const useStyles = makeStyles((theme) =>({
     container: {
@@ -128,6 +108,7 @@ const Log = () =>{
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [loglist, setLoglist] = React.useState([]);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -137,6 +118,24 @@ const Log = () =>{
         setRowsPerPage(+event.target.value);
         setPage(0);
       };
+
+
+    useEffect(()=>{
+      getLogData(sessionStorage.getItem('uid').slice(0,2))
+      return () => {
+        };
+    },[])
+    
+    const getLogData = ((line=>{
+      window.db.collection("logs").doc(line).collection("messages").orderBy('time','desc').onSnapshot
+      (snapshot =>{
+            setLoglist(snapshot.docs.map(doc=>doc.data()))
+          });
+      }))
+
+      console.log(loglist)
+    
+
 
     return(
             <div>
@@ -181,15 +180,17 @@ const Log = () =>{
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                        {loglist.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((log, index) => {
                         return (
-                            <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                            <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                             {columns.map((column) => {
-                                const value = row[column.id];
+                                const value = log[column.id];
                                 return (
+                                  
                                 <TableCell key={column.id} align={column.align}>
-                                    {column.format && typeof value === 'number' ? column.format(value) : value}
-                                </TableCell>
+                                  {column.format && typeof value === 'number' ? column.format(value) : value}
+                                  {column.id === "data" && <Moment format="YYYY-MM-DD HH:mm">{log.time.seconds}</Moment>}
+                                </TableCell>                    
                                 );
                             })}
                             </TableRow>
@@ -202,12 +203,13 @@ const Log = () =>{
                     className="mr-4"
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={rows.length}
+                    count={loglist.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
+    
             </div>
         );
     }

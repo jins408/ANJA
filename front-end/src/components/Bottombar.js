@@ -26,31 +26,39 @@ const Bottombar = (props) =>{
     const handleBadgeVisibility = (is) => {
       setInvisible(is);
     };
-    // console.log('line',props.alarm_line,'time',props.lastReadTime,'time',timestamp)
+
+
     useEffect(()=>{
       getCount(props.alarm_line)
       if(location.pathname === '/mobile/alarm'){
         handleBadgeVisibility(true);
         setCount(0)
+      }else{
+        if( count === 0 ){
+        handleBadgeVisibility(true);
+        }else{
+          handleBadgeVisibility(false);
+        }
       }
-      else
-        handleBadgeVisibility(false);
-    },[location.pathname, count,line])
+  },[location.pathname, count,line])
 
-    const getCount = ((line=>{
-      window.db.collection('logs').doc(line).collection('messages').orderBy('time','desc').onSnapshot((snapshot)=>{ 
-        var i = 0
-        var date2 = props.lastReadTime / 100000
-        snapshot.forEach(change=>{
-          //마지막으로 알림에 들어온 시간보다 뒤에 있는것만
-            var date1 =change.data().time.seconds/100
-            if(date1>date2){
-              i += 1
-            }
-          }) 
-          setCount(i)
-        });
-  }))
+  const getCount = ((line=>{
+    window.db.collection('logs').doc(line).collection('messages').orderBy('time','desc').onSnapshot((snapshot)=>{ 
+      var i = 0
+      var date2 = props.lastReadTime / 100000
+      snapshot.forEach(change=>{
+        //마지막으로 알림에 들어온 시간보다 뒤에 있는것만
+          var date1 =change.data().time.seconds/100
+          if(date1>date2){
+            i += 1
+          }
+        }) 
+        setCount(i)
+      });
+}))
+
+
+
 
     return (
       <BottomNavigation
@@ -63,7 +71,7 @@ const Bottombar = (props) =>{
       >
         <BottomNavigationAction label="Home" icon={<HomeIcon />} component={Link} to='/mobile/main'/>
         <BottomNavigationAction label="즐겨찾기" icon={<StarIcon />} component={Link} to='/mobile/favorite'/>
-        <BottomNavigationAction onChange={handleBadgeVisibility}  label="알림" icon={<Badge color="secondary" badgeContent={count} invisible={invisible}><NotificationsActiveIcon/></Badge>} component={Link} to='/mobile/alarm'/>
+        <BottomNavigationAction onChange={handleBadgeVisibility}  label="알림" icon={<Badge color="secondary" className="alarmcount" badgeContent={count} invisible={invisible}><NotificationsActiveIcon/></Badge>} component={Link} to='/mobile/alarm'/>
         <BottomNavigationAction label="신고" icon={<RingVolumeIcon/>} component={Link} to='/mobile/claim'/>
         <BottomNavigationAction label="설정" icon={<SettingsIcon/>} component={Link} to='/mobile/setting'/>
         </BottomNavigation>

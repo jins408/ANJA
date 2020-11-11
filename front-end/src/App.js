@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Route, useLocation } from 'react-router-dom' 
+import { Route, useLocation, useHistory } from 'react-router-dom' 
 
 import Navigation from './components/Navigation'
-// import Introduce from './pages/Introduce'
 import Join from './pages/admin/user/Join'
 import Home from './pages/admin/user/Home'
 import Cctv from './pages/admin/user/Cctv'
 import Log from './pages/admin/user/Log'
 import AdminClaim from './pages/admin/user/AdminClaim'
 import Login from './pages/admin/user/Login'
+import Introduce from './pages/admin/user/Introduce'
 // import Apply from './pages/Apply'
 
 import Favorites from './pages/moblie/tab/Favorites'
@@ -47,16 +47,19 @@ const useStyles = makeStyles(() => ({
   },
   navigation:{
     paddingLeft: '200px'
-  }
+  },
 }));
 
 const App = () => {
   const classes = useStyles();
   const location = useLocation();
+  const history = useHistory();
   const [preloc, setPreloc] = React.useState();
-  const [user, setUser] = React.useState('user');
+  const [user, setUser] = React.useState();
   const [acount, setAcount] = React.useState('0');
   const [lastReadTime, setLastReadTime] = React.useState('0');
+  const [edit, setEdit] = React.useState(false);
+
 
   useEffect(()=>{
     setPreloc(location.pathname) 
@@ -64,14 +67,23 @@ const App = () => {
       if(preloc === '/'){
         setUser('logo')
       }
-      else if(preloc !== '/admin/login' && preloc !== '/admin/home' && preloc !== '/admin/cctv' && preloc !== '/admin/log' && preloc !== '/admin/adminclaim'){
+      else if(preloc !== '/admin/login' && preloc !== '/admin/home' && preloc !== '/admin/cctv' && preloc !== '/admin/log' && preloc !== '/admin/adminclaim' && preloc !== '/admin/introduce'){
         setUser('user')
       }
       else{
         setUser('admin')
       }
     }
-  },[preloc, location.pathname,acount])
+  },[preloc, location.pathname, acount])
+
+  useEffect(()=>{
+    if(user === 'admin'){
+      if(sessionStorage.length === 0 && preloc !== '/admin/login'){
+        alert('로그인 후 사용해주세요!')
+        history.push('/admin/login')
+      }
+    }
+  },[user, history, preloc])
   
 
   return (
@@ -82,9 +94,12 @@ const App = () => {
       </div>}
       {user === 'user' && <div className={classes.mobile}>
         {/* <Route exact path="/apply" component={Apply}></Route> */}
-        <Headerbar location={preloc} />
+        <Headerbar location={preloc} favorite_edit={(value)=>setEdit(value)} />
         <div className={classes.header}>
-          <Route exact path='/mobile/favorite' component={Favorites}></Route>
+          <Route exact path={'/mobile/favorite'}
+          render={()=>(
+            <Favorites favorite_edit={edit} />
+          )}/>
           <Route exact path='/mobile/main' component={Main}></Route>
           <Route exact path={'/mobile/alarm'}
           render={()=>(
@@ -100,8 +115,9 @@ const App = () => {
 
       {/* 관리자 태블릿(아이패드 사이즈) */}
       {user === 'admin' && <div className={classes.tablet}>
-      {location.pathname !== "/admin/login" && <Navigation />}
+      {location.pathname !== "/admin/login" && location.pathname !== "/admin/introduce" && <Navigation />}
       <Route exact path="/admin/login" component={Login}></Route>
+      <Route exact path="/admin/introduce" component={Introduce}></Route>
       <div className={classes.navigation}>
         <Route exact path="/admin/home" component={Home} />
           <Route exact path="/admin/join" component={Join}></Route>

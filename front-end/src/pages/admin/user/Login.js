@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 import '../../../css/Login.css'
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-      paddingTop: theme.spacing(15),
+      paddingTop: theme.spacing(20),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -39,11 +39,32 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () =>{
     const classes = useStyles();
-    const [id, setId] = useState('');
+    const history = useHistory();
+    const [uid, setUid] = useState('');
     const [password, setPassword] = useState('');
     
     const gologin = ()=> {
-      sessionStorage.setItem('id', id)
+      axios.post('https://k3b101.p.ssafy.io/api/users/sign',{
+        uid: uid,
+        password: password
+      })
+      .then((res)=>{
+        if(res.data.data === 'NOT FOUND USER'){
+          alert('등록되지 않은 사용자입니다.')
+          setUid('')
+          setPassword('')
+        }else if(res.data.data === 'INVALID PW'){
+          alert('비밀번호를 다시 확인해주세요.')
+          setPassword('')
+        }else{
+          sessionStorage.setItem('uid', uid)
+          alert('로그인 성공')
+          history.push('/admin/home')
+        }
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
     }
 
     return(
@@ -66,8 +87,8 @@ const Login = () =>{
                   label="ID"
                   autoComplete="id"
                   autoFocus
-                  value={id}
-                  onChange={(e)=>setId(e.target.value)}
+                  value={uid}
+                  onChange={(e)=>setUid(e.target.value)}
                 />
                 <TextField
                   className="text-form"
@@ -83,7 +104,6 @@ const Login = () =>{
                 />
 
                 <Button
-                  type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
@@ -92,7 +112,7 @@ const Login = () =>{
                 >
                   로그인
                 </Button>
-                <Grid container>
+                {/* <Grid container>
                   <Grid item xs>
                     <Link href="#" variant="body2">
                     비밀번호를 잊으셨나요?
@@ -101,10 +121,10 @@ const Login = () =>{
                   <Grid item>
                     <Link href="/Join" variant="body2">
                         아직 회원이 아니신가요?
-                      {/* {"Don't have an account? Sign Up"} */}
+                      {"Don't have an account? Sign Up"}
                     </Link>
                   </Grid>
-                </Grid>
+                </Grid> */}
               </form>
             </div>
           </Container>
