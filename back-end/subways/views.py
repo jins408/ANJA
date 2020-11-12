@@ -100,6 +100,11 @@ class SubwayEstimatedTimeView(APIView):
         minRoute["transLines"] = minLines
         shortRoute["transLines"] = shortLines
 
+        if int(minRoute["minTravelTm"]) >= 180:
+            minRoute = shortRoute
+        if int(shortRoute["shtTravelTm"]) >= 180:
+            shortRoute = minRoute
+
         return Response({'data': {'최소환승': minRoute, '최단거리': shortRoute}}, status=status.HTTP_200_OK)
 
 
