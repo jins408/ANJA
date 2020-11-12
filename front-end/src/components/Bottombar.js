@@ -29,11 +29,11 @@ const Bottombar = (props) =>{
 
 
     useEffect(()=>{
-      getCount(props.alarm_line)
       if(location.pathname === '/mobile/alarm'){
         handleBadgeVisibility(true);
         setCount(0)
       }else{
+        getCount(props.alarm_line)
         if( count === 0 ){
         handleBadgeVisibility(true);
         }else{
@@ -48,7 +48,7 @@ const Bottombar = (props) =>{
       var date2 = props.lastReadTime / 100000
       snapshot.forEach(change=>{
         //마지막으로 알림에 들어온 시간보다 뒤에 있는것만
-          var date1 =change.data().time.seconds/100
+        var date1 =change.data().time.seconds/100
           if(date1>date2){
             i += 1
           }
