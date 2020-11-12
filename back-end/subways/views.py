@@ -272,8 +272,8 @@ def getStationInfo(station):
     items = dict["item"]
     subways = []
     for item in items:
-        if station != item["subwayStationName"]:
-            continue
+        # if station != item["subwayStationName"]:
+        #     continue
         type = item["subwayRouteName"]
         info = {}
         if (type.startswith("서울")):
@@ -291,13 +291,15 @@ def getStationInfo(station):
 class StationInfoView(APIView):
     # 키워드에 맞는 서울 지하철 찾기
     def get(self, request):
-        infos = getStationInfo(request.GET.get("station"))
+        station = request.GET.get("station")
+        infos = getStationInfo(station)
         if not infos:
             return Response({"data": "NO DATA"}, status=status.HTTP_200_OK)
 
         stations = []
         for info in infos:
-            stations.append(info["line"])
+            if info["station"] == station:
+                stations.append(info["line"])
         stations.sort()
 
         return Response({"data": stations}, status=status.HTTP_200_OK)
