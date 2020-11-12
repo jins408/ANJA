@@ -59,8 +59,13 @@
  text-align: center; 
 }
 
+.loadingBox .lg-btn{
+    margin-left: 29.5rem;
+}
+
 .sub{
     margin-top: 0.8rem;
+    margin-left: 25.5rem;
     color: white;
 }
 

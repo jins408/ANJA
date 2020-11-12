@@ -239,7 +239,7 @@ const Log = () =>{
                   aria-labelledby="simple-modal-title"
                   aria-describedby="simple-modal-description"
                 >
-                  <div>
+                  <div className="my-auto">
                     <video
                         controls
                         autoPlay

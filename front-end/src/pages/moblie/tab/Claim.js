@@ -50,7 +50,7 @@ const Claim = () =>{
     const goclaim = () =>{
         axios.post(`${baseURL}/api/reports`,{
             category: inputbox,
-            sid: trainnum,
+            id: trainnum,
             contents: content
         }).then((res) =>{
             console.log(res)

@@ -1,12 +1,40 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
-const setting = () =>{
+const useStyles = makeStyles({
+    anja:{
+        width: '250px',
+        marginTop: '5rem',
+        borderRadius: '50%'
+    },
+    madeby:{
+        textAlign:'center',
+        marginTop: '3rem',
+        fontSize: '1.2rem'
+    },
+    name:{
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: '1.5rem'
+    }
+});
+
+
+const Setting = () =>{
+    const classes = useStyles();
+
+
     return(
             <div>
-                <h3 className="text-center">Hello setting Page</h3>
+                <div className="d-flex justify-content-center">
+                    <img className={classes.anja} src={require('../../../images/ANJA.png')} alt="로고" />
+                </div>
+                <p className="text-center">Mobile ver.201112</p>
+                <p className={classes.madeby}>Made by</p>
+                <p className={classes.name}>권민지 김석환 김진실 박세훈 조민기</p>
       
             </div>
         );
     }
 
-export default setting;
+export default Setting;

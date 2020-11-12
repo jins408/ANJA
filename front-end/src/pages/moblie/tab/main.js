@@ -6,6 +6,7 @@ import '../../../css/subway.css'
 
 const Main = () =>{
     const [plusimg, setPlusimg] = useState(false);
+
     const changeimg = (e) =>{
         if(!plusimg){
             e.target.width =e.target.width * 2
@@ -19,7 +20,7 @@ const Main = () =>{
     return(
             <div>
                 {/* <h3 className="text-center">Hello main Page</h3> */}
-                <Search />
+                <Search  />
                 <div className="subway-wrapper">
                     <div className="subway">
                         <img onClick={changeimg} src={require('../../../images/img_subway.png')} alt="이미지"  ></img>
