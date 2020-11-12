@@ -3,6 +3,9 @@ import { useHistory } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import '../css/search.css'
 import swal from 'sweetalert';
@@ -12,12 +15,23 @@ const Search = () =>{
     let history = useHistory();
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
+    const [preview1, setPreview1] = useState([]);
+    const [preview2, setPreview2] = useState([]);
+    
 
     const changestart = (e) =>{
         setStart(e.target.value)
         axios.get(`http://127.0.0.1:8080/api/subways/station?station=${e.target.value}`)
         .then((res)=>{
-            console.log(res.data.data)
+            if(res.data.data === 'NO DATA'){
+                return;
+            }
+            if(e.target.value===''){
+                setPreview1([]);
+            }else{
+                // console.log(res.data.data)
+                setPreview1(res.data.data)
+            }
         })
         .catch((err)=>{
             console.log(err)
@@ -25,6 +39,21 @@ const Search = () =>{
     }
     const changeend = (e) => {
         setEnd(e.target.value)
+        axios.get(`http://127.0.0.1:8080/api/subways/station?station=${e.target.value}`)
+        .then((res)=>{
+            if(res.data.data === 'NO DATA'){
+                return;
+            }
+            if(e.target.value===''){
+                setPreview2([]);
+            }else{
+                // console.log(res.data.data)
+                setPreview2(res.data.data)
+            }
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
     }
 
     const godetail = (e) =>{
@@ -47,6 +76,16 @@ const Search = () =>{
         }
     }
 
+    const selectpre1 = (e) => {
+        setStart(e)
+        setPreview1([])
+    }
+
+    const selectpre2 = (e) => {
+        setEnd(e)
+        setPreview2([])
+    }
+
     return (
     <form className="search pt-3" noValidate autoComplete="off">
         <div className="d-flex justify-content-between">
@@ -61,7 +100,23 @@ const Search = () =>{
                 value={start}
                 onChange={changestart}
             >
-                </TextField></div>
+                </TextField>
+            {preview1.length !== 0 && preview1 !== 'NO DATA' &&
+            <div className="preview1">
+                <List dense>
+                {preview1.map((pre, index)=>
+                    <ListItem key={index} >
+                    <ListItemText
+                        primary={pre}
+                        onClick={()=>selectpre1(pre)}
+                    />
+                    </ListItem>
+                )}
+                </List>
+            </div>}
+                
+                </div>
+            
             
             <div><span className="mr-2 ml-2">도착:</span>  
             <TextField
@@ -72,7 +127,21 @@ const Search = () =>{
                 value={end}
                 onChange={changeend}
                 onKeyPress={godetail}
-            /></div>
+            />
+            {preview2.length !== 0 && preview2 !== 'NO DATA' &&
+            <div className="preview2">
+                <List dense>
+                {preview2.map((pre, index)=>
+                    <ListItem key={index} >
+                    <ListItemText
+                        primary={pre}
+                        onClick={()=>selectpre2(pre)}
+                    />
+                    </ListItem>
+                )}
+                </List>
+            </div>}
+            </div>
         </div>
         <div>
             <IconButton className="searchIcon" component="span" onClick={godetail}>

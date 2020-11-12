@@ -21,3 +21,46 @@
     /* top:60px; */
     width: 373.4px;
 }
+
+.preview1{
+    width: 70%;
+    min-height: 50px;
+    background-color: white;
+    position: absolute;
+    /* bottom: 1%; */
+    /* top:0.1%; */
+    z-index: 2;
+    margin-left: 3rem;
+    border: 0.5px solid gray;
+}
+
+.preview1 .MuiList-padding{
+    padding: 0;
+}
+
+.preview1 .MuiListItem-dense{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+
+.preview2{
+    width: 70%;
+    min-height: 50px;
+    background-color: white;
+    position: absolute;
+    /* bottom: 1%; */
+    /* top:0.1%; */
+    z-index: 2;
+    margin-left: 3rem;
+    border: 0.5px solid gray;
+}
+
+.preview2 .MuiList-padding{
+    padding: 0;
+}
+
+.preview2 .MuiListItem-dense{
+    padding-top: 0;
+    padding-bottom: 0;
+}

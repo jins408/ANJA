@@ -42,7 +42,7 @@ const useStyles = makeStyles(() => ({
       paddingTop : '48px',
   },
   navigation:{
-    paddingLeft: '200px'
+    paddingLeft: '100px'
   },
 }));
 

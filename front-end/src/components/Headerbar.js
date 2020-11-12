@@ -53,7 +53,7 @@ const  Headerbar = ({location, favorite_edit}) =>{
     
     
     useEffect(()=>{
-      if( location !== '/mobile/main' && location !== '/mobile/favorite' && location !== '/mobile/alarm' && location !== '/mobile/claim'){
+      if( location !== '/mobile/main' && location !== '/mobile/favorite' && location !== '/mobile/alarm' && location !== '/mobile/claim' && location !== '/mobile/setting'){
         setBack(true)
         setShowedit(false)
       }else{
