@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63ea4dae-c0f8-4b88-a4d0-0aaf82b990df" name="Default Changelist" comment="">
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/../AI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AI/.idea/workspace.xml" afterDir="false" />
+=======
       <change beforePath="$PROJECT_DIR$/../AI/ipcamera/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AI/ipcamera/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AI/ipcamera/best.pt" beforeDir="false" afterPath="$PROJECT_DIR$/../AI/ipcamera/best.pt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AI/ipcamera/passengers/utils/best.pt" beforeDir="false" afterPath="$PROJECT_DIR$/../AI/ipcamera/passengers/utils/best.pt" afterDir="false" />
@@ -9,6 +12,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/passengers/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/passengers/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/passengers/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/passengers/views.py" afterDir="false" />
+>>>>>>> 5aafe2b02a36ca5cfcf3652adfd7b7eb5f1580ff
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -155,11 +159,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/subways/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="274" column="18" selection-start-line="274" selection-start-column="18" selection-end-line="274" selection-end-column="18" />
+            <state relative-caret-position="386">
+              <caret line="265" column="39" lean-forward="true" selection-start-line="265" selection-start-column="39" selection-end-line="265" selection-end-column="39" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1605085172199" expanded="false" signature="11398:11467" ph="..." />
+                <marker date="1605086808613" expanded="false" signature="11398:11467" ph="..." />
               </folding>
             </state>
           </provider>
@@ -284,10 +288,16 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
+<<<<<<< HEAD
+    <option name="x" value="953" />
+    <option name="width" value="974" />
+    <option name="height" value="1047" />
+=======
     <option name="x" value="951" />
     <option name="y" value="-9" />
     <option name="width" value="978" />
     <option name="height" value="1048" />
+>>>>>>> 5aafe2b02a36ca5cfcf3652adfd7b7eb5f1580ff
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -362,8 +372,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
+    <frame x="953" y="0" width="974" height="1047" extended-state="0" />
+=======
     <frame x="761" y="-7" width="782" height="838" extended-state="0" />
     <editor active="true" />
+>>>>>>> 5aafe2b02a36ca5cfcf3652adfd7b7eb5f1580ff
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4991453" visible="true" weight="0.22013423" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -600,11 +614,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/subways/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="274" column="18" selection-start-line="274" selection-start-column="18" selection-end-line="274" selection-end-column="18" />
+        <state relative-caret-position="386">
+          <caret line="265" column="39" lean-forward="true" selection-start-line="265" selection-start-column="39" selection-end-line="265" selection-end-column="39" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <marker date="1605085172199" expanded="false" signature="11398:11467" ph="..." />
+            <marker date="1605086808613" expanded="false" signature="11398:11467" ph="..." />
           </folding>
         </state>
       </provider>
