@@ -31,16 +31,12 @@ const useStyles = makeStyles(() => ({
     minHeight: '812px',
     height: '100%',
     margin: 'auto',
-    borderRight: '0.5px solid gray',
-    borderLeft: '0.5px solid gray'
   },
   tablet:{
     width: '1024px',
     minHeight: '768px',
     height: '100%',
     margin: 'auto',
-    borderRight: '0.5px solid gray',
-    borderLeft: '0.5px solid gray'
   },
   header: {
       paddingTop : '48px',
@@ -78,7 +74,7 @@ const App = () => {
 
   useEffect(()=>{
     if(user === 'admin'){
-      if(sessionStorage.length === 0 && preloc !== '/admin/login'){
+      if(sessionStorage.length === 0 && preloc !== '/admin/login' && preloc !== '/admin/introduce'){
         alert('로그인 후 사용해주세요!')
         history.push('/admin/login')
       }
@@ -107,8 +103,8 @@ const App = () => {
           )}/>
           <Route exact path='/mobile/claim' component={Claim}></Route>
           <Route exact path='/mobile/setting' component={Setting}></Route>
-          <Route exact path='/selectroute/:start/:end' component={Selectroute}></Route>
-          <Route exact path='/subwaytime/:subway' component={SubwayTime}></Route>
+          <Route exact path={'/selectroute/:start/:end'} component={Selectroute} />
+          <Route exact path={'/subwaytime/:station/:line'} component={SubwayTime} />
          <Bottombar alarm_line={acount} lastReadTime={lastReadTime} />
         </div>
       </div>}

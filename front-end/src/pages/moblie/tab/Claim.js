@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 
 import '../../../css/claim.css'
 
+import swal from 'sweetalert';
 import axios from 'axios'
 
 const baseURL = 'https://k3b101.p.ssafy.io'
@@ -16,17 +17,16 @@ const Claim = () =>{
     const [trainnum, setTrainnum ] = useState('');
 
     const Claimcontent = e =>{
-        console.log(e.target.value.length)
+        // console.log(e.target.value.length)
         setContent(e.target.value)
         if(e.target.value.length > 50){
             setContent(content)
-            alert('50자')
             return
         }
     }
 
     const maxLengthCheck = (object) => {
-        console.log(object.target.value.length)
+        // console.log(object.target.value.length)
         if (object.target.value.length > object.target.maxLength) {
             object.target.value = object.target.value.slice(0, object.target.maxLength)
         }
@@ -54,7 +54,11 @@ const Claim = () =>{
             contents: content
         }).then((res) =>{
             console.log(res)
-            alert("등록")
+            swal("신고되었습니다!", {
+                icon: "success",
+                buttons: false,
+                timer: 1000,
+              });
             oncancle()
         })
         .catch((error) => {
@@ -93,7 +97,7 @@ const Claim = () =>{
             </div>
             <div className="mt-3">
                 <p className="categoty-claim mr-1">신고내용 </p>
-                <div>
+                <div className="subway-claim">
                     <textarea className="claim-content" value={content} onChange={Claimcontent} type="text" placeholder="내용을 입력해주세요."></textarea>
                     <p className="textcount">글자수50자 이하</p>
                 </div>

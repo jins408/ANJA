@@ -25,6 +25,9 @@ from utils.general import (
     check_img_size, non_max_suppression, apply_classifier, scale_coords,
     xyxy2xywh, plot_one_box, strip_optimizer, set_logging)
 from .firebase import push_data,push_passenger
+import requests
+#firestore timezone 변경하기위함
+from pytz import timezone
 
 directory = os.getcwd()
 filePath = directory + '/passengers/templates/resources/images/'
@@ -34,6 +37,7 @@ subway_data = {
 	'ssid' : '01',
 	'id' : '010101',
 }
+KST = timezone('Asia/Seoul')
 
 class VideoCamera(object):
 	def __init__(self):
@@ -47,9 +51,14 @@ class VideoCamera(object):
 
 	def test(self):
 		# Load model
+		# 시작시간 설정
+		self.endtime = time.time()
+		logEndTime = time.time()
+		passengerSaveTime = time.time()
+		# print('시간',datetime.now(KST))
 
 		device = select_device('')
-		weights = './passengers/utils/best.pt'
+		weights = 'best.pt'
 		model = attempt_load(weights, map_location=device)  # load FP32 model
 		imgsz = check_img_size(640, s=model.stride.max())  # check img_size
 
@@ -119,34 +128,41 @@ class VideoCamera(object):
 						# n => 개수 names[int(c)] => 클래스 이름
 						n = (det[:, -1] == c).sum()  # detections per class
 						s += '%g %ss, ' % (n, names[int(c)])  # add to string
-						if (names[int(c)] == 'mask'and dangerTime>0):
+						if (names[int(c)] == 'mask'):
 							nowPS += int(n)
 						if (names[int(c)] == 'no-mask'):
 							nowPS += int(n)
 
-						# firestore에 6초에 한번씩 Log 보냄
-						if(names[int(c)] !='mask' and dangerTime>=0):
-							print('파이어스토어입력')
+						# firestore에 30초에 한번씩 Log 및 영상보냄
+						if(names[int(c)] !='mask' and time.time()-logEndTime>30):
+
+							# self.save_clip()
+							# print('파이어스토어입력',time.time()-logEndTime)
 							alarm = subway_data
-							timeToSave = int(datetime.now().timestamp())
+							timeToSave = datetime.now(KST)
+							# print(timeToSave,'타이이이임',timeToSave.timestamp())
+
+							# 영상저장 쓰레드 생성
+							self.timeToSave = int(timeToSave.timestamp())
+							threading.Thread(target=self.save_clip, args=()).start()
+
+							# firestore에 저장 (영상은 id와 timestamp 값으로 찾는다)
 							alarm['category'] = names[int(c)]
-							if(alarm['category'] == 'no-mask'):
+							if (alarm['category'] == 'no-mask'):
 								alarm['category'] = 'nomask'
 							alarm['time'] = timeToSave
-							# firestore에 저장 (영상은 id와 timestamp 값으로 찾는다)
 							push_data(alarm)
-							##########
-							#영상녹화 함수 들어갈 부분
-							##########
-							# 6초 타이머 on
-							dangerTime = -180
+							logEndTime = time.time()
+
+
 
 					# 30초에 한번씩 좌석 및 승객 수 파이어 스토어에 저장
-					if saveTime%900==0:
-						print('now',int(datetime.now().timestamp()))
+					if time.time()-passengerSaveTime>30:
+						# print('now',int(datetime.now().timestamp()))
 						passenger = subway_data
 						passenger['current'] = nowPS
 						push_passenger(passenger)
+						passengerSaveTime = time.time()
 						# serializer = PsSerializer(data=passenger)
 						# print('시리얼라이저', serializer)
 						#
@@ -180,6 +196,31 @@ class VideoCamera(object):
 		# 	cv2.imshow(p, im0)
 		# 	if cv2.waitKey(1) == ord('q'):  # q to quit
 		# 		raise StopIteration
+	
+	# 영상 클립 저장
+	def save_clip(self):
+		print('영상저장')
+		start = time.time()
+		# print('다시 시작되는데 걸린 시간', time.time()-self.endtime)
+		self.endtime=time.time()
+		saveTime = self.timeToSave
+		saveName = subway_data['id']+str(saveTime)+'.mp4'
+		fcc = cv2.VideoWriter_fourcc(*'X264')
+		out = cv2.VideoWriter('./video/'+saveName,fcc,30,(640,480))
+		while True:
+			out.write(self.frame)
+			print(time.time()-start)
+			if(time.time()-start>7):
+				break;
+			time.sleep(0.03)
+		
+		out.release()
+		with open("./video/"+saveName, "rb") as a_file:
+			file_dict = {'file': a_file}
+			response = requests.post("https://k3b101.p.ssafy.io/api/passengers/passenger", files=file_dict)
+
+			print(saveName,response.text)
+		self.endtime = time.time()
 
 	def save_passenger(data):
 		serializer = PsSerializer(data=data)
@@ -199,6 +240,7 @@ class VideoCamera(object):
 		fileName = filePath + now.strftime('%y%m%d_%H%M%S') + '.png'
 		print (fileName)
 		cv2.imwrite(fileName, self.frame)
+		
 
 		db = Image(image_name=now.strftime('%y%m%d_%H%M%S'), pub_date=timezone.now())
 		db.save()

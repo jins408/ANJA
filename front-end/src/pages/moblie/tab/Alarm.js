@@ -25,82 +25,82 @@ const useStyles = makeStyles((theme) => ({
     firstline:{
         color: "#283593",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     secondline:{
         color:"#4caf50",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     thirdline:{
         color: "#ef6c00",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     fourthline:{
         color:"#2196f3",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     fifthline:{
         color:"#7e57c2",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     sixthline:{
         color:"#B8860B",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     seventhline:{
         color:"#556B2F",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     eighthline:{
         color:"#FF1493",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     ninthline:{
         color:"#DAA520",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     gyeongchun:{
         color:"#7CFC00",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     gyeonguicenter:{
         color:"#48D1CC",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     airport:{
         color:"#1E90FF",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     shinbundang:{
         color:"#FF4500",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     inchone:{
         color:"#87CEFA",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     wuyihsin:{
         color:"#6B8E23",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     suinbundang:{
         color:"#000000",
         padding: '7px',
-        width: '93px'
+        width: '90px'
     },
     paper: {
         padding: '6px 16px',
@@ -187,7 +187,7 @@ const Alarm = (props) =>{
     );
 
     return(
-            <div>
+            <div className="ml-2">
                 <h6 className={classes.root}>지하철 호선</h6>
                 <Button onClick={()=>changline('01')} className={classes.firstline} variant="outlined" size="large" >1호선</Button>
                 <Button onClick={()=>changline('02')} className={classes.secondline} variant="outlined" size="large">2호선</Button>

@@ -7,8 +7,10 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
-import StarIcon from '@material-ui/icons/Star';
+// import StarIcon from '@material-ui/icons/Star';
 import DeleteIcon from '@material-ui/icons/Delete';
+import TrainIcon from '../../../images/train_885831.png'
+import swal from 'sweetalert';
 
 import '../../../css/Favorites.css'
 // import subway1 from '../images/subway1.png';
@@ -19,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     //     backgroundColor: 'none',
     // },
     trash:{
-        color: 'crimson'
+        color: '#ff0000a3'
     },
     nonefavor:{
         fontSize: '2rem',
@@ -57,9 +59,36 @@ const Favorites = ( props ) => {
 
 
     const onRemove = (id) => {
-        setFavname(favname.filter(favn => favn.id !== id));
-        localStorage.removeItem(id)
-        alert('삭제되었습니다')
+        swal({
+            title: "삭제하시겠습니까?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            buttons: {
+                cancel: "취소",
+                confirm: "삭제"
+              },
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                setFavname(favname.filter(favn => favn.id !== id));
+                localStorage.removeItem(id)
+              swal("삭제되었습니다!", {
+                icon: "success",
+                buttons:{
+                    confirm: "완료"
+                }
+              });
+            } else {
+              swal("취소되었습니다!",{
+                icon: "error",
+                buttons:{
+                    confirm: "완료"
+                }
+              });
+              
+            }
+          });
     }
 
     const godetail = (content) => {
@@ -70,7 +99,8 @@ const Favorites = ( props ) => {
 
     const favlist = favname.map((favn) =>
         <ListItem key={favn.id} onClick={() => godetail(favn.content)}>
-            <StarIcon className="favorite_star ml-2" />
+            <img src={TrainIcon} alt="기차" className="favorite_star ml-2" />
+            {/* <StarIcon className="favorite_star ml-2" /> */}
             <ListItemText
                 primary={favn.content.split(',')[0] + '->' + favn.content.split(',')[1]}
                 className="listname mb-1 ml-3"

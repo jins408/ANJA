@@ -18,7 +18,7 @@ def push_data(data):
         u'sid': data['sid'],
         u'ssid': data['ssid'],
         u'category': data['category'],
-        u'time': datetime.now()
+        u'time': data['time']
     })
 
 def push_passenger(data):

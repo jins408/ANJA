@@ -58,7 +58,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-const SelectRoute = ({ match }) => {
+const SelectRoute = ({ match }, props) => {
     const classes = useStyles();
     const [star, setStar] = useState(false);
     const [id, setId] = useState(0)
@@ -69,17 +69,22 @@ const SelectRoute = ({ match }) => {
     const [showdetail2, setShowdetail2] = useState(false);
     const [chairs, setChairs] = useState([]);
     const [rechairs, setRechairs] = useState([]);
+    // const [station, setStation] = useState();
+    const [line, setLine] = useState();
     var [nextid, setNextid] = useState(0)
+
 
     const start = match.params.start
     const end = match.params.end
     
 
     useEffect(() => {
-        axios.get(`https://k3b101.p.ssafy.io/api/subways/estimate?from=${start}&to=${end}`)
+        axios.get(`http://127.0.0.1:8080/api/subways/estimate?from=${start}&to=${end}`)
             .then((res) => {
                 // console.log(res.data.data)
                 setTraininfo(res.data.data)
+                // setStation(res.data.data['최단거리'].transLines.station[0])
+                setLine(res.data.data['최단거리'].transLines.line[0])
             }).catch((err) => {
                 console.log(err)
             })
@@ -129,9 +134,9 @@ const SelectRoute = ({ match }) => {
 
     const order = chairs.map((chair)=>
     <div className="d-flex justify-content-start mb-3 chairdiv" key={chair.ssid}>
-        {(chair.seat >= 30 && <img src={TrainIcon} className={classes.good}/>) || 
-        (chair.seat < 30 && chair.seat >= 6 && <img src={TrainIcon} className={classes.soso}/>) ||
-        (chair.seat <= 5 && <img src={TrainIcon} className={classes.bad}/>)}
+        {(chair.seat >= 30 && <img src={TrainIcon} alt="원활" className={classes.good}/>) || 
+        (chair.seat < 30 && chair.seat >= 6 && <img src={TrainIcon} alt="보통" className={classes.soso}/>) ||
+        (chair.seat <= 5 && <img src={TrainIcon} alt="혼잡" className={classes.bad}/>)}
         <div className="chairs">
             <p className="selectroute_chair">열차번호 : {chair.id}</p> 
             <p className="selectroute_chair">남은 좌석 수 : {chair.seat}</p>
@@ -141,9 +146,9 @@ const SelectRoute = ({ match }) => {
 
     const recommend = rechairs.map((rechair)=>
         <div className="d-flex justify-content-start mb-3 chairdiv" key={rechair.ssid}>
-            {(rechair.seat >= 30 && <img src={TrainIcon} className={classes.good}/>) || 
-            (rechair.seat < 30 && rechair.seat >= 6 && <img src={TrainIcon} className={classes.soso}/>) ||
-            (rechair.seat <= 5 && <img src={TrainIcon} className={classes.bad}/>)}
+            {(rechair.seat >= 30 && <img src={TrainIcon} alt="원활" className={classes.good}/>) || 
+            (rechair.seat < 30 && rechair.seat >= 6 && <img src={TrainIcon} alt="보통" className={classes.soso}/>) ||
+            (rechair.seat <= 5 && <img src={TrainIcon} alt="혼잡" className={classes.bad}/>)}
             <div className="chairs">
                 <p className="selectroute_chair">열차번호 : {rechair.id}</p> 
                 <p className="selectroute_chair">남은 좌석 수 : {rechair.seat}</p>
@@ -171,15 +176,16 @@ const SelectRoute = ({ match }) => {
     return (
         <div>
             <div className="selectroute_box">
-                <div className="d-flex justify-content-center mr-2 mt-2">
+                {traininfo && 
+                <div className="d-flex justify-content-end mr-2 mt-2">
                     {/* <Button href={`/subwaytime/${start}`} color="primary">TIME</Button> */}
-                    <p className="selectroute_location mb-0">{start} <ForwardIcon className="mb-1" /> {end}</p>
+                    <p className="selectroute_location mb-0">{start}({traininfo['최단거리'].transLines.line[0]}) <ForwardIcon className="mb-1" /> {end}</p>
                     {star ? <StarIcon className="selectroute_star" onClick={starHandler} /> : <StarBorderIcon className="selectroute_star" onClick={starHandler} />}
-                </div>
+                </div>}
                 {/* <p className="selectroute_location mb-0">{start} <ForwardIcon className="mb-1" /> {end}</p> */}
                 <div className="d-flex justify-content-end">
                     {/* {mintime ? <Button className="ml-2" onClick={mintimeHandler} color="secondary">최단시간</Button> : <Button className="ml-2" onClick={mintimeHandler} color="secondary">최소환승</Button>} */}
-                    <Button href={`/subwaytime/${start}`} color="primary" className="timebtn">TIME</Button>
+                    <Button href={`/subwaytime/${start}/${line}`}  color="primary" className="timebtn">TIME</Button>
                 </div>
                 {/* 최단시간 */}
                 {/* {mintime && traininfo && <p className="sleectroute_time mb-4">{traininfo.shtTravelMsg}</p>} */}
@@ -188,28 +194,28 @@ const SelectRoute = ({ match }) => {
                 {traininfo && 
                 <div className="mx-auto mb-3 selectroute_updown">
                 <Button className="ml-2" onClick={()=>setShowdetail1(!showdetail1)} color="secondary">최단시간</Button>
-                    <p className="ml-3">소요시간 : {traininfo.shtTravelTm}분({traininfo.shtTransferCnt}회 환승)</p>
+                    <p className="ml-3">소요시간 : {traininfo['최단거리'].shtTravelTm}분({traininfo['최단거리'].shtTransferCnt}회 환승)</p>
                     {/* {traininfo.shtTransferMsg !== null && <p>환승역 : {traininfo.shtTransferMsg}</p>} */}
                     {showdetail1 && 
                     <div className="ml-3">
-                        {traininfo.shtStatnNm.split(',').map((shttrain, index)=>
+                        {traininfo['최단거리'].shtStatnNm.split(',').map((shttrain, index)=>
                         <span key={index}>
-                            {shttrain !== '' && index !== traininfo.shtStatnNm.split(',').length-2 && <span>{shttrain} <ArrowRightAltIcon className={classes.arrow}/></span>}
-                            {index === traininfo.shtStatnNm.split(',').length-2 && <span>{shttrain} </span>}
+                            {shttrain !== '' && index !== traininfo['최단거리'].shtStatnNm.split(',').length-2 && <span>{shttrain} <ArrowRightAltIcon className={classes.arrow}/></span>}
+                            {index === traininfo['최단거리'].shtStatnNm.split(',').length-2 && <span>{shttrain} </span>}
                         </span>
-                    )}({traininfo.shtStatnCnt}개)
+                    )}({traininfo['최단거리'].shtStatnCnt}개)
                     </div>}
                 <Button className="ml-2" onClick={()=>setShowdetail2(!showdetail2)} color="secondary">최소환승</Button>
-                    <p className="ml-3">소요시간 : {traininfo.minTravelTm}분({traininfo.minTransferCnt}회 환승)</p>
+                    <p className="ml-3">소요시간 : {traininfo['최소환승'].minTravelTm}분({traininfo['최소환승'].minTransferCnt}회 환승)</p>
                     {/* {traininfo.minTransferMsg !== null &&<p>환승역 : {traininfo.minTransferMsg}</p>} */}
                     {showdetail2 && 
                     <div className="ml-3">
-                        {traininfo.minStatnNm.split(',').map((mintrain, index)=>
+                        {traininfo['최소환승'].minStatnNm.split(',').map((mintrain, index)=>
                         <span key={index}>
-                            {mintrain !== '' && index !== traininfo.minStatnNm.split(',').length-2 && <span>{mintrain} <ArrowRightAltIcon className={classes.arrow}/></span>}
-                            {index === traininfo.minStatnNm.split(',').length-2 && <span>{mintrain}</span>}
+                            {mintrain !== '' && index !== traininfo['최소환승'].minStatnNm.split(',').length-2 && <span>{mintrain} <ArrowRightAltIcon className={classes.arrow}/></span>}
+                            {index === traininfo['최소환승'].minStatnNm.split(',').length-2 && <span>{mintrain}</span>}
                         </span>
-                    )}({traininfo.minStatnCnt}개)
+                    )}({traininfo['최소환승'].minStatnCnt}개)
                     </div>}
                     {/* {sinfo && <p className="text-center mb-1 selectroute_gotarin"><TrainIcon /> {sinfo[0].trainLineNm} : {parseInt(sinfo[0].barvlDt / 60)}분{sinfo[0].barvlDt % 60}초</p>}
                     {sinfo && <p className="text-center selectroute_gotarin"><TrainIcon /> {sinfo[1].trainLineNm} : {parseInt(sinfo[1].barvlDt / 60)}분{sinfo[1].barvlDt % 60}초</p>} */}
