@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63ea4dae-c0f8-4b88-a4d0-0aaf82b990df" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/subways/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/subways/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AI/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -143,11 +143,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/subways/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="274" column="18" selection-start-line="274" selection-start-column="18" selection-end-line="274" selection-end-column="18" />
+            <state relative-caret-position="386">
+              <caret line="265" column="39" lean-forward="true" selection-start-line="265" selection-start-column="39" selection-end-line="265" selection-end-column="39" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1605085172199" expanded="false" signature="11398:11467" ph="..." />
+                <marker date="1605086808613" expanded="false" signature="11398:11467" ph="..." />
               </folding>
             </state>
           </provider>
@@ -228,7 +228,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
+    <option name="x" value="953" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -305,8 +305,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="974" height="1047" extended-state="0" />
-    <editor active="true" />
+    <frame x="953" y="0" width="974" height="1047" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4991453" visible="true" weight="0.22115384" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -539,11 +538,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/subways/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="274" column="18" selection-start-line="274" selection-start-column="18" selection-end-line="274" selection-end-column="18" />
+        <state relative-caret-position="386">
+          <caret line="265" column="39" lean-forward="true" selection-start-line="265" selection-start-column="39" selection-end-line="265" selection-end-column="39" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <marker date="1605085172199" expanded="false" signature="11398:11467" ph="..." />
+            <marker date="1605086808613" expanded="false" signature="11398:11467" ph="..." />
           </folding>
         </state>
       </provider>
