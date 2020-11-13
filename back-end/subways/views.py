@@ -270,20 +270,23 @@ def getStationInfo(station):
     dict = xmltodict.parse(response_body)
     dict = json.loads(json.dumps(dict))
     dict = dict["response"]["body"]["items"]
-
+    
     seouls = ['경춘선', '경의중앙선', '공항철도', '신분당선', '인천 1호선', '인천 2호선', '우이신설', '수인선']
     if not dict:
         return None
-    items = dict["item"]
+    items = []
+
+    if str(type(dict["item"])) == "<class 'dict'>":
+        items.append(dict["item"])
+    else:
+        items = dict["item"]
     subways = []
     for item in items:
-        # if station != item["subwayStationName"]:
-        #     continue
-        type = item["subwayRouteName"]
+        line = item["subwayRouteName"]
         info = {}
-        if (type.startswith("서울")):
+        if (line.startswith("서울")):
             info['line'] = item["subwayRouteName"][3:]
-        elif type in seouls:
+        elif line in seouls:
             info['line'] = item["subwayRouteName"]
         else:
             continue
@@ -308,8 +311,6 @@ class StationInfoView(APIView):
         stations.sort()
 
         return Response({"data": stations}, status=status.HTTP_200_OK)
-
-        return Response({"data": subways}, status=status.HTTP_200_OK)
 
 
 
