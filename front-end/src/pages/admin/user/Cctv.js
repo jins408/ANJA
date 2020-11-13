@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Chart from './Chart'
 
 
 const useStyles = makeStyles({
@@ -69,7 +68,6 @@ const Cctv = () => {
                     <img className={classes.vdeio} onClick={()=>gocctv(4)} src={'http://118.217.60.147:8000/stream2/'} alt="cctv4"></img>
                 </div>
             </div>
-            <Chart data={'시발'}></Chart>
         </div>
     );
 }
