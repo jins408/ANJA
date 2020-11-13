@@ -11,6 +11,8 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.0",
     "firebase": "^7.2.3",
+    "highcharts": "^8.2.2",
+    "highcharts-react-official": "^3.0.0",
     "material-ui-icons": "^1.0.0-beta.36",
     "moment": "^2.29.1",
     "react": "^17.0.0",
