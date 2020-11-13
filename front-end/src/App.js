@@ -12,6 +12,7 @@ import Log from './pages/admin/user/Log'
 import AdminClaim from './pages/admin/user/AdminClaim'
 import Login from './pages/admin/user/Login'
 import Introduce from './pages/admin/user/Introduce'
+import Statistics from './pages/admin/user/Statistics'
 // import Apply from './pages/Apply'
 
 import Favorites from './pages/moblie/tab/Favorites'
@@ -63,7 +64,10 @@ const App = () => {
       if(preloc === '/'){
         setUser('logo')
       }
-      else if(preloc !== '/admin/login' && preloc !== '/admin/home' && preloc !== '/admin/cctv' && preloc !== '/admin/log' && preloc !== '/admin/adminclaim' && preloc !== '/admin/introduce'){
+      else if(preloc === '/admin'){
+        setUser('adminIntroduce')
+      }
+      else if(preloc !== '/admin/login' && preloc !== '/admin/home' && preloc !== '/admin/cctv' && preloc !== '/admin/log' && preloc !== '/admin/adminclaim' && preloc !== '/admin/introduce' && preloc !== '/admin/statistics'){
         setUser('user')
       }
       else{
@@ -108,18 +112,24 @@ const App = () => {
          <Bottombar alarm_line={acount} lastReadTime={lastReadTime} />
         </div>
       </div>}
+    
+      {/* 관리자 Introduce Page */}
+      {user === 'adminIntroduce' && <div className={classes.tablet}>
+      <Route exact path='/admin' component={Introduce}></Route>
+      </div>}
 
       {/* 관리자 태블릿(아이패드 사이즈) */}
       {user === 'admin' && <div className={classes.tablet}>
       {location.pathname !== "/admin/login" && location.pathname !== "/admin/introduce" && <Navigation />}
+      <Route exact path="/admin" component={Introduce}></Route>
       <Route exact path="/admin/login" component={Login}></Route>
-      <Route exact path="/admin/introduce" component={Introduce}></Route>
       <div className={classes.navigation}>
         <Route exact path="/admin/home" component={Home} />
           <Route exact path="/admin/join" component={Join}></Route>
           <Route exact path="/admin/cctv" component={Cctv}></Route>
           <Route exact path="/admin/log" component={Log}></Route>
           <Route exact path="/admin/adminclaim" component={AdminClaim}></Route>
+          <Route exact path="/admin/statistics" component={Statistics}></Route>
         </div>
       </div>}
     </div>

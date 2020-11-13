@@ -133,6 +133,15 @@ const Navigation = () =>{
               </ListItemLink>
               </ListItem>
               <p className={classes.menu3}>신고</p>
+              <ListItem className="pb-0"  button>
+              <ListItemLink href="/admin/statistics">
+                <ListItemIcon>
+                  <HeadsetMicIcon fontSize="large" className={classes.menulogo}/> 
+                </ListItemIcon>
+                {/* <ListItemText primary="신고" /> */}
+              </ListItemLink>
+              </ListItem>
+              <p className={classes.menu3}>통계</p>
               {/* <Button className={classes.btn} variant="contained" color="secondary">
                 로그아웃
               </Button> */}
