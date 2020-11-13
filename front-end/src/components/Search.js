@@ -29,7 +29,7 @@ const Search = () =>{
             if(e.target.value===''){
                 setPreview1([]);
             }else{
-                // console.log(res.data.data)
+                console.log(res.data.data)
                 setPreview1(res.data.data)
             }
         })
@@ -38,6 +38,9 @@ const Search = () =>{
         })
     }
     const changeend = (e) => {
+        if(preview1 !== []){
+            setPreview1([])
+        }
         setEnd(e.target.value)
         axios.get(`http://127.0.0.1:8080/api/subways/station?station=${e.target.value}`)
         .then((res)=>{
