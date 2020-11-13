@@ -25,19 +25,24 @@ const useStyles = makeStyles((theme) => ({
       position: 'fixed',
       height: '100%',
       overflow: 'auto',
-      backgroundColor: '#858484c2',
+      backgroundColor: '#000000b8',
+      color: 'white',
+      // backgroundColor: '#858484c2',
     },
     menu1:{
       marginLeft: '2.6rem'
     },
     menu2:{
-      marginLeft: '2rem'
+      marginLeft: '2.2rem'
     },
     menu3:{
       marginLeft: '2.3rem'
     },
     menu4:{
       marginLeft:"1.3rem"
+    },
+    menulogo:{
+      color: 'white'
     },
     logout:{
       marginTop: '16rem',
@@ -93,7 +98,7 @@ const Navigation = () =>{
               <ListItem className="pb-0"  button>
               <ListItemLink href="/admin/home">
                 <ListItemIcon>
-                  <HomeIcon fontSize="large"  color="primary" />
+                  <HomeIcon fontSize="large"  className={classes.menulogo} />
                 </ListItemIcon>
                 {/* <ListItemText primary="HOME" /> */}
                 </ListItemLink>
@@ -102,19 +107,18 @@ const Navigation = () =>{
               <ListItem  className="pb-0"  button>
               <ListItemLink href="/admin/cctv">
                 <ListItemIcon >
-                  <VideocamIcon fontSize="large" />
+                  <VideocamIcon fontSize="large" className={classes.menulogo}/>
                 </ListItemIcon>
                 {/* <ListItemText primary="CCTV" /> */}
                 </ListItemLink>
               </ListItem>
               <p className={classes.menu2}>cctv</p>
             </List>
-            <Divider />
             <List component="nav" aria-label="secondary mailbox folders">
               <ListItem className="pb-0"  button>
               <ListItemLink href="/admin/log">
                 <ListItemIcon>
-                  <ListIcon fontSize="large" /> 
+                  <ListIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
                 {/* <ListItemText primary="LOG" /> */}
                 </ListItemLink>
@@ -123,7 +127,7 @@ const Navigation = () =>{
               <ListItem className="pb-0"  button>
               <ListItemLink href="/admin/adminclaim">
                 <ListItemIcon>
-                  <HeadsetMicIcon fontSize="large" /> 
+                  <HeadsetMicIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
                 {/* <ListItemText primary="신고" /> */}
               </ListItemLink>

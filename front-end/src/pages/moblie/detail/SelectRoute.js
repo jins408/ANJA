@@ -54,7 +54,12 @@ const useStyles = makeStyles(() => ({
     },
     dot3:{
         color: '#ff0000a3'
-    }
+    },
+    trainnow: {
+        color: '#f50057',
+        fontSize: '0.875rem',
+        marginBottom: '6px',
+    },
 }));
 
 
@@ -69,8 +74,13 @@ const SelectRoute = ({ match }, props) => {
     const [showdetail2, setShowdetail2] = useState(false);
     const [chairs, setChairs] = useState([]);
     const [rechairs, setRechairs] = useState([]);
-    // const [station, setStation] = useState();
-    const [line, setLine] = useState();
+    const [line, setLine] = useState([]);
+    const [station, setStation] = useState([]);
+    const [transfer, setTransfer] = useState([]);
+    const [minline, setMinline] = useState([]);
+    const [minstation, setMinstation] = useState([]);
+    const [mintransfer, setMintransfer] = useState([]);
+    const [arrive, setArrive] = useState([]);
     var [nextid, setNextid] = useState(0)
 
 
@@ -79,12 +89,15 @@ const SelectRoute = ({ match }, props) => {
     
 
     useEffect(() => {
+        const arr = []
         axios.get(`http://127.0.0.1:8080/api/subways/estimate?from=${start}&to=${end}`)
             .then((res) => {
                 // console.log(res.data.data)
                 setTraininfo(res.data.data)
-                // setStation(res.data.data['최단거리'].transLines.station[0])
-                setLine(res.data.data['최단거리'].transLines.line[0])
+                setStation(res.data.data['최단거리'].transLines.station)
+                setLine(res.data.data['최단거리'].transLines.line)
+                setMinstation(res.data.data['최소환승'].transLines.station)
+                setMinline(res.data.data['최소환승'].transLines.line)
             }).catch((err) => {
                 console.log(err)
             })
@@ -98,6 +111,17 @@ const SelectRoute = ({ match }, props) => {
         getchairs()
     }, [start, end])
 
+    useEffect(()=>{
+        const arr = []
+        if(sinfo && traininfo){
+            for(let i=0; i<sinfo.length; i++){
+                if(sinfo[i].statnId === traininfo['최단거리'].shtStatnId.split(',')[0]){
+                    arr.push(sinfo[i])
+                }
+            }
+            setArrive(arr)
+        }
+    },[sinfo,traininfo])
 
     useEffect(() => {
         const checkid = []
@@ -116,8 +140,27 @@ const SelectRoute = ({ match }, props) => {
         setNextid(Number(checknextid[0]))
         if (checkid.length) {
             setStar(true)
+
         }
     }, [star, start, end])
+
+    useEffect(()=>{
+        if(station && line){
+            const arr = []
+            for(let i=1; i < line.length; i++){
+                arr.push(station[i]+"("+line[i]+")"+" ")
+            }
+            setTransfer(arr)
+        }
+        if(minstation && minline){
+            const arr = []
+            for(let i=1;i < minline.length; i++){
+                arr.push(minstation[i]+"("+minline[i]+")"+" ")
+            }
+            setMintransfer(arr)
+        }
+    },[line, station, minline, minstation])
+
 
     const getchairs = (()=>{
         const arr = []
@@ -156,6 +199,26 @@ const SelectRoute = ({ match }, props) => {
         </div>
     )
 
+    const arvmsg = arrive.map((arv, index)=>
+        <p className="mb-0" key={index}>
+            <span>{arv.trainLineNm} : </span>
+            {(arv.arvlCd === "0" || arv.arvlCd === "1" || arv.arvlCd === "2" || arv.arvlCd === "3" || arv.arvlCd === "4" || arv.arvlCd === "5")
+            && <span>{arv.arvlMsg2}</span>
+            }
+            {arv.arvlCd === "99" 
+            && <span>
+                {arv.arvlMsg2[3] !== ']' && <span>
+                    {arv.arvlMsg2[1]}{arv.arvlMsg2.slice(3)}</span>
+                }
+                {arv.arvlMsg2[3] === ']' && <span>
+                    {arv.arvlMsg2.slice(1,3)}{arv.arvlMsg2.slice(4)}</span>
+                }
+            </span>
+            }
+            {/* {arv.arvlMsg2}{arv.arvlMsg2.slice(3)} */}
+        </p>
+    )
+
 
     const starHandler = () => {
         if (star) {
@@ -170,7 +233,7 @@ const SelectRoute = ({ match }, props) => {
             localStorage.setItem(addfavname.id, addfavname.content)
         }
     }
-
+    
 
 
     return (
@@ -178,24 +241,29 @@ const SelectRoute = ({ match }, props) => {
             <div className="selectroute_box">
                 {traininfo && 
                 <div className="d-flex justify-content-end mr-2 mt-2">
-                    {/* <Button href={`/subwaytime/${start}`} color="primary">TIME</Button> */}
                     <p className="selectroute_location mb-0">{start}({traininfo['최단거리'].transLines.line[0]}) <ForwardIcon className="mb-1" /> {end}</p>
                     {star ? <StarIcon className="selectroute_star" onClick={starHandler} /> : <StarBorderIcon className="selectroute_star" onClick={starHandler} />}
                 </div>}
-                {/* <p className="selectroute_location mb-0">{start} <ForwardIcon className="mb-1" /> {end}</p> */}
+                {line && 
                 <div className="d-flex justify-content-end">
-                    {/* {mintime ? <Button className="ml-2" onClick={mintimeHandler} color="secondary">최단시간</Button> : <Button className="ml-2" onClick={mintimeHandler} color="secondary">최소환승</Button>} */}
-                    <Button href={`/subwaytime/${start}/${line}`}  color="primary" className="timebtn">TIME</Button>
+                    <Button href={`/subwaytime/${start}/${line[0]}`}  color="primary" className="timebtn">TIME</Button>
+                </div>}
+
+                <div className="ml-3 mb-3">
+                    <p className={classes.trainnow}>현재 위치</p>
+                    {arvmsg}
                 </div>
-                {/* 최단시간 */}
-                {/* {mintime && traininfo && <p className="sleectroute_time mb-4">{traininfo.shtTravelMsg}</p>} */}
-                {/* 최소환승 */}
-                {/* {!mintime && traininfo && <p className="sleectroute_time mb-4">{traininfo.minTravelMsg}</p>} */}
+                
+
                 {traininfo && 
                 <div className="mx-auto mb-3 selectroute_updown">
                 <Button className="ml-2" onClick={()=>setShowdetail1(!showdetail1)} color="secondary">최단시간</Button>
                     <p className="ml-3">소요시간 : {traininfo['최단거리'].shtTravelTm}분({traininfo['최단거리'].shtTransferCnt}회 환승)</p>
-                    {/* {traininfo.shtTransferMsg !== null && <p>환승역 : {traininfo.shtTransferMsg}</p>} */}
+                    {traininfo['최단거리'].shtTransferCnt !== "0" && 
+                    <p className="ml-3">
+                        환승구역 : {transfer}
+                    </p>
+                    }
                     {showdetail1 && 
                     <div className="ml-3">
                         {traininfo['최단거리'].shtStatnNm.split(',').map((shttrain, index)=>
@@ -207,7 +275,10 @@ const SelectRoute = ({ match }, props) => {
                     </div>}
                 <Button className="ml-2" onClick={()=>setShowdetail2(!showdetail2)} color="secondary">최소환승</Button>
                     <p className="ml-3">소요시간 : {traininfo['최소환승'].minTravelTm}분({traininfo['최소환승'].minTransferCnt}회 환승)</p>
-                    {/* {traininfo.minTransferMsg !== null &&<p>환승역 : {traininfo.minTransferMsg}</p>} */}
+                    {traininfo['최소환승'].minTransferCnt !== "0" && 
+                    <p className="ml-3">
+                        환승구역 : {mintransfer}
+                    </p>}
                     {showdetail2 && 
                     <div className="ml-3">
                         {traininfo['최소환승'].minStatnNm.split(',').map((mintrain, index)=>
@@ -217,8 +288,6 @@ const SelectRoute = ({ match }, props) => {
                         </span>
                     )}({traininfo['최소환승'].minStatnCnt}개)
                     </div>}
-                    {/* {sinfo && <p className="text-center mb-1 selectroute_gotarin"><TrainIcon /> {sinfo[0].trainLineNm} : {parseInt(sinfo[0].barvlDt / 60)}분{sinfo[0].barvlDt % 60}초</p>}
-                    {sinfo && <p className="text-center selectroute_gotarin"><TrainIcon /> {sinfo[1].trainLineNm} : {parseInt(sinfo[1].barvlDt / 60)}분{sinfo[1].barvlDt % 60}초</p>} */}
                 </div>}
             </div>
             <div className="selectroute_box2">
@@ -242,39 +311,6 @@ const SelectRoute = ({ match }, props) => {
                 </div>
                 
                 {showtrain ? <div>{order}<br/></div> : <div> {recommend}<br/></div>}
-                {/* {showtrain ?
-                    <div>
-                        <div className="d-flex justify-content-start mb-3">
-                            <span className="selectroute_num">1</span>
-                            <TrainIcon className={classes.good} />
-                            <span className="selectroute_chair">31254(잔여:10석)</span>
-                        </div>
-                        <div className="d-flex justify-content-start mb-3">
-                            <span className="selectroute_num">2</span>
-                            <TrainIcon className={classes.good} />
-                            <span className="selectroute_chair">31220(잔여:6석)</span>
-                        </div>
-                        <div className="d-flex justify-content-start mb-3">
-                            <span className="selectroute_num">3</span>
-                            <TrainIcon className={classes.soso} />
-                            <span className="selectroute_chair">31250(잔여:2석)</span>
-                        </div>
-                        <div className="d-flex justify-content-start mb-3">
-                            <span className="selectroute_num">4</span>
-                            <TrainIcon className={classes.soso} />
-                            <span className="selectroute_chair">31213(잔여:1석)</span>
-                        </div>
-                        <div className="d-flex justify-content-start mb-3">
-                            <span className="selectroute_num">5</span>
-                            <TrainIcon className={classes.bad} />
-                            <span className="selectroute_chair">31243(잔여:0석)</span>
-                        </div>
-                        <div className="d-flex justify-content-start mb-5">
-                            <span className="selectroute_num">6</span>
-                            <TrainIcon className={classes.bad} />
-                            <span className="selectroute_chair">31289(잔여:0석)</span>
-                        </div>
-                    </div> : <div> {order} </div>} */}
             </div>
         </div>
     )
