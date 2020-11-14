@@ -161,6 +161,11 @@ class SubwayEstimatedTimeView(APIView):
         else:
             minRoute["upDown"] = "하행"
 
+        if shortRoute["shtStatnId"][0] < shortRoute["shtStatnId"][1]:
+            shortRoute["upDown"] = "상행"
+        else:
+            shortRoute["upDown"] = "하행"
+
         if int(minRoute["minTravelTm"]) >= 180:
             minRoute["minTravelTm"] = minRoute["shtTravelTm"]
             minRoute["minTravelMsg"] = minRoute["shtTravelMsg"]
