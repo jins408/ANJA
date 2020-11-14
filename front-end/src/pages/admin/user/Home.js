@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom' 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Typography from '@material-ui/core/Typography';
@@ -42,12 +43,23 @@ const tutorialSteps = [
 ];
 
 const columns = [
-    { id: 'data', label: '날짜/시간', minWidth: 170, align: 'center' },
+    { id: 'data', label: '날짜/시간', minWidth: 100, align: 'center' },
     { id: 'category', label: '경보유형', minWidth: 100, align: 'center' },
     {
       id: 'id',
       label: '열차번호(칸)',
-      minWidth: 170,
+      minWidth: 100,
+      align: 'center',
+    },   
+  ];
+
+const claims = [
+    { id: 'data', label: '날짜/시간', minWidth: 100, align: 'center' },
+    { id: 'category', label: '신고유형', minWidth: 100, align: 'center' },
+    {
+      id: 'id',
+      label: '열차번호(칸)',
+      minWidth: 100,
       align: 'center',
     },   
   ];
@@ -62,12 +74,16 @@ const useStyles = makeStyles((theme) => ({
     container: {
         maxHeight: 440,
         width: '90%',
-        marginLeft: 40,
-        marginTop: 20
+        // marginLeft: 40,
+        // marginTop: 20
     },
     root: {
         width: 700,
         flexGrow: 1,
+        margin: 'auto'
+    },
+    table:{
+        width: 400,
         margin: 'auto'
     },
     header: {
@@ -82,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'block',
         width: 600,
         overflow: 'hidden',
-        width: '100%',
+        // width: '100%',
     },
     imglabel:{
         position: 'absolute',
@@ -90,6 +106,32 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '1.5rem',
         fontWeight: 'bold',
         zIndex: '3'
+    },
+    logname:{
+        width:370,
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginLeft: '40px'
+    },
+    loglog:{
+        fontSize: '1.5rem',
+        fontWeight: 'bold'
+    },
+    logmore:{
+        color: '#f50057'
+    },
+    claimname:{
+        width:370,
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginRight: '40px'
+    },
+    claimclaim:{
+        fontSize: '1.5rem',
+        fontWeight: 'bold'
+    },
+    claimmore:{
+        color: '#f50057'
     }
 }));
 
@@ -99,6 +141,7 @@ const Home = () => {
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
     const [loglist, setLoglist] = useState([]);
+    const [claimlist, setClaimlist] = useState([])
     const maxSteps = tutorialSteps.length;
 
     const handleNext = () => {
@@ -116,6 +159,7 @@ const Home = () => {
 
     useEffect(()=>{
         getLogData(sessionStorage.getItem('uid').slice(0,2))
+        claimRegist(sessionStorage.getItem('uid').slice(0,2))
         return () => {
           };
       },[])
@@ -131,7 +175,25 @@ const Home = () => {
         });
     }))
 
-    console.log(loglist)
+    
+    const claimRegist = ((line =>{
+        window.db.collection("reports").doc(line).collection("messages").orderBy('time','desc').onSnapshot(
+            querySnapshot => {
+                var list = []
+                querySnapshot.forEach(doc => {
+                    var obj = {};
+                    obj = doc.data();
+                    obj["key"] = doc.id;
+                    list.push(obj)
+                });
+                const arr =[]
+                for(let i=0; i < 5; i++){
+                    arr.push(list[i])
+                }
+                setClaimlist(arr)
+        });
+    }))
+
 
 
     return (
@@ -177,38 +239,92 @@ const Home = () => {
                 />
             </div>
 
-            {/* 기록 */}
-            {/* <TableContainer className={classes.container}>
-                    <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                        {columns.map((column) => (
-                            <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ minWidth: column.minWidth }}
-                            >
-                            {column.label}
-                            </TableCell>
-                        ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                            <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                            {columns.map((column) => {
-                                const value = log[column.id];
-                                return (
-                                  
-                                <TableCell key={column.id} align={column.align}>
-                                  {column.format && typeof value === 'number' ? column.format(value) : value}
-                                  {column.id === "data" && <Moment format="YYYY-MM-DD HH:mm">{log.time.seconds*1000}</Moment>}     
-                                </TableCell>  
-                                );
-                            })}
+
+            <div className="d-flex justify-content-between pt-5">
+                <div className={classes.logname}>
+                    <span className={classes.loglog}>기록</span>
+                    <Link to="/admin/log"><span className={classes.logmore}>더보기</span></Link>
+                </div>
+                <div className={classes.claimname}>
+                    <span className={classes.claimclaim}>신고</span>
+                    <Link to="/admin/adminclaim"><span className={classes.claimmore}>더보기</span></Link>
+                </div>
+            </div>
+            <div className="d-flex justify-content-between pb-5">
+                {/* 기록 */}
+                <TableContainer className={classes.container}>
+                        <Table className={classes.table} stickyHeader aria-label="sticky table">
+                        <TableHead>
+                            <TableRow>
+                            {columns.map((column) => (
+                                <TableCell
+                                key={column.id}
+                                align={column.align}
+                                style={{ minWidth: column.minWidth }}
+                                >
+                                {column.label}
+                                </TableCell>
+                            ))}
                             </TableRow>
-                    </TableBody>
-                    </Table>
-                </TableContainer> */}
+                        </TableHead>
+                        <TableBody>
+                            {loglist.map((log, index) => {
+                            return (
+                                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                {columns.map((column) => {
+                                    const value = log[column.id];
+                                    return (
+                                    
+                                    <TableCell key={column.id} align={column.align}>
+                                    {column.format && typeof value === 'number' ? column.format(value) : value}
+                                    {column.id === "data" && <Moment format="YYYY-MM-DD HH:mm">{log.time.seconds*1000}</Moment>}     
+                                    </TableCell>  
+                                    );
+                                })}
+                                </TableRow>
+                            );
+                            })}
+                        </TableBody>
+                        </Table>
+                    </TableContainer>
+
+                    {/* 신고 */}
+                    <TableContainer className={classes.container}>
+                        <Table className={classes.table} stickyHeader aria-label="sticky table">
+                        <TableHead>
+                            <TableRow>
+                            {claims.map((column) => (
+                                <TableCell
+                                key={column.id}
+                                align={column.align}
+                                style={{ minWidth: column.minWidth }}
+                                >
+                                {column.label}
+                                </TableCell>
+                            ))}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {claimlist.map((claim, index) => {
+                            return (
+                                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                {columns.map((column) => {
+                                    const value = claim[column.id];
+                                    return (
+                                    
+                                    <TableCell key={column.id} align={column.align}>
+                                    {column.format && typeof value === 'number' ? column.format(value) : value}
+                                    {column.id === "data" && <Moment format="YYYY-MM-DD HH:mm">{claim.time.seconds*1000}</Moment>}     
+                                    </TableCell>  
+                                    );
+                                })}
+                                </TableRow>
+                            );
+                            })}
+                        </TableBody>
+                        </Table>
+                    </TableContainer>
+            </div>
         </div>
     );
 }

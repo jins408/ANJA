@@ -8,8 +8,8 @@ const useStyles = makeStyles({
         fontWeight: 'bold'
       },
     anja:{
-        width: '250px',
-        marginTop: '10rem',
+        width: '40vw',
+        marginTop: '2rem',
         borderRadius: '50%'
     },
     madeby:{

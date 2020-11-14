@@ -41,8 +41,8 @@ const SubwayTimeTable = (props) =>{
     const [maxlen, setMaxlen] = useState(0);
     const [arrivetime, setArrivetime] = useState([]);
 
-    // console.log(upwardlist)
-    // console.log(downwardlist)
+    // // console.log(upwardlist)
+    // // console.log(downwardlist)
 
     useEffect(()=>{
         if(upwardlist.length < downwardlist.length){
@@ -75,8 +75,8 @@ const SubwayTimeTable = (props) =>{
     if(radio_value !== props.radio_value){
         setRadio_value(props.radio_value)
     }
-    // console.log(radio_value)
-    // console.log(arrivetime)
+    // // console.log(radio_value)
+    // // console.log(arrivetime)
 
     
     return (

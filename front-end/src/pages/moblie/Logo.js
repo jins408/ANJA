@@ -39,6 +39,9 @@ const Logo = () => {
     useEffect(()=>{
         setTimeout(()=>{
             setShow(!show)
+            if(show){
+                return setShow(false)
+            }
         },800)
         setTimeout(()=>{
             history.push('/mobile/main')

@@ -63,7 +63,7 @@ const Statistics = () => {
 // 날자 계산해서(ex: 2020-11-14) Chart로 보내주기
     return (
         <div>
-            <h1 className={classes.header}>CCTV</h1>
+            <h1 className={classes.header}>통계</h1>
             <div>
                 <Chart data={date} chartType={chartType} chartName='시간별 열차 승객 평균'></Chart>
             </div>

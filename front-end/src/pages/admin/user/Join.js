@@ -5,7 +5,7 @@ import '../../../css/Join.css'
 
 import axios from 'axios'
 
-const baseURL = 'http://127.0.0.1:8080'
+const baseURL = 'http://k3b101.p.ssafy.io'
 
 const Join = () => {
     const [name, setNickname] = useState();
@@ -57,7 +57,7 @@ const Join = () => {
         //         name: name
         //     }
         // })
-        console.log(email);
+        // console.log(email);
         axios.post(`${baseURL}/api/users/`,
             {
                 email: email,
@@ -72,11 +72,11 @@ const Join = () => {
             }else{
                 alert('가입성공')
             }
-            console.log(res.data)
+            // console.log(res.data)
         })
         .catch((err, a)=>{
-            console.log(err)
-            console.log(a)
+            // console.log(err)
+            // console.log(a)
         })
     }
 

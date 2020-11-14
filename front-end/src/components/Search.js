@@ -27,7 +27,7 @@ const Search = () =>{
 
     const changestart = (e) =>{
         setStart(e.target.value)
-        axios.get(`http://127.0.0.1:8080/api/subways/station?station=${e.target.value}`)
+        axios.get(`http://k3b101.p.ssafy.io/api/subways/station?station=${e.target.value}`)
         .then((res)=>{
             if(res.data.data === 'NO DATA'){
                 return;
@@ -35,12 +35,12 @@ const Search = () =>{
             if(e.target.value===''){
                 setPreview1([]);
             }else{
-                console.log(res.data.data)
+                // // console.log(res.data.data)
                 setPreview1(res.data.data)
             }
         })
         .catch((err)=>{
-            console.log(err)
+            // console.log(err)
         })
     }
     const changeend = (e) => {
@@ -48,7 +48,7 @@ const Search = () =>{
             setPreview1([])
         }
         setEnd(e.target.value)
-        axios.get(`http://127.0.0.1:8080/api/subways/station?station=${e.target.value}`)
+        axios.get(`http://k3b101.p.ssafy.io/api/subways/station?station=${e.target.value}`)
         .then((res)=>{
             if(res.data.data === 'NO DATA'){
                 return;
@@ -56,12 +56,12 @@ const Search = () =>{
             if(e.target.value===''){
                 setPreview2([]);
             }else{
-                // console.log(res.data.data)
+                // // console.log(res.data.data)
                 setPreview2(res.data.data)
             }
         })
         .catch((err)=>{
-            console.log(err)
+            // console.log(err)
         })
     }
 

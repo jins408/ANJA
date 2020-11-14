@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
       padding:0
     },
     icon:{
+      '&:hover':{
+        color: '#f50057 !important'
+      },
       minWidth: 45
     },
     text:{
@@ -166,7 +169,7 @@ const Navigation = () =>{
 
               <List>
               <ListItem className="pb-0"  button>
-              <ListItemLink href="/admin/setting">
+              <ListItemLink component={Link} to='/admin/setting'>
                 <ListItemIcon className={classes.icon}>
                   <SettingsIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>

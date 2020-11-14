@@ -17,7 +17,7 @@ const Claim = () =>{
     const [trainnum, setTrainnum ] = useState('');
 
     const Claimcontent = e =>{
-        // console.log(e.target.value.length)
+        // // console.log(e.target.value.length)
         setContent(e.target.value)
         if(e.target.value.length > 50){
             setContent(content)
@@ -26,7 +26,7 @@ const Claim = () =>{
     }
 
     const maxLengthCheck = (object) => {
-        // console.log(object.target.value.length)
+        // // console.log(object.target.value.length)
         if (object.target.value.length > object.target.maxLength) {
             object.target.value = object.target.value.slice(0, object.target.maxLength)
         }
@@ -53,7 +53,7 @@ const Claim = () =>{
             id: trainnum,
             contents: content
         }).then((res) =>{
-            console.log(res)
+            // console.log(res)
             swal("신고되었습니다!", {
                 icon: "success",
                 buttons: false,
@@ -62,7 +62,7 @@ const Claim = () =>{
             oncancle()
         })
         .catch((error) => {
-            console.log(error)
+            // console.log(error)
         })
     }
 

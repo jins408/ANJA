@@ -17,19 +17,19 @@ import Modal from '@material-ui/core/Modal';
 // import Card from '@material-ui/core/Card';
 
 const columns = [
-    { id: 'data', label: '날짜/시간', minWidth: 170 },
-    { id: 'category', label: '경보유형', minWidth: 100 },
+    { id: 'data', label: '날짜/시간', minWidth: 170, align: 'center' },
+    { id: 'category', label: '경보유형', minWidth: 100, align: 'center' },
     {
       id: 'id',
       label: '열차번호(칸)',
       minWidth: 170,
-      align: 'right',
+      align: 'center',
     },
     {
       id: 'cctv',
       label: '영상보기',
       minWidth: 170,
-      align: 'right',
+      align: 'center',
         
     },
    
@@ -149,7 +149,7 @@ const Log = () =>{
           });
       }))
 
-      console.log(loglist)
+      // console.log(loglist)
 
     const openModal = ((data)=>{
       setShowModal(true)
