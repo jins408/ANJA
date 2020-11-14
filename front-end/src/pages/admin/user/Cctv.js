@@ -3,6 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 const useStyles = makeStyles({
+    header:{
+        padding:'40px 0 20px 0',
+        textAlign: 'center',
+        fontWeight: 'bold'
+      },
     traininfo: {
         width: '750px',
         margin: 'auto'
@@ -53,7 +58,8 @@ const Cctv = () => {
 
     return (
         <div>
-            <h1 className="text-center pt-5 mb-5" >{sessionStorage.getItem('uid')}번 열차</h1>
+            <h1 className={classes.header}>CCTV</h1>
+            <h3 className="pl-5 mb-5" >열차번호 - {sessionStorage.getItem('uid').slice(0,4)}호</h3>
             {cctvsize===1 && <img className={classes.maxvdeio} onClick={closecctv} src={'http://localhost:8000/stream2/'} alt="cctv1"></img> }
             {cctvsize===2 && <img className={classes.maxvdeio} onClick={closecctv} src={'http://183.107.25.170:8001/stream2/'} alt="cctv2"></img> }
             {cctvsize===3 && <img className={classes.maxvdeio} onClick={closecctv} src={'http://125.242.221.85:8000/stream2/'} alt="cctv3"></img> }

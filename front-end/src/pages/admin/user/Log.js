@@ -1,5 +1,5 @@
 import React , { useEffect }from 'react';
-import {  fade,makeStyles } from '@material-ui/core/styles';
+import {  fade, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,14 +7,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
-import Button from '@material-ui/core/Button';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
+// import SearchIcon from '@material-ui/icons/Search';
+// import InputBase from '@material-ui/core/InputBase';
+// import Button from '@material-ui/core/Button';
+// import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import Moment from 'react-moment'
 import Modal from '@material-ui/core/Modal';
-import Card from '@material-ui/core/Card';
+// import Card from '@material-ui/core/Card';
 
 const columns = [
     { id: 'data', label: '날짜/시간', minWidth: 170 },
@@ -37,6 +37,11 @@ const columns = [
   
 
 const useStyles = makeStyles((theme) =>({
+    header:{
+      padding:'40px 0 20px 0',
+      textAlign: 'center',
+      fontWeight: 'bold'
+    },
     container: {
         maxHeight: 440,
         width: '90%',
@@ -117,9 +122,9 @@ const Log = () =>{
     const [showModal, setShowModal] = React.useState(false);
     const [videoUrl, setVideoUrl] = React.useState('');
 
-    const onClose= () =>{
-      setShowModal(false);
-    }
+    // const onClose= () =>{
+    //   setShowModal(false);
+    // }
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -160,7 +165,7 @@ const Log = () =>{
 
     return(
             <div>
-                <div className={classes.search}>
+                {/* <div className={classes.search}>
                     <div className={classes.searchIcon}>
                     <SearchIcon />
                     </div>
@@ -183,8 +188,8 @@ const Log = () =>{
                         Excel
                     </Button>
                   
-                </Card>
-
+                </Card> */}
+                <h1 className={classes.header}>기록</h1>
                 <TableContainer className={classes.container}>
                     <Table stickyHeader aria-label="sticky table">
                     <TableHead>

@@ -5,7 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+import Moment from 'react-moment'
 
 import '../../../css/adminclaim.css'
 
@@ -15,8 +15,14 @@ import { Grid } from '@material-ui/core';
 const baseURL = 'https://k3b101.p.ssafy.io'
 
 const useStyles = makeStyles({
+    header:{
+        padding:'40px 0 20px 0',
+        textAlign: 'center',
+        fontWeight: 'bold'
+      },
     root: {
     //   minWidth: 200,
+      margin:'auto',
       width: 250,
       height: '17rem'
     },
@@ -41,6 +47,10 @@ const useStyles = makeStyles({
         fontSize: 18,
         fontWeight: "bold"
     },
+    timestamp:{
+        lineHeight:'46.4px',
+        padding: '8px'
+    }
 
 });
 
@@ -85,7 +95,7 @@ const useStyles = makeStyles({
     }
 
     const listClaim = claimlist.map((claim, index) => 
-    <Grid item xs={4} key={index} className="mb-3 ml-4">
+    <Grid item xs={4} key={index} className="mb-3">
         <Card  className={classes.root} variant="outlined">
             <CardContent>
                 {/* <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -102,7 +112,8 @@ const useStyles = makeStyles({
                 {claim.contents}
                 </Typography>
             </CardContent>
-            <div className="d-flex justify-content-end">
+            <div className="d-flex justify-content-between">
+            <Moment className={classes.timestamp} format="YYYY-MM-DD HH:mm">{claim.time.seconds*1000}</Moment>
             <CardActions >
                 <Button  variant="outlined" color="secondary" size="small" onClick={()=>claimDelete(claim)}>신고삭제</Button>
             </CardActions>
@@ -115,7 +126,7 @@ const useStyles = makeStyles({
 
     return(
         <div>
-            <div className="card-form"></div>
+            <h1 className={classes.header}>신고</h1>
                 <Grid container>
                     {/* <Grid claim xs={4}> */}
                      {listClaim}
