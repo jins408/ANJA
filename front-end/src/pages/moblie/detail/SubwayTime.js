@@ -123,27 +123,27 @@ const SubwayTime = ({match}) =>{
 
     useEffect(()=>{
         axios
-            .get(`http://127.0.0.1:8080/api/subways/stationInfo?station=${station}`)
+            .get(`http://k3b101.p.ssafy.io/api/subways/stationInfo?station=${station}`)
             .then((res)=>{
-                // console.log(res.data.data)
+                // // console.log(res.data.data)
                 setAllline(res.data.data)
             })
             .catch((err)=>{
-                console.log(err)
+                // console.log(err)
             })
         axios
-            .get(`http://127.0.0.1:8080/api/subways/timetable?station=${station}&line=${line}&day=${radio}`)
+            .get(`http://k3b101.p.ssafy.io/api/subways/timetable?station=${station}&line=${line}&day=${radio}`)
             .then((res)=>{
-                // console.log(res.data)
+                // // console.log(res.data)
                 setUpwardlist(res.data.data['상행'])
                 setDownwardlist(res.data.data['하행'])
             })
             .catch((err)=>{
-                console.log(err)
+                // console.log(err)
             })
     },[radio, station, line])
 
-    // console.log(allline)
+    // // console.log(allline)
     const line_button = allline.map((line,index)=>
             // {line==="1호선" && <Button className={classes.subway_line} size="small" variant="outlined" onClick={()=>setLine(line)}>{line}</Button>}
             <span key={index}>

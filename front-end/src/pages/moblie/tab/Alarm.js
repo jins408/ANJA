@@ -143,7 +143,7 @@ const Alarm = (props) =>{
             // var test = []
             // snapshot.forEach(change => {
             //     if(change.data().time.seconds<timestamp){
-            //         // console.log('data',change.data().time.seconds)
+            //         // // console.log('data',change.data().time.seconds)
             //         test.push(change.data())
             //     }
                 setAlarmlist(snapshot.docs.map(doc=>doc.data()))

@@ -61,7 +61,7 @@ const useStyles = makeStyles({
 
         
     useEffect(() => {
-        claimRegist('01')
+        claimRegist(sessionStorage.getItem('uid').slice(0,2))
         return () =>{
         };
     },[])
@@ -77,7 +77,7 @@ const useStyles = makeStyles({
                     obj["key"] = doc.id;
                     list.push(obj)
                 });
-                console.log(list)
+                // console.log(list)
                 setClaimlist(list)
         });
     }))
@@ -86,11 +86,11 @@ const useStyles = makeStyles({
     const claimDelete = (claim) =>{
         axios.delete(`${baseURL}/api/reports?id=${claim.id}&reportDocId=${claim.key}`)
         .then((res) =>{
-            console.log(res.data)
+            // console.log(res.data)
             claimRegist()
         })
         .catch((error) =>{
-            console.log(error)
+            // console.log(error)
         })
     }
 

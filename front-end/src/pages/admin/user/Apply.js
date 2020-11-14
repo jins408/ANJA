@@ -22,7 +22,7 @@ const Apply = () => {
 
     var today = new Date();
     let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    // console.log(date);
+    // // console.log(date);
     const [biznum, setBiznum] = useState();
     const [bizname, setBizname] = useState();
     const [phone, setPhone] = useState();
@@ -50,11 +50,11 @@ const Apply = () => {
         setLocation(e.target.value)
     }
     const setSdateText = e => {
-        // console.log(e.target.value)
+        // // console.log(e.target.value)
         setSdate(e.target.value)
     }
     const setEdateText = e => {
-        // console.log(e.target.value)
+        // // console.log(e.target.value)
         setEdate(e.target.value)
     }
 
@@ -68,9 +68,9 @@ const Apply = () => {
 
     // const setSdateText = e =>{
     //     if(e.target.value === "self"){
-    //         console.log(today.getFullYear())
-    //         console.log(e.target.value)
-    //         console.log(e)
+    //         // console.log(today.getFullYear())
+    //         // console.log(e.target.value)
+    //         // console.log(e)
             
     //         setSelfwriter(true)
     //         setSdate(e.target.value)

@@ -91,9 +91,9 @@ const SelectRoute = ({ match }, props) => {
     
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8080/api/subways/estimate?from=${start}&to=${end}`)
+        axios.get(`http://k3b101.p.ssafy.io/api/subways/estimate?from=${start}&to=${end}`)
             .then((res) => {
-                console.log(res.data.data)
+                // // console.log(res.data.data)
                 if(res.data.data === "NOT SUPPORTED"){
                     history.push('/error')
                 }
@@ -103,14 +103,14 @@ const SelectRoute = ({ match }, props) => {
                 setMinstation(res.data.data['최소환승'].transLines.station)
                 setMinline(res.data.data['최소환승'].transLines.line)
             }).catch((err) => {
-                console.log(err)
+                // console.log(err)
             })
         axios.get(`https://k3b101.p.ssafy.io/api/subways/approach?station=${start}`)
             .then((res) => {
-                console.log(res.data.data)
+                // // console.log(res.data.data)
                 setSinfo(res.data.data)
             }).catch((err) => {
-                console.log(err)
+                // console.log(err)
             })
         getchairs()
     }, [start, end])
