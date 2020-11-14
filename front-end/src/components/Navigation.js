@@ -14,9 +14,11 @@ import ListIcon from '@material-ui/icons/List';
 import HeadsetMicIcon from '@material-ui/icons/HeadsetMic';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 // import Button from '@material-ui/core/Button';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import swal from 'sweetalert';
 import '../css/navigation.css'
+import { Link, useLocation } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -96,7 +98,7 @@ const Navigation = () =>{
             <div className={classes.root}>
             <List component="nav" aria-label="main mailbox folders">
               <ListItem className="pb-0"  button>
-              <ListItemLink href="/admin/home">
+              <ListItemLink component={Link} to='/admin/home'>
                 <ListItemIcon>
                   <HomeIcon fontSize="large"  className={classes.menulogo} />
                 </ListItemIcon>
@@ -105,7 +107,7 @@ const Navigation = () =>{
               </ListItem>
               <p className={classes.menu1}>홈</p>
               <ListItem  className="pb-0"  button>
-              <ListItemLink href="/admin/cctv">
+              <ListItemLink component={Link} to='/admin/cctv'>
                 <ListItemIcon >
                   <VideocamIcon fontSize="large" className={classes.menulogo}/>
                 </ListItemIcon>
@@ -116,7 +118,7 @@ const Navigation = () =>{
             </List>
             <List component="nav" aria-label="secondary mailbox folders">
               <ListItem className="pb-0"  button>
-              <ListItemLink href="/admin/log">
+              <ListItemLink component={Link} to='/admin/log'>
                 <ListItemIcon>
                   <ListIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
@@ -125,7 +127,7 @@ const Navigation = () =>{
               </ListItem>
               <p className={classes.menu3}>로그</p>
               <ListItem className="pb-0"  button>
-              <ListItemLink href="/admin/adminclaim">
+              <ListItemLink component={Link} to='/admin/adminclaim'>
                 <ListItemIcon>
                   <HeadsetMicIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
@@ -134,7 +136,7 @@ const Navigation = () =>{
               </ListItem>
               <p className={classes.menu3}>신고</p>
               <ListItem className="pb-0"  button>
-              <ListItemLink href="/admin/statistics">
+              <ListItemLink component={Link} to='/admin/statistics'>
                 <ListItemIcon>
                   <HeadsetMicIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
@@ -142,6 +144,15 @@ const Navigation = () =>{
               </ListItemLink>
               </ListItem>
               <p className={classes.menu3}>통계</p>
+              <ListItem className="pb-0"  button>
+              <ListItemLink href="/admin/setting">
+                <ListItemIcon>
+                  <SettingsIcon fontSize="large" className={classes.menulogo}/> 
+                </ListItemIcon>
+                {/* <ListItemText primary="신고" /> */}
+              </ListItemLink>
+              </ListItem>
+              <p className={classes.menu3}>설정</p>
               {/* <Button className={classes.btn} variant="contained" color="secondary">
                 로그아웃
               </Button> */}
