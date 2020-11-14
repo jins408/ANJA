@@ -18,6 +18,7 @@
     position: fixed;
     z-index: 2 !important;
     background-color: white;
+    opacity: 0.9;
     /* top:60px; */
     width: 373.4px;
 }

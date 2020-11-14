@@ -33,6 +33,7 @@ const useStyles = makeStyles(() => ({
     minHeight: '812px',
     height: '100%',
     margin: 'auto',
+    backgroundColor: '#d7a98c0d'
   },
   tablet:{
     width: '1024px',

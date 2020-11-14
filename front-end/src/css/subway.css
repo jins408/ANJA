@@ -1,9 +1,10 @@
 .root{
-    background-color: #e66a1921;
+    background-color: #d7a98c0d;
 }
 
 .subway-div{
-    opacity: 80%;
+    opacity: 0.8;
+    z-index: 5;
 }
 
 .subway-wrapper{
