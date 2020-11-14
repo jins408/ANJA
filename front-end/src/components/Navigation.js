@@ -93,7 +93,7 @@ const Navigation = () =>{
             timer: 1500
           });
           setTimeout(()=>{
-            history.push('/admin/introduce')
+            history.push('/admin')
           },1600)
         } else {
           swal("취소되었습니다!",{
