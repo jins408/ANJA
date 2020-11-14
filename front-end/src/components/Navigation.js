@@ -6,8 +6,7 @@ import { useHistory } from 'react-router-dom'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-// import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
+import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import ListIcon from '@material-ui/icons/List';
@@ -15,15 +14,16 @@ import HeadsetMicIcon from '@material-ui/icons/HeadsetMic';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 // import Button from '@material-ui/core/Button';
 import SettingsIcon from '@material-ui/icons/Settings';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 
 import swal from 'sweetalert';
 import '../css/navigation.css'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
-      maxWidth: 100,
+      maxWidth: 150,
       position: 'fixed',
       height: '100%',
       overflow: 'auto',
@@ -31,24 +31,32 @@ const useStyles = makeStyles((theme) => ({
       color: 'white',
       // backgroundColor: '#858484c2',
     },
-    menu1:{
-      marginLeft: '2.6rem'
-    },
-    menu2:{
-      marginLeft: '2.2rem'
-    },
-    menu3:{
-      marginLeft: '2.3rem'
-    },
-    menu4:{
-      marginLeft:"1.3rem"
-    },
+    // menu1:{
+    //   marginLeft: '2.6rem'
+    // },
+    // menu2:{
+    //   marginLeft: '2.2rem'
+    // },
+    // menu3:{
+    //   marginLeft: '2.3rem'
+    // },
+    // menu4:{
+    //   marginLeft:"1.3rem"
+    // },
     menulogo:{
       color: 'white'
     },
     logout:{
-      marginTop: '16rem',
-      paddingBottom:0
+      marginTop: '15rem',
+      padding:0
+    },
+    icon:{
+      minWidth: 45
+    },
+    text:{
+      '&:hover':{
+        color: '#f50057 !important'
+      }
     }
   }));
   
@@ -99,71 +107,88 @@ const Navigation = () =>{
             <List component="nav" aria-label="main mailbox folders">
               <ListItem className="pb-0"  button>
               <ListItemLink component={Link} to='/admin/home'>
-                <ListItemIcon>
+                <ListItemIcon className={classes.icon}>
                   <HomeIcon fontSize="large"  className={classes.menulogo} />
                 </ListItemIcon>
-                {/* <ListItemText primary="HOME" /> */}
+                <ListItemText className={classes.text} primary="HOME" />
                 </ListItemLink>
               </ListItem>
-              <p className={classes.menu1}>홈</p>
+              {/* <p className={classes.menu1}>홈</p> */}
+              </List>
+
+              <List>
               <ListItem  className="pb-0"  button>
               <ListItemLink component={Link} to='/admin/cctv'>
-                <ListItemIcon >
+                <ListItemIcon className={classes.icon}>
                   <VideocamIcon fontSize="large" className={classes.menulogo}/>
                 </ListItemIcon>
-                {/* <ListItemText primary="CCTV" /> */}
+                <ListItemText className={classes.text} primary="CCTV" />
                 </ListItemLink>
               </ListItem>
-              <p className={classes.menu2}>cctv</p>
+              {/* <p className={classes.menu2}>cctv</p> */}
             </List>
+
             <List component="nav" aria-label="secondary mailbox folders">
               <ListItem className="pb-0"  button>
               <ListItemLink component={Link} to='/admin/log'>
-                <ListItemIcon>
+                <ListItemIcon className={classes.icon}>
                   <ListIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
-                {/* <ListItemText primary="LOG" /> */}
+                <ListItemText className={classes.text} primary="기록" />
                 </ListItemLink>
               </ListItem>
-              <p className={classes.menu3}>로그</p>
+              {/* <p className={classes.menu3}>로그</p> */}
+              </List>
+
+              <List>
               <ListItem className="pb-0"  button>
               <ListItemLink component={Link} to='/admin/adminclaim'>
-                <ListItemIcon>
+                <ListItemIcon className={classes.icon}>
                   <HeadsetMicIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
-                {/* <ListItemText primary="신고" /> */}
+                <ListItemText className={classes.text} primary="신고" />
               </ListItemLink>
               </ListItem>
-              <p className={classes.menu3}>신고</p>
+              {/* <p className={classes.menu3}>신고</p> */}
+              </List>
+
+              <List>
               <ListItem className="pb-0"  button>
               <ListItemLink component={Link} to='/admin/statistics'>
-                <ListItemIcon>
-                  <HeadsetMicIcon fontSize="large" className={classes.menulogo}/> 
+                <ListItemIcon className={classes.icon}>
+                  <EqualizerIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
-                {/* <ListItemText primary="신고" /> */}
+                <ListItemText className={classes.text} primary="통계" />
               </ListItemLink>
               </ListItem>
-              <p className={classes.menu3}>통계</p>
+              {/* <p className={classes.menu3}>통계</p> */}
+              </List>
+
+              <List>
               <ListItem className="pb-0"  button>
               <ListItemLink href="/admin/setting">
-                <ListItemIcon>
+                <ListItemIcon className={classes.icon}>
                   <SettingsIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
-                {/* <ListItemText primary="신고" /> */}
+                <ListItemText className={classes.text} primary="설정" />
               </ListItemLink>
               </ListItem>
-              <p className={classes.menu3}>설정</p>
+              {/* <p className={classes.menu3}>설정</p> */}
+              </List>
+
+              <List>
               {/* <Button className={classes.btn} variant="contained" color="secondary">
                 로그아웃
               </Button> */}
               <ListItem className={classes.logout} onClick={onLogout} button>
-              <ListItemLink className="pb-1">
+              <ListItemLink className={classes.icon}>
                 <ListItemIcon>
                   <ExitToAppIcon  fontSize="large" color="secondary"/> 
                 </ListItemIcon>
+                <ListItemText primary="로그아웃" />
               </ListItemLink>
               </ListItem>
-              <p className={classes.menu4}>로그아웃</p>
+              {/* <p className={classes.menu4}>로그아웃</p> */}
             </List>
           </div>
       

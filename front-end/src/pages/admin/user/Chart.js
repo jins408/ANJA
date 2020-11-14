@@ -1,9 +1,18 @@
 import React, { Component, Fragment, useState, useEffect } from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-const Chart = (props) => {
+const useStyles = makeStyles({
+    header:{
+        padding:'40px 0 20px 0',
+        textAlign: 'center',
+        fontWeight: 'bold'
+      },
+})
 
+const Chart = (props) => {
+        const classes = useStyles()
 
         const [series, setSeries] = useState([['0시',1],['1시',1],[],[],[],[],[],[],[],[],[],[]]);
         const options = (()=>{
@@ -64,9 +73,12 @@ const Chart = (props) => {
     
 
     return (
-        <Fragment>
-            <HighchartsReact highcharts={Highcharts} options={options()} />
-        </Fragment>
+        <div>
+            <h1 className={classes.header}>통계</h1>
+            <Fragment>
+                <HighchartsReact highcharts={Highcharts} options={options()} />
+            </Fragment>
+        </div>
     );
     
 }

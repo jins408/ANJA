@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
@@ -65,6 +66,7 @@ const useStyles = makeStyles(() => ({
 
 const SelectRoute = ({ match }, props) => {
     const classes = useStyles();
+    const history = useHistory();
     const [star, setStar] = useState(false);
     const [id, setId] = useState(0)
     const [traininfo, setTraininfo] = useState();
@@ -89,10 +91,12 @@ const SelectRoute = ({ match }, props) => {
     
 
     useEffect(() => {
-        const arr = []
         axios.get(`http://127.0.0.1:8080/api/subways/estimate?from=${start}&to=${end}`)
             .then((res) => {
-                // console.log(res.data.data)
+                console.log(res.data.data)
+                if(res.data.data === "NOT SUPPORTED"){
+                    history.push('/error')
+                }
                 setTraininfo(res.data.data)
                 setStation(res.data.data['최단거리'].transLines.station)
                 setLine(res.data.data['최단거리'].transLines.line)
@@ -103,7 +107,7 @@ const SelectRoute = ({ match }, props) => {
             })
         axios.get(`https://k3b101.p.ssafy.io/api/subways/approach?station=${start}`)
             .then((res) => {
-                // console.log(res.data.data)
+                console.log(res.data.data)
                 setSinfo(res.data.data)
             }).catch((err) => {
                 console.log(err)
@@ -115,13 +119,16 @@ const SelectRoute = ({ match }, props) => {
         const arr = []
         if(sinfo && traininfo){
             for(let i=0; i<sinfo.length; i++){
-                if(sinfo[i].statnId === traininfo['최단거리'].shtStatnId.split(',')[0]){
-                    arr.push(sinfo[i])
+                if(sinfo[i].updnLine === traininfo['최단거리'].upDown){
+                    if(sinfo[i].statnId === traininfo['최단거리'].shtStatnId.split(',')[0]){
+                        arr.push(sinfo[i])
+                    }
                 }
             }
             setArrive(arr)
         }
     },[sinfo,traininfo])
+
 
     useEffect(() => {
         const checkid = []
@@ -251,7 +258,10 @@ const SelectRoute = ({ match }, props) => {
 
                 <div className="ml-3 mb-3">
                     <p className={classes.trainnow}>현재 위치</p>
-                    {arvmsg}
+                    {arrive.length !== 0 ? <div>{arvmsg}</div> : <div>
+                        <p className="mb-1">해당역은 종점입니다.</p>
+                        <p>출발 시간표를 확인해주세요!</p>
+                        </div>}
                 </div>
                 
 

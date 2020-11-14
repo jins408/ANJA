@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
@@ -18,6 +18,12 @@ const Search = () =>{
     const [preview1, setPreview1] = useState([]);
     const [preview2, setPreview2] = useState([]);
     
+    useEffect(()=>{
+        return () => {
+            setPreview1([])
+            setPreview2([])
+        }
+    },[])
 
     const changestart = (e) =>{
         setStart(e.target.value)

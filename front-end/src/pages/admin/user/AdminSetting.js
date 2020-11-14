@@ -2,6 +2,11 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
+    header:{
+        padding:'40px 0 20px 0',
+        textAlign: 'center',
+        fontWeight: 'bold'
+      },
     anja:{
         width: '250px',
         marginTop: '10rem',
@@ -25,6 +30,7 @@ const AdminSetting = () => {
 
     return (
         <div>
+            <h1 className={classes.header}>설정</h1>
             <div className="d-flex justify-content-center">
                     <img className={classes.anja} src={require('../../../images/ANJA.png')} alt="로고" />
                 </div>

@@ -13,6 +13,8 @@ import AdminClaim from './pages/admin/user/AdminClaim'
 import Login from './pages/admin/user/Login'
 import Introduce from './pages/admin/user/Introduce'
 import Statistics from './pages/admin/user/Statistics'
+import AdminSetting from './pages/admin/user/AdminSetting';
+
 // import Apply from './pages/Apply'
 
 import Favorites from './pages/moblie/tab/Favorites'
@@ -25,7 +27,7 @@ import Selectroute from './pages/moblie/detail/SelectRoute'
 import Headerbar from './components/Headerbar';
 import SubwayTime from './pages/moblie/detail/SubwayTime';
 import Logo from './pages/moblie/Logo'
-import AdminSetting from './pages/admin/user/AdminSetting';
+import Error from './pages/moblie/Error'
 
 const useStyles = makeStyles(() => ({
   mobile:{
@@ -44,7 +46,7 @@ const useStyles = makeStyles(() => ({
       paddingTop : '48px',
   },
   navigation:{
-    paddingLeft: '100px'
+    paddingLeft: '150px'
   },
 }));
 
@@ -110,6 +112,7 @@ const App = () => {
           <Route exact path='/mobile/setting' component={Setting}></Route>
           <Route exact path={'/selectroute/:start/:end'} component={Selectroute} />
           <Route exact path={'/subwaytime/:station/:line'} component={SubwayTime} />
+          <Route exact path='/error' component={Error}></Route>
          <Bottombar alarm_line={acount} lastReadTime={lastReadTime} />
         </div>
       </div>}
