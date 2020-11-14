@@ -51,14 +51,19 @@ const useStyles = makeStyles((theme) => ({
       padding:0
     },
     icon:{
-      '&:hover':{
-        color: '#f50057 !important'
-      },
       minWidth: 45
     },
     text:{
       '&:hover':{
         color: '#f50057 !important'
+      }
+    },
+    hover:{
+      '&:hover ':{
+        color: '#f50057 !important',
+        '& $menulogo':{
+          color: '#f50057 !important',
+        },
       }
     }
   }));
@@ -109,7 +114,7 @@ const Navigation = () =>{
             <div className={classes.root}>
             <List component="nav" aria-label="main mailbox folders">
               <ListItem className="pb-0"  button>
-              <ListItemLink component={Link} to='/admin/home'>
+              <ListItemLink className={classes.hover} component={Link} to='/admin/home'>
                 <ListItemIcon className={classes.icon}>
                   <HomeIcon fontSize="large"  className={classes.menulogo} />
                 </ListItemIcon>
@@ -121,7 +126,7 @@ const Navigation = () =>{
 
               <List>
               <ListItem  className="pb-0"  button>
-              <ListItemLink component={Link} to='/admin/cctv'>
+              <ListItemLink className={classes.hover} component={Link} to='/admin/cctv'>
                 <ListItemIcon className={classes.icon}>
                   <VideocamIcon fontSize="large" className={classes.menulogo}/>
                 </ListItemIcon>
@@ -133,11 +138,11 @@ const Navigation = () =>{
 
             <List component="nav" aria-label="secondary mailbox folders">
               <ListItem className="pb-0"  button>
-              <ListItemLink component={Link} to='/admin/log'>
+              <ListItemLink className={classes.hover} component={Link} to='/admin/log'>
                 <ListItemIcon className={classes.icon}>
                   <ListIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
-                <ListItemText className={classes.text} primary="기록" />
+                <ListItemText className={classes.text} primary="기 록" />
                 </ListItemLink>
               </ListItem>
               {/* <p className={classes.menu3}>로그</p> */}
@@ -145,11 +150,11 @@ const Navigation = () =>{
 
               <List>
               <ListItem className="pb-0"  button>
-              <ListItemLink component={Link} to='/admin/adminclaim'>
+              <ListItemLink className={classes.hover} component={Link} to='/admin/adminclaim'>
                 <ListItemIcon className={classes.icon}>
                   <HeadsetMicIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
-                <ListItemText className={classes.text} primary="신고" />
+                <ListItemText className={classes.text} primary="신 고" />
               </ListItemLink>
               </ListItem>
               {/* <p className={classes.menu3}>신고</p> */}
@@ -157,11 +162,11 @@ const Navigation = () =>{
 
               <List>
               <ListItem className="pb-0"  button>
-              <ListItemLink component={Link} to='/admin/statistics'>
+              <ListItemLink className={classes.hover} component={Link} to='/admin/statistics'>
                 <ListItemIcon className={classes.icon}>
                   <EqualizerIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
-                <ListItemText className={classes.text} primary="통계" />
+                <ListItemText className={classes.text} primary="통 계" />
               </ListItemLink>
               </ListItem>
               {/* <p className={classes.menu3}>통계</p> */}
@@ -169,11 +174,11 @@ const Navigation = () =>{
 
               <List>
               <ListItem className="pb-0"  button>
-              <ListItemLink component={Link} to='/admin/setting'>
+              <ListItemLink className={classes.hover} component={Link} to='/admin/setting'>
                 <ListItemIcon className={classes.icon}>
                   <SettingsIcon fontSize="large" className={classes.menulogo}/> 
                 </ListItemIcon>
-                <ListItemText className={classes.text} primary="설정" />
+                <ListItemText className={classes.text} primary="버 전" />
               </ListItemLink>
               </ListItem>
               {/* <p className={classes.menu3}>설정</p> */}

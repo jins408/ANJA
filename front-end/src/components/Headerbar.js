@@ -74,7 +74,7 @@ const  Headerbar = ({location, favorite_edit}) =>{
       }else if(nowlocation.pathname === '/mobile/claim'){
         setTitle('신 고')
       }else if(nowlocation.pathname === '/mobile/setting'){
-        setTitle('설 정')
+        setTitle('버 전')
       }else{
         setTitle('A N J A')
       }

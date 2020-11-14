@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
     anja:{
-        width: '80vw',
+        height:'15rem',
         marginTop: '5rem',
         borderRadius: '50%'
     },
