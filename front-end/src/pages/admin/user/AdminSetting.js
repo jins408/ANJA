@@ -8,7 +8,8 @@ const useStyles = makeStyles({
         fontWeight: 'bold'
       },
     anja:{
-        width: '40vw',
+        // width: '40vw',
+        height:'20rem',
         marginTop: '2rem',
         borderRadius: '50%'
     },
@@ -30,7 +31,7 @@ const AdminSetting = () => {
 
     return (
         <div>
-            <h1 className={classes.header}>설정</h1>
+            <h1 className={classes.header}>버전</h1>
             <div className="d-flex justify-content-center">
                     <img className={classes.anja} src={require('../../../images/ANJA.png')} alt="로고" />
                 </div>

@@ -73,7 +73,7 @@ const Bottombar = (props) =>{
         <BottomNavigationAction className="icontext" label="즐겨찾기" icon={<StarIcon />} component={Link} to='/mobile/favorite'/>
         <BottomNavigationAction className="icontext" onChange={handleBadgeVisibility}  label="알림" icon={<Badge color="secondary" className="alarmcount" badgeContent={count} invisible={invisible}><NotificationsActiveIcon/></Badge>} component={Link} to='/mobile/alarm'/>
         <BottomNavigationAction className="icontext" label="신고" icon={<RingVolumeIcon/>} component={Link} to='/mobile/claim'/>
-        <BottomNavigationAction className="icontext" label="설정" icon={<SettingsIcon/>} component={Link} to='/mobile/setting'/>
+        <BottomNavigationAction className="icontext" label="버전" icon={<SettingsIcon/>} component={Link} to='/mobile/setting'/>
         </BottomNavigation>
     );
 }

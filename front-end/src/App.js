@@ -82,7 +82,7 @@ const App = () => {
 
   useEffect(()=>{
     if(user === 'admin'){
-      if(sessionStorage.length === 0 && preloc !== '/admin/login' && preloc !== '/admin/introduce'){
+      if(sessionStorage.length === 0 && preloc !== '/admin/login' && preloc !== '/admin'){
         alert('로그인 후 사용해주세요!')
         history.push('/admin/login')
       }
