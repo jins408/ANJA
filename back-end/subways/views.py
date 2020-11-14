@@ -88,36 +88,36 @@ class SubwayEstimatedTimeView(APIView):
         shortRoute = copy.deepcopy(sorted(items, key=lambda item: (item['shtTravelTm']))[0])
 
         # 데이터 오류 제거
-        minStatnNm = minRoute["minStatnNm"][:-1].split(", ")
+        minStatnNm = minRoute["minStatnNm"].split(", ")
         if minStatnNm[0] == minStatnNm[1]:
-            minStatnId = minRoute["minStatnId"][:-1].split(",")
+            minStatnId = minRoute["minStatnId"].split(",")
             minStatnNm.pop(0)
             minStatnId.pop(0)
             minRoute["minStatnNm"] = ", ".join(minStatnNm)
             minRoute["minStatnId"] = ",".join(minStatnId)
             minRoute["statnFid"] = minStatnId[0]
 
-        shtStatnNm = minRoute["shtStatnNm"][:-1].split(", ")
+        shtStatnNm = minRoute["shtStatnNm"].split(", ")
         if shtStatnNm[0] == shtStatnNm[1]:
-            shtStatnId = minRoute["shtStatnId"][:-1].split(",")
+            shtStatnId = minRoute["shtStatnId"].split(",")
             shtStatnNm.pop(0)
             shtStatnId.pop(0)
             minRoute["shtStatnNm"] = ", ".join(shtStatnNm)
             minRoute["shtStatnId"] = ",".join(shtStatnId)
             minRoute["statnFid"] = shtStatnId[0]
 
-        minStatnNm = shortRoute["minStatnNm"][:-1].split(", ")
+        minStatnNm = shortRoute["minStatnNm"].split(", ")
         if minStatnNm[0] == minStatnNm[1]:
-            minStatnId = shortRoute["minStatnId"][:-1].split(",")
+            minStatnId = shortRoute["minStatnId"].split(",")
             minStatnNm.pop(0)
             minStatnId.pop(0)
             shortRoute["minStatnNm"] = ", ".join(minStatnNm)
             shortRoute["minStatnId"] = ",".join(minStatnId)
             shortRoute["statnFid"] = minStatnId[0]
 
-        shtStatnNm = shortRoute["shtStatnNm"][:-1].split(", ")
+        shtStatnNm = shortRoute["shtStatnNm"].split(", ")
         if shtStatnNm[0] == shtStatnNm[1]:
-            shtStatnId = shortRoute["shtStatnId"][:-1].split(",")
+            shtStatnId = shortRoute["shtStatnId"].split(",")
             shtStatnNm.pop(0)
             shtStatnId.pop(0)
             shortRoute["shtStatnNm"] = ", ".join(shtStatnNm)
