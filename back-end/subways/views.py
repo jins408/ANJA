@@ -21,8 +21,12 @@ import copy
 API_KEY = "dFO37hTXbj0XfqChs155Oc8em7iRWRtqQYi9kT54LWZSjjBIErEr4sEYwfKn8wIAisL3B8MUYIggAKSrxZXIPA%3D%3D"
 SU_API_KEY = "6f6b516269686f6439307a4d76666d"
 
-
+# path('/approach', views.SubwayApproachView.as_view(), name="subways_approach"),
+# path('/timetable', views.SubwayTimeTableView.as_view(), name="subways_times"),
+# path('/station', views.SubwayStationView.as_view(), name="subways_stations"),
+# path('/stationInfo', views.StationInfoView.as_view(), name="subways_infos")
 # 출발역-도착역 소요시간 및 경로 정보
+# /estimate
 class SubwayEstimatedTimeView(APIView):
     def get(self, request):
         lineDict = {
@@ -39,9 +43,16 @@ class SubwayEstimatedTimeView(APIView):
             '1065': '공항철도',
             '1067': '경춘선',
             '1069': '인천 1호선',
-            '1071': '수인분당선',
+            '1071': '수인선',
+            '1075': '분당선',
             '1077': '신분당선',
             '1078': '인천 2호선',
+            '1079': '의정부경전철',
+            '1080': '에버라인',
+            '1081': '경강선',
+            '1091': '자기부상',
+            '1092': '우이신설',
+            '1093': '서해선',
         }
         # 서울
         # http://swopenapi.seoul.go.kr/api/subway/sample/json/shortestRoute/0/5/출발지/도착지
@@ -70,17 +81,58 @@ class SubwayEstimatedTimeView(APIView):
         if "shortestRouteList" not in dict:
             return Response({'data': "NO DATA"}, status=status.HTTP_200_OK)
 
+
+        # 최소환승, 최단거리 경로
         items = dict["shortestRouteList"]
         minRoute = copy.deepcopy(sorted(items, key=lambda item: (item['minTravelTm']))[0])
         shortRoute = copy.deepcopy(sorted(items, key=lambda item: (item['shtTravelTm']))[0])
 
+        # 데이터 오류 제거
+        minStatnNm = minRoute["minStatnNm"][:-1].split(", ")
+        if minStatnNm[0] == minStatnNm[1]:
+            minStatnId = minRoute["minStatnId"][:-1].split(",")
+            minStatnNm.pop(0)
+            minStatnId.pop(0)
+            minRoute["minStatnNm"] = ", ".join(minStatnNm)
+            minRoute["minStatnId"] = ",".join(minStatnId)
+            minRoute["statnFid"] = minStatnId[0]
+
+        shtStatnNm = minRoute["shtStatnNm"][:-1].split(", ")
+        if shtStatnNm[0] == shtStatnNm[1]:
+            shtStatnId = minRoute["shtStatnId"][:-1].split(",")
+            shtStatnNm.pop(0)
+            shtStatnId.pop(0)
+            minRoute["shtStatnNm"] = ", ".join(shtStatnNm)
+            minRoute["shtStatnId"] = ",".join(shtStatnId)
+            minRoute["statnFid"] = shtStatnId[0]
+
+        minStatnNm = shortRoute["minStatnNm"][:-1].split(", ")
+        if minStatnNm[0] == minStatnNm[1]:
+            minStatnId = shortRoute["minStatnId"][:-1].split(",")
+            minStatnNm.pop(0)
+            minStatnId.pop(0)
+            shortRoute["minStatnNm"] = ", ".join(minStatnNm)
+            shortRoute["minStatnId"] = ",".join(minStatnId)
+            shortRoute["statnFid"] = minStatnId[0]
+
+        shtStatnNm = shortRoute["shtStatnNm"][:-1].split(", ")
+        if shtStatnNm[0] == shtStatnNm[1]:
+            shtStatnId = shortRoute["shtStatnId"][:-1].split(",")
+            shtStatnNm.pop(0)
+            shtStatnId.pop(0)
+            shortRoute["shtStatnNm"] = ", ".join(shtStatnNm)
+            shortRoute["shtStatnId"] = ",".join(shtStatnId)
+            shortRoute["statnFid"] = shtStatnId[0]
+
         # 최소환승 노선 구하기
         minStationIDs = minRoute["minStatnId"][:-1].split(",")
+        pprint(minStationIDs)
         minStationNames = minRoute["minStatnNm"][:-1].split(", ")
-        pprint(minStationNames)
         minLines = {'line': [], 'station': []}
         for index, minStation in enumerate(minStationIDs):
             stationID = minStation[:4]
+            if stationID not in lineDict:
+                return Response({'data': 'NOT SUPPORTED'}, status=status.HTTP_200_OK)
             line = lineDict[stationID]
             if line not in minLines['line']:
                 minLines['line'].append(line)
@@ -92,18 +144,30 @@ class SubwayEstimatedTimeView(APIView):
         shortLines = {'line': [], 'station': []}
         for index, shortStation in enumerate(shortStationIDs):
             stationID = shortStation[:4]
+            if stationID not in lineDict:
+                return Response({'data': 'NOT SUPPORTED'}, status=status.HTTP_200_OK)
             line = lineDict[stationID]
             if line not in shortLines['line']:
                 shortLines['line'].append(line)
                 shortLines['station'].append(shortStationNames[index])
 
+        # 환승 노선들 값 추가해주기
         minRoute["transLines"] = minLines
         shortRoute["transLines"] = shortLines
 
+        # 상하행 판단
+        if minRoute["minStatnId"][0] < minRoute["minStatnId"][1]:
+            minRoute["upDown"] = "상행"
+        else:
+            minRoute["upDown"] = "하행"
+
         if int(minRoute["minTravelTm"]) >= 180:
-            minRoute = shortRoute
+            minRoute["minTravelTm"] = minRoute["shtTravelTm"]
+            minRoute["minTravelMsg"] = minRoute["shtTravelMsg"]
+
         if int(shortRoute["shtTravelTm"]) >= 180:
-            shortRoute = minRoute
+            shortRoute["shtTravelTm"] = shortRoute["minTravelTm"]
+            shortRoute["shtTravelMsg"] = shortRoute["minTravelMsg"]
 
         return Response({'data': {'최소환승': minRoute, '최단거리': shortRoute}}, status=status.HTTP_200_OK)
 
@@ -165,7 +229,6 @@ class SubwayTimeTableView(APIView):
             return Response({'data': 'NOT FOUND STATION'}, status=status.HTTP_200_OK)
         stationID = dict["stationCode"]
         pprint(stations)
-        # stationID = "SUB133"
 
         timetable = {}
         # 상하행별
@@ -203,37 +266,6 @@ class SubwayTimeTableView(APIView):
                 }
                 items.append(time)
             timetable[type_value] = items
-            # if type_value not in timetable:
-            #     timetable[type_value] = {}
-            # for day, day_value in days.items():
-            #     if day_value not in timetable[type_value]:
-            #         timetable[type_value][day_value] = {}
-            #     URL_SU = []
-            #     URL_SU.append("http://openapi.tago.go.kr/openapi/service/SubwayInfoService/getSubwaySttnAcctoSchdulList")
-            #     URL_SU.append("?serviceKey=")
-            #     URL_SU.append(API_KEY)
-            #     URL_SU.append("&subwayStationId=")
-            #     URL_SU.append(stationID)
-            #     URL_SU.append("&dailyTypeCode=")
-            #     URL_SU.append(day)
-            #     URL_SU.append("&upDownTypeCode=")
-            #     URL_SU.append(type)
-            #     URL_SU.append("&numOfRows=300")
-            #     URL_SU = "".join(URL_SU)
-            #     req = Request(URL_SU)
-            #     response = urlopen(req)
-            #     response_body = response.read()
-            #     dict = xmltodict.parse(response_body)
-            #     dict = json.loads(json.dumps(dict))["response"]["body"]["items"]["item"]
-            #     dict = sorted(dict, key=lambda subway: (subway['depTime']))
-            #     items = []
-            #     for item in dict:
-            #         if item["depTime"].startswith("00") or item["depTime"].startswith("24"):
-            #             continue
-            #         item["depTime"] = item["depTime"][:2] + ":" + item["depTime"][2:4] + ":" + item["depTime"][4:6]
-            #         item["arrTime"] = item["arrTime"][:2] + ":" + item["arrTime"][2:4] + ":" + item["arrTime"][4:6]
-            #         items.append(item)
-            #     timetable[type_value][day_value] = items
 
         return Response({'data': timetable}, status=status.HTTP_200_OK)
 
@@ -270,29 +302,34 @@ def getStationInfo(station):
     dict = xmltodict.parse(response_body)
     dict = json.loads(json.dumps(dict))
     dict = dict["response"]["body"]["items"]
-    
-    seouls = ['경춘선', '경의중앙선', '공항철도', '신분당선', '인천 1호선', '인천 2호선', '우이신설', '수인선']
+
+
+    seouls = ['경춘선', '경의중앙선', '공항철도', '신분당선', '인천 1호선', '인천 2호선', '우이신설', '수인분당선', '김포골드']
     if not dict:
         return None
     items = []
-
     if str(type(dict["item"])) == "<class 'dict'>":
         items.append(dict["item"])
     else:
         items = dict["item"]
+    pprint(items)
+
     subways = []
     for item in items:
-        line = item["subwayRouteName"]
+        line = item["subwayRouteName"].replace("선", "")
         info = {}
         if (line.startswith("서울")):
             info['line'] = item["subwayRouteName"][3:]
-        elif line in seouls:
-            info['line'] = item["subwayRouteName"]
         else:
+            for seoul in seouls:
+                if line in seoul:
+                    info['line'] = item["subwayRouteName"]
+        if "line" not in info:
             continue
         info["stationCode"] = item["subwayStationId"]
         info["station"] = item["subwayStationName"]
         subways.append(info)
+    pprint(subways)
     return subways
 
 
