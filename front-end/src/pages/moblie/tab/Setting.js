@@ -31,7 +31,7 @@ const Setting = () =>{
                 </div>
                 <p className="text-center">Mobile ver.201112</p>
                 <p className={classes.madeby}>Made by</p>
-                <p className={classes.name}>권민지 김석환 김진실 박세훈 조민기</p>
+                <p className={classes.name}>Team 앉게해조</p>
       
             </div>
         );

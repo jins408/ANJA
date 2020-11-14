@@ -18,7 +18,8 @@ const Main = () =>{
     }
 
     return(
-            <div>
+        <div className="root">
+            <div className="subway-div">
                 {/* <h3 className="text-center">Hello main Page</h3> */}
                 <Search  />
                 <div className="subway-wrapper">
@@ -27,6 +28,7 @@ const Main = () =>{
                     </div>
                 </div>
             </div>
+        </div>
         );
     }
 

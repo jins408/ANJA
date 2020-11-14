@@ -1,3 +1,11 @@
+.root{
+    background-color: #e66a1921;
+}
+
+.subway-div{
+    opacity: 80%;
+}
+
 .subway-wrapper{
     width: 100%;
     padding-top: 100px;
