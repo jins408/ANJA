@@ -5,7 +5,7 @@ import '../../../css/Join.css'
 
 import axios from 'axios'
 
-const baseURL = 'http://k3b101.p.ssafy.io'
+const baseURL = 'https://k3b101.p.ssafy.io'
 
 const Join = () => {
     const [name, setNickname] = useState();

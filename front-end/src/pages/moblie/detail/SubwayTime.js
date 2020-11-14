@@ -123,7 +123,7 @@ const SubwayTime = ({match}) =>{
 
     useEffect(()=>{
         axios
-            .get(`http://k3b101.p.ssafy.io/api/subways/stationInfo?station=${station}`)
+            .get(`https://k3b101.p.ssafy.io/api/subways/stationInfo?station=${station}`)
             .then((res)=>{
                 // // console.log(res.data.data)
                 setAllline(res.data.data)
@@ -132,7 +132,7 @@ const SubwayTime = ({match}) =>{
                 // console.log(err)
             })
         axios
-            .get(`http://k3b101.p.ssafy.io/api/subways/timetable?station=${station}&line=${line}&day=${radio}`)
+            .get(`https://k3b101.p.ssafy.io/api/subways/timetable?station=${station}&line=${line}&day=${radio}`)
             .then((res)=>{
                 // // console.log(res.data)
                 setUpwardlist(res.data.data['상행'])

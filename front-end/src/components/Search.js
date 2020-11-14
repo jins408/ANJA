@@ -27,7 +27,7 @@ const Search = () =>{
 
     const changestart = (e) =>{
         setStart(e.target.value)
-        axios.get(`http://k3b101.p.ssafy.io/api/subways/station?station=${e.target.value}`)
+        axios.get(`https://k3b101.p.ssafy.io/api/subways/station?station=${e.target.value}`)
         .then((res)=>{
             if(res.data.data === 'NO DATA'){
                 return;
@@ -48,7 +48,7 @@ const Search = () =>{
             setPreview1([])
         }
         setEnd(e.target.value)
-        axios.get(`http://k3b101.p.ssafy.io/api/subways/station?station=${e.target.value}`)
+        axios.get(`https://k3b101.p.ssafy.io/api/subways/station?station=${e.target.value}`)
         .then((res)=>{
             if(res.data.data === 'NO DATA'){
                 return;

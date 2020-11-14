@@ -91,7 +91,7 @@ const SelectRoute = ({ match }, props) => {
     
 
     useEffect(() => {
-        axios.get(`http://k3b101.p.ssafy.io/api/subways/estimate?from=${start}&to=${end}`)
+        axios.get(`https://k3b101.p.ssafy.io/api/subways/estimate?from=${start}&to=${end}`)
             .then((res) => {
                 // // console.log(res.data.data)
                 if(res.data.data === "NOT SUPPORTED"){
