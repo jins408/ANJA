@@ -25,6 +25,7 @@ import Selectroute from './pages/moblie/detail/SelectRoute'
 import Headerbar from './components/Headerbar';
 import SubwayTime from './pages/moblie/detail/SubwayTime';
 import Logo from './pages/moblie/Logo'
+import AdminSetting from './pages/admin/user/AdminSetting';
 
 const useStyles = makeStyles(() => ({
   mobile:{
@@ -67,7 +68,7 @@ const App = () => {
       else if(preloc === '/admin'){
         setUser('adminIntroduce')
       }
-      else if(preloc !== '/admin/login' && preloc !== '/admin/home' && preloc !== '/admin/cctv' && preloc !== '/admin/log' && preloc !== '/admin/adminclaim' && preloc !== '/admin/introduce' && preloc !== '/admin/statistics'){
+      else if(preloc !== '/admin/login' && preloc !== '/admin/home' && preloc !== '/admin/cctv' && preloc !== '/admin/log' && preloc !== '/admin/adminclaim' && preloc !== '/admin/introduce' && preloc !== '/admin/statistics' && preloc !== '/admin/setting'){
         setUser('user')
       }
       else{
@@ -130,6 +131,7 @@ const App = () => {
           <Route exact path="/admin/log" component={Log}></Route>
           <Route exact path="/admin/adminclaim" component={AdminClaim}></Route>
           <Route exact path="/admin/statistics" component={Statistics}></Route>
+          <Route exact path="/admin/setting" component={AdminSetting}></Route>
         </div>
       </div>}
     </div>
