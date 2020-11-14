@@ -12,6 +12,7 @@
 }
 
 .MuiAppBar-colorPrimary{
+    opacity: 60%;
     background-color: white !important;
     color: black !important;
     /* border: none !important; */
