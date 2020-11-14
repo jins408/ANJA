@@ -158,14 +158,20 @@ const Alarm = (props) =>{
                 {alarm.category === 'nomask' && <TimelineDot color="secondary">
                    <SentimentDissatisfiedRoundedIcon />  
                 </TimelineDot>}  
-                {alarm.category === 'pet' && <TimelineDot color="primary" variant="outlined">
+                {alarm.category === 'cat' && <TimelineDot color="primary" variant="outlined">
+                    <PetsRoundedIcon /> 
+                </TimelineDot>}
+                {alarm.category === 'dog' && <TimelineDot color="primary" variant="outlined">
                     <PetsRoundedIcon /> 
                 </TimelineDot>}
                  {alarm.category === 'bicycle' && <TimelineDot color="primary" >
                     <DirectionsBikeRoundedIcon />
                 </TimelineDot> }
-                {alarm.category === 'smoke' && <TimelineDot color="secondary" variant="outlined" >
+                {alarm.category === 'smoking' && <TimelineDot color="secondary" variant="outlined" >
                     <SmokingRoomsRoundedIcon />
+                </TimelineDot>}
+                {alarm.category === 'miscellaneous' && <TimelineDot color="secondary" variant="outlined" >
+                <SentimentDissatisfiedRoundedIcon />  
                 </TimelineDot>}
                 <TimelineConnector />
                 </TimelineSeparator>              
@@ -177,9 +183,14 @@ const Alarm = (props) =>{
                 <TimelineContent>
                 <Paper elevation={3} className={classes.paper}>
                 <Typography className="title-h6" variant="h6" component="h1">
-                        {alarm.sid}번 열차
+                        {alarm.line}{alarm.sid} 열차 {alarm.ssid} 칸
                     </Typography>
-                        <Typography> {alarm.message} </Typography>
+                        <Typography> {alarm.category === 'nomask' ? <div>마스크 미착용 의심 승객</div>:<div></div>}</Typography>
+                        <Typography> {alarm.category === 'cat' ? <div>애완동물 동반 의심 승객</div>:<div></div>}</Typography>
+                        <Typography> {alarm.category === 'dog' ? <div>애완동물 동반 의심 승객</div>:<div></div>}</Typography>
+                        <Typography> {alarm.category === 'bicycle' ? <div>자전거 동반 의심 승객</div>:<div></div>}</Typography>
+                        <Typography> {alarm.category === 'smoking' ? <div>흡연 의심 승객</div>:<div></div>}</Typography>
+                        <Typography> {alarm.category === 'miscellaneous' ? <div>잡상인 의심 승객</div>:<div></div>}</Typography>
                 </Paper>
             </TimelineContent>
         </div>

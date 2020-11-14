@@ -18,10 +18,10 @@ const Chart = (props) => {
         const options = (()=>{
             return {
                 chart: {
-                    type: 'scatter'		// bar차트. 아무 설정이 없으면 line chart가 된다.
+                    type: props.chartType		// bar차트. 아무 설정이 없으면 line chart가 된다.
                 },
                 title: {
-                    text: props.data+' 시간별 열차 승객'
+                    text: props.data+' '+props.chartName
                 },
                 credits: {
                     enabled: false
@@ -41,7 +41,7 @@ const Chart = (props) => {
                         }
                     }
                 },
-                series: [{ name: "평균 승객수", data: series }]
+                series: [{ name: props.chartName, data: series }]
             }
         })
         
@@ -49,21 +49,39 @@ const Chart = (props) => {
              // 시간별 열차 인원 수 평균
            window.db.collection("chart").doc('01').collection("data").get()
            .then((snapshot) =>{
-               var temp = [[],[],[],[],[],[],[],[],[],[],[],[]]
+               var temp = [[,5],[,3],[,0],[,0],[,0],[,0],[,34],[,43],[,21],[,9],[,12],[,13],[,34],[,23],[,15],[,15],[,52],[,48],[,32],[,31],[,28],[,22],[,20],[,14]]
                snapshot.forEach((doc) =>{
-                   console.log(doc.data())
-                   console.log(doc.data().ssid*1)
-                   temp[doc.data().timeHour*1] = [doc.data().timeHour+'시',doc.data().people]
-                   console.log(temp)
+                    temp[doc.data().timeHour*1] = [doc.data().timeHour+'시',doc.data().people]
                })
-               setSeries(temp)
+                   setSeries(temp)
+           });
+        })
+
+        const checkChart = (()=>{
+            window.db.collection("chart2").doc('01').collection("data").get()
+           .then((snapshot) =>{
+               var temp =[['nomask',0],['pet',0],['smoke',0],['bicycle',0],['miscellaneous',0]]
+               snapshot.forEach((doc) =>{
+                   console.log('data',doc.data())
+                   temp[0][1] += doc.data().nomask
+                   temp[1][1] += doc.data().pet
+                   temp[2][1] += doc.data().smoke
+                   temp[3][1] += doc.data().bicycle
+                   temp[4][1] += doc.data().micellaneous
+               })
+                setSeries(temp)
            });
         })
           
    
 
         useEffect(()=>{
-            checkEver()
+            if(props.chartType === 'bar'){
+                checkEver()
+            }
+            else if(props.chartType === 'pie'){
+                checkChart()
+            }
             options()
             return () => {
               };
@@ -74,7 +92,6 @@ const Chart = (props) => {
 
     return (
         <div>
-            <h1 className={classes.header}>통계</h1>
             <Fragment>
                 <HighchartsReact highcharts={Highcharts} options={options()} />
             </Fragment>
