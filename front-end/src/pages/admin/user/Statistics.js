@@ -48,8 +48,8 @@ const Statistics = () => {
     const [date, setDate] = useState(()=>{
         let today = new Date();
         let year = today.getFullYear();
-        let month = today.getMonth();
-        let day = today.getDay();
+        let month = today.getMonth()+1;
+        let day = today.getDate();
         return year+'-'+month+'-'+day
     });
     const [chartType, setChartType] = useState('bar')
