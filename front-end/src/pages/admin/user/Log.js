@@ -110,6 +110,10 @@ const useStyles = makeStyles((theme) =>({
     modal:{
       display: 'flex',
       justifyContent: 'center',
+    },
+    videobtn:{
+      borderRadius:'10%',
+      backgroundColor: 'ghostwhite'
     }
  }));
     
@@ -216,7 +220,7 @@ const Log = () =>{
                                 <TableCell key={column.id} align={column.align}>
                                   {column.format && typeof value === 'number' ? column.format(value) : value}
                                   {column.id === "data" && <Moment format="YYYY-MM-DD HH:mm">{log.time.seconds*1000}</Moment>}
-                                  {column.id === "cctv" ? <button onClick={()=>openModal(log)} ><VideocamIcon></VideocamIcon></button> :''}      
+                                  {column.id === "cctv" ? <button onClick={()=>openModal(log)} className={classes.videobtn} ><VideocamIcon></VideocamIcon></button> :''}      
      
                                 </TableCell>  
                                 );
