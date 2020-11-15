@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import {Link} from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -29,20 +29,10 @@ const useStyles = makeStyles((theme) => ({
       overflow: 'auto',
       backgroundColor: '#000000b8',
       color: 'white',
-      // backgroundColor: '#858484c2',
     },
-    // menu1:{
-    //   marginLeft: '2.6rem'
-    // },
-    // menu2:{
-    //   marginLeft: '2.2rem'
-    // },
-    // menu3:{
-    //   marginLeft: '2.3rem'
-    // },
-    // menu4:{
-    //   marginLeft:"1.3rem"
-    // },
+    now:{
+      color: '#f50057'
+    },
     menulogo:{
       color: 'white'
     },
@@ -55,12 +45,12 @@ const useStyles = makeStyles((theme) => ({
     },
     text:{
       '&:hover':{
-        color: '#f50057 !important'
+        color: 'white !important'
       }
     },
     hover:{
       '&:hover ':{
-        color: '#f50057 !important',
+        color: 'white !important',
         '& $menulogo':{
           color: '#f50057 !important',
         },
@@ -76,7 +66,24 @@ const useStyles = makeStyles((theme) => ({
 const Navigation = () =>{
     const classes = useStyles();
     const history = useHistory();
+    const location = useLocation();
+    const [tab, setTab] = useState('home');
 
+    useEffect(()=>{
+      if(location.pathname === '/admin/home'){
+        setTab('home')
+      }else if(location.pathname === '/admin/cctv'){
+        setTab('cctv')
+      }else if(location.pathname === '/admin/log'){
+        setTab('log')
+      }else if(location.pathname === '/admin/adminclaim'){
+        setTab('adminclaim')
+      }else if(location.pathname === '/admin/statistics'){
+        setTab('statistics')
+      }else if(location.pathname === '/admin/setting'){
+        setTab('setting')
+      }
+    },[location])
     
     const onLogout = () =>{
       swal({
@@ -116,7 +123,7 @@ const Navigation = () =>{
               <ListItem className="pb-0"  button>
               <ListItemLink className={classes.hover} component={Link} to='/admin/home'>
                 <ListItemIcon className={classes.icon}>
-                  <HomeIcon fontSize="large"  className={classes.menulogo} />
+                  {tab === 'home' ? <HomeIcon fontSize="large"  className={classes.now} /> : <HomeIcon fontSize="large"  className={classes.menulogo} />}
                 </ListItemIcon>
                 <ListItemText className={classes.text} primary="HOME" />
                 </ListItemLink>
@@ -128,7 +135,7 @@ const Navigation = () =>{
               <ListItem  className="pb-0"  button>
               <ListItemLink className={classes.hover} component={Link} to='/admin/cctv'>
                 <ListItemIcon className={classes.icon}>
-                  <VideocamIcon fontSize="large" className={classes.menulogo}/>
+                  {tab === 'cctv' ? <VideocamIcon fontSize="large" className={classes.now}/> : <VideocamIcon fontSize="large" className={classes.menulogo}/>}
                 </ListItemIcon>
                 <ListItemText className={classes.text} primary="CCTV" />
                 </ListItemLink>
@@ -140,7 +147,7 @@ const Navigation = () =>{
               <ListItem className="pb-0"  button>
               <ListItemLink className={classes.hover} component={Link} to='/admin/log'>
                 <ListItemIcon className={classes.icon}>
-                  <ListIcon fontSize="large" className={classes.menulogo}/> 
+                  {tab === 'log' ? <ListIcon fontSize="large" className={classes.now}/> : <ListIcon fontSize="large" className={classes.menulogo}/>} 
                 </ListItemIcon>
                 <ListItemText className={classes.text} primary="기 록" />
                 </ListItemLink>
@@ -152,7 +159,7 @@ const Navigation = () =>{
               <ListItem className="pb-0"  button>
               <ListItemLink className={classes.hover} component={Link} to='/admin/adminclaim'>
                 <ListItemIcon className={classes.icon}>
-                  <HeadsetMicIcon fontSize="large" className={classes.menulogo}/> 
+                  {tab === 'adminclaim' ? <HeadsetMicIcon fontSize="large" className={classes.now}/>  : <HeadsetMicIcon fontSize="large" className={classes.menulogo}/> }
                 </ListItemIcon>
                 <ListItemText className={classes.text} primary="신 고" />
               </ListItemLink>
@@ -164,7 +171,7 @@ const Navigation = () =>{
               <ListItem className="pb-0"  button>
               <ListItemLink className={classes.hover} component={Link} to='/admin/statistics'>
                 <ListItemIcon className={classes.icon}>
-                  <EqualizerIcon fontSize="large" className={classes.menulogo}/> 
+                  {tab === 'statistics' ? <EqualizerIcon fontSize="large" className={classes.now}/> : <EqualizerIcon fontSize="large" className={classes.menulogo}/>} 
                 </ListItemIcon>
                 <ListItemText className={classes.text} primary="통 계" />
               </ListItemLink>
@@ -176,7 +183,7 @@ const Navigation = () =>{
               <ListItem className="pb-0"  button>
               <ListItemLink className={classes.hover} component={Link} to='/admin/setting'>
                 <ListItemIcon className={classes.icon}>
-                  <SettingsIcon fontSize="large" className={classes.menulogo}/> 
+                  {tab === 'setting' ? <SettingsIcon fontSize="large" className={classes.now}/> : <SettingsIcon fontSize="large" className={classes.menulogo}/> }
                 </ListItemIcon>
                 <ListItemText className={classes.text} primary="버 전" />
               </ListItemLink>

@@ -44,26 +44,49 @@ const Claim = () =>{
             return setCategory()
         }
         setWriter(false)
+        setCategory('')
         setInputbox(e.target.value)
     }
 
     const goclaim = () =>{
-        axios.post(`${baseURL}/api/reports`,{
-            category: inputbox,
-            id: trainnum,
-            contents: content
-        }).then((res) =>{
-            // console.log(res)
-            swal("신고되었습니다!", {
-                icon: "success",
-                buttons: false,
-                timer: 1000,
-              });
-            oncancle()
-        })
-        .catch((error) => {
-            // console.log(error)
-        })
+        if(category !== ''){
+            console.log(0, category, inputbox)
+            axios.post(`${baseURL}/api/reports`,{
+                category: category,
+                id: trainnum,
+                contents: content
+            }).then((res) =>{
+                // console.log(res)
+                swal("신고되었습니다!", {
+                    icon: "success",
+                    buttons: false,
+                    timer: 1000,
+                  });
+                oncancle()
+            })
+            .catch((error) => {
+                // console.log(error)
+            })
+        }else{
+            console.log(1, category, inputbox)
+            axios.post(`${baseURL}/api/reports`,{
+                category: inputbox,
+                id: trainnum,
+                contents: content
+            }).then((res) =>{
+                // console.log(res)
+                swal("신고되었습니다!", {
+                    icon: "success",
+                    buttons: false,
+                    timer: 1000,
+                  });
+                oncancle()
+            })
+            .catch((error) => {
+                // console.log(error)
+            })
+        }
+
     }
 
     const oncancle = () =>{

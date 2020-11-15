@@ -23,22 +23,22 @@ const tutorialSteps = [
     {
         label: 'CCTV1',
         imgPath:
-            'http://localhost:8000/stream2/',
+            'https://61.85.86.92:8000/stream2/',
     },
     {
         label: 'CCTV2',
         imgPath:
-            'http://183.107.25.170:8001/stream2/',
+            'https://183.107.25.170:8001/stream2/',
     },
     {
         label: 'CCTV3',
         imgPath:
-            'http://125.242.221.85:8000/stream2/',
+            'https://125.242.221.85:8000/stream2/',
     },
     {
         label: 'CCTV4',
         imgPath:
-            'http://118.217.60.147:8000/stream2/',
+            'https://118.217.60.147:8000/stream2/',
     },
 ];
 
@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     img: {
         height: 400,
         display: 'block',
-        width: 600,
+        width: 700,
         overflow: 'hidden',
         // width: '100%',
     },
@@ -105,7 +105,8 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: '1rem',
         fontSize: '1.5rem',
         fontWeight: 'bold',
-        zIndex: '3'
+        zIndex: '3',
+        color: 'green'
     },
     logname:{
         width:370,
