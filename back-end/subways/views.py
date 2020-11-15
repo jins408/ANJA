@@ -65,6 +65,8 @@ class SubwayEstimatedTimeView(APIView):
 
         if start == '서울역':
             start = '서울'
+        if end == '서울역':
+            end = '서울'
 
         URL_SU = []
         URL_SU.append("http://swopenapi.seoul.go.kr/api/subway/sample/json/shortestRoute")
