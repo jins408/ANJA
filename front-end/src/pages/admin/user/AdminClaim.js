@@ -9,6 +9,7 @@ import Moment from 'react-moment'
 
 import '../../../css/adminclaim.css'
 
+import swal from 'sweetalert';
 import axios from 'axios'
 import { Grid } from '@material-ui/core';
 
@@ -84,14 +85,42 @@ const useStyles = makeStyles({
 
  
     const claimDelete = (claim) =>{
-        axios.delete(`${baseURL}/api/reports?id=${claim.id}&reportDocId=${claim.key}`)
-        .then((res) =>{
-            // console.log(res.data)
-            claimRegist()
-        })
-        .catch((error) =>{
-            // console.log(error)
-        })
+        swal({
+            title: "삭제하시겠습니까?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            buttons: {
+                cancel: "취소",
+                confirm: "삭제"
+              },
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                axios.delete(`${baseURL}/api/reports?id=${claim.id}&reportDocId=${claim.key}`)
+                .then((res) =>{
+                    // console.log(res.data)
+                    claimRegist()
+                })
+                .catch((error) =>{
+                    // console.log(error)
+                })
+              swal("삭제되었습니다!", {
+                icon: "success",
+                buttons:{
+                    confirm: "완료"
+                }
+              });
+            } else {
+              swal("취소되었습니다!",{
+                icon: "error",
+                buttons:{
+                    confirm: "완료"
+                }
+              });
+              
+            }
+          });
     }
 
     const listClaim = claimlist.map((claim, index) => 

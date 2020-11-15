@@ -4,9 +4,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
     header:{
-        padding:'40px 0 20px 0',
+        padding:'40px 0 10px 0',
         textAlign: 'center',
         fontWeight: 'bold'
+      },
+      subheader:{
+        paddingLeft: '60px',
+        marginBottom: '8px'
       },
     traininfo: {
         width: '750px',
@@ -18,8 +22,8 @@ const useStyles = makeStyles({
     },
     maxvdeio: {
         position: 'absolute',
-        left: '18%',
-        width: '752px',
+        left: '20.8%',
+        width: '750px',
         height: '600px',
     },
     table: {
@@ -39,7 +43,30 @@ const useStyles = makeStyles({
     workbtn: {
         width: '10rem',
         fontSize: '2rem',
-    }
+    },
+    caption:{
+        position: 'absolute',
+        padding: '5px',
+        fontSize:'1.5rem',
+        fontWeight:'bold',
+        color: 'green',
+        right: '72%'
+    },
+    caption1:{
+        position: 'absolute',
+        padding: '5px',
+        fontSize:'1.3rem',
+        fontWeight:'bold',
+        color: 'green'
+    },
+    caption2:{
+        position: 'absolute',
+        padding: '5px',
+        fontSize:'1.3rem',
+        fontWeight:'bold',
+        color: 'green',
+        right:'35.5%'
+    },
 
 });
 
@@ -59,21 +86,26 @@ const Cctv = () => {
     return (
         <div>
             <h1 className={classes.header}>CCTV</h1>
-            <h3 className="pl-5 mb-5" >열차번호 - {sessionStorage.getItem('uid').slice(0,4)}호</h3>
-            {cctvsize===1 && <img className={classes.maxvdeio} onClick={closecctv} src={'http://localhost:8000/stream2/'} alt="cctv1"></img> }
-            {cctvsize===2 && <img className={classes.maxvdeio} onClick={closecctv} src={'http://183.107.25.170:8001/stream2/'} alt="cctv2"></img> }
-            {cctvsize===3 && <img className={classes.maxvdeio} onClick={closecctv} src={'http://125.242.221.85:8000/stream2/'} alt="cctv3"></img> }
-            {cctvsize===4 && <img className={classes.maxvdeio} onClick={closecctv} src={'http://118.217.60.147:8000/stream2/'} alt="cctv4"></img> }
+            <h3 className={classes.subheader} >열차번호 - {sessionStorage.getItem('uid').slice(0,4)}호</h3>
+            {cctvsize===1 && <div><img className={classes.maxvdeio} onClick={closecctv} src={'https://61.85.86.92:8000/stream2/'} alt="cctv1"></img><span className={classes.caption}>CCTV1</span></div> }
+            {cctvsize===2 && <div><img className={classes.maxvdeio} onClick={closecctv} src={'https://183.107.25.170:8001/stream2/'} alt="cctv2"></img><span className={classes.caption}>CCTV2</span></div> }
+            {cctvsize===3 && <div><img className={classes.maxvdeio} onClick={closecctv} src={'https://125.242.221.85:8000/stream2/'} alt="cctv3"></img><span className={classes.caption}>CCTV3</span></div> }
+            {cctvsize===4 && <div><img className={classes.maxvdeio} onClick={closecctv} src={'https://118.217.60.147:8000/stream2/'} alt="cctv4"></img><span className={classes.caption}>CCTV4</span></div> }
+            {cctvsize === 0 && 
             <div className={classes.traininfo}>
                 <div className="d-flex justify-content-between">
-                    <img className={classes.vdeio} onClick={()=>gocctv(1)} src={'http://localhost:8000/stream2/'} alt="cctv1"></img>
-                    <img className={classes.vdeio} onClick={()=>gocctv(2)} src={'http://183.107.25.170:8001/stream2/'} alt="cctv2"></img>
+                    <img className={classes.vdeio} onClick={()=>gocctv(1)} src={'https://61.85.86.92:8000/stream2/'} alt="cctv1"></img>
+                    <span className={classes.caption1}>CCTV1</span>
+                    <img className={classes.vdeio} onClick={()=>gocctv(2)} src={'https://183.107.25.170:8001/stream2/'} alt="cctv2"></img>
+                    <span className={classes.caption2}>CCTV2</span>
                 </div>
                 <div className="d-flex justify-content-between">
-                    <img className={classes.vdeio} onClick={()=>gocctv(3)} src={'http://125.242.221.85:8000/stream2/'} alt="cctv3"></img>
-                    <img className={classes.vdeio} onClick={()=>gocctv(4)} src={'http://118.217.60.147:8000/stream2/'} alt="cctv4"></img>
+                    <img className={classes.vdeio} onClick={()=>gocctv(3)} src={'https://125.242.221.85:8000/stream2/'} alt="cctv3"></img>
+                    <span className={classes.caption1}>CCTV3</span>
+                    <img className={classes.vdeio} onClick={()=>gocctv(4)} src={'https://118.217.60.147:8000/stream2/'} alt="cctv4"></img>
+                    <span className={classes.caption2}>CCTV4</span>
                 </div>
-            </div>
+            </div>}
         </div>
     );
 }
