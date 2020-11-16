@@ -1,0 +1,33 @@
+.root{
+    background-color: #d7a98c0d;
+}
+
+.subway-div{
+    opacity: 0.8;
+    z-index: 5;
+}
+
+.subway-wrapper{
+    width: 100%;
+    padding-top: 100px;
+}
+
+.subway{
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 10%;
+    /* overflow-y:scroll; */
+    overflow-x:scroll;
+    /* white-space:nowrap; */
+}
+
+.img{
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    max-width: 100%; 
+    height: auto;
+    z-index: 0 !important;
+}

@@ -1,0 +1,17 @@
+.MuiTimelineOppositeContent-root{
+    text-align: left !important;
+}
+
+.timeline{
+    position: relative;
+    /* overflow: hidden; */
+    overflow-x:scroll;
+}
+
+.timetitle { 
+    height: 100px;
+}
+
+.title-h6 {
+    transform: none !important;
+}

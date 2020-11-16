@@ -1,0 +1,23 @@
+.header{
+    position: fixed;
+    top: 0;
+}
+
+.Favorite_edit{
+    position: absolute;
+    right: 0.5%;
+    top: 8%;
+    z-index: 6;
+    color: black !important;
+}
+
+.MuiAppBar-colorPrimary{
+    opacity: 0.6;
+    background-color: white !important;
+    color: black !important;
+    /* border: none !important; */
+}
+
+.MuiPaper-elevation4{
+    box-shadow: none !important;
+}

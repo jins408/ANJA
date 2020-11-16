@@ -1,0 +1,76 @@
+.selectroute_box{
+    border: 0.5px solid gray;
+    padding: 0;
+    margin:3% 5%;
+    background: #fff4f4b0;
+    border-radius: 10%;
+}
+
+.selectroute_star{
+    /* position: absolute;
+    top: 9%;
+    left: 83%; */
+    margin-right: 0.5rem;
+    font-size: 2rem !important;
+    color: crimson;
+}
+
+.selectroute_location{
+    width: 280px;
+    transform: translate(5%);
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.sleectroute_time{
+    text-align: center;
+    margin-bottom: 1%;
+}
+
+.selectroute_updown{
+    width: 100%;
+}
+
+.selectroute_box2{
+    padding:8% 5%;
+}
+
+.selectroute_num{
+    font-size: 1.5rem;
+    line-height: 80px;
+}
+
+/* .selectroute_chair{
+    margin-left: 1.5rem;
+    font-size: 1rem;
+    line-height: 80px;
+} */
+
+.chairs{
+    margin: auto;
+    line-height: 30px;
+}
+.selectroute_chair{
+    margin: 0rem;
+    font-size: 1rem;
+    /* line-height: 80px; */
+}
+
+.selectroute_gotarin{
+    font-size: 0.8rem;
+}
+
+button:focus{
+    outline: none;
+}
+
+.chairdiv{
+    border-bottom: 0.5px solid gray;
+}
+
+.timebtn{
+    font-size: 1rem !important;
+    font-weight: bold !important;
+}

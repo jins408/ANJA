@@ -1,0 +1,17 @@
+.Favorite_edit:focus{
+    outline: none !important;
+    box-shadow:none;
+}
+
+.favorite_star {
+    margin-right: 1rem;
+    width: 50px;
+}
+
+.listname{
+    width: 70vw;
+}
+
+.listname span{
+    font-size: 1.5rem !important;
+}

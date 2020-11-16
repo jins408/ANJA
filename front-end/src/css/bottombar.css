@@ -1,0 +1,22 @@
+.bottom{
+    width: 100%;
+    max-width: 375px;
+    position: fixed;
+    bottom: 0;
+    /* background-color:#fff4f4 !important; */
+    background-color: rgb(248, 248, 248) !important;
+}
+
+.alarmcount .MuiBadge-anchorOriginTopRightRectangle{
+    top: 25% !important
+}
+
+.MuiBottomNavigationAction-root {
+    color: rgb(23 28 92 / 54%) !important;
+    /* transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,padding-top 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; */
+}
+
+.icontext:hover{
+    color: #6da1ff !important;
+    text-decoration: none;
+}
