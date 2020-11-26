@@ -1,7 +1,5 @@
-import pandas as pd
-from bs4 import BeautifulSoup
-import requests
-import time
+from .models import Station
+from .serializers import StationSerializer
 
 from django.shortcuts import render
 from rest_framework import status
@@ -69,9 +67,11 @@ class SubwayEstimatedTimeView(APIView):
             end = '서울'
 
         URL_SU = []
-        URL_SU.append("http://swopenapi.seoul.go.kr/api/subway/sample/json/shortestRoute")
+        URL_SU.append("http://swopenapi.seoul.go.kr/api/subway")
+        URL_SU.append(SU_API_KEY)
+        URL_SU.append("json/shortestRoute")
         URL_SU.append("0")
-        URL_SU.append("5")
+        URL_SU.append("20")
         URL_SU.append(quote(start))
         URL_SU.append(quote(end))
         URL_SU = "/".join(URL_SU)
@@ -86,49 +86,55 @@ class SubwayEstimatedTimeView(APIView):
 
         # 최소환승, 최단거리 경로
         items = dict["shortestRouteList"]
-        minRoute = copy.deepcopy(sorted(items, key=lambda item: (item['minTravelTm']))[0])
-        shortRoute = copy.deepcopy(sorted(items, key=lambda item: (item['shtTravelTm']))[0])
 
-        # 데이터 오류 제거
-        minStatnNm = minRoute["minStatnNm"].split(", ")
-        if minStatnNm[0] == minStatnNm[1]:
-            minStatnId = minRoute["minStatnId"].split(",")
-            minStatnNm.pop(0)
-            minStatnId.pop(0)
-            minRoute["minStatnNm"] = ", ".join(minStatnNm)
-            minRoute["minStatnId"] = ",".join(minStatnId)
-            minRoute["statnFid"] = minStatnId[0]
+        for item in items:
+            if int(item["shtTravelTm"]) > 180 or int(item["minTravelTm"]) > 180:
+                items.remove(item)
 
-        shtStatnNm = minRoute["shtStatnNm"].split(", ")
-        if shtStatnNm[0] == shtStatnNm[1]:
-            shtStatnId = minRoute["shtStatnId"].split(",")
-            shtStatnNm.pop(0)
-            shtStatnId.pop(0)
-            minRoute["shtStatnNm"] = ", ".join(shtStatnNm)
-            minRoute["shtStatnId"] = ",".join(shtStatnId)
-            minRoute["statnFid"] = shtStatnId[0]
 
-        minStatnNm = shortRoute["minStatnNm"].split(", ")
-        if minStatnNm[0] == minStatnNm[1]:
-            minStatnId = shortRoute["minStatnId"].split(",")
-            minStatnNm.pop(0)
-            minStatnId.pop(0)
-            shortRoute["minStatnNm"] = ", ".join(minStatnNm)
-            shortRoute["minStatnId"] = ",".join(minStatnId)
-            shortRoute["statnFid"] = minStatnId[0]
-
-        shtStatnNm = shortRoute["shtStatnNm"].split(", ")
-        if shtStatnNm[0] == shtStatnNm[1]:
-            shtStatnId = shortRoute["shtStatnId"].split(",")
-            shtStatnNm.pop(0)
-            shtStatnId.pop(0)
-            shortRoute["shtStatnNm"] = ", ".join(shtStatnNm)
-            shortRoute["shtStatnId"] = ",".join(shtStatnId)
-            shortRoute["statnFid"] = shtStatnId[0]
-
+        minRoute = copy.deepcopy(sorted(items, key=lambda item: (int(item['minTravelTm']))))[0]
+        shortRoute = copy.deepcopy(sorted(items, key=lambda item: (int(item['shtTravelTm']), int(item['minTravelTm']))))[0]
+        #
+        # # 데이터 오류 제거
+        # minStatnNm = minRoute["minStatnNm"].split(", ")
+        # if minStatnNm[0] == minStatnNm[1]:
+        #     minStatnId = minRoute["minStatnId"].split(",")
+        #     minStatnNm.pop(0)
+        #     minStatnId.pop(0)
+        #     minRoute["minStatnNm"] = ", ".join(minStatnNm)
+        #     minRoute["minStatnId"] = ",".join(minStatnId)
+        #     minRoute["statnFid"] = minStatnId[0]
+        #
+        # shtStatnNm = minRoute["shtStatnNm"].split(", ")
+        # if shtStatnNm[0] == shtStatnNm[1]:
+        #     shtStatnId = minRoute["shtStatnId"].split(",")
+        #     shtStatnNm.pop(0)
+        #     shtStatnId.pop(0)
+        #     minRoute["shtStatnNm"] = ", ".join(shtStatnNm)
+        #     minRoute["shtStatnId"] = ",".join(shtStatnId)
+        #     minRoute["statnFid"] = shtStatnId[0]
+        #
+        # minStatnNm = shortRoute["minStatnNm"].split(", ")
+        # if minStatnNm[0] == minStatnNm[1]:
+        #     minStatnId = shortRoute["minStatnId"].split(",")
+        #     minStatnNm.pop(0)
+        #     minStatnId.pop(0)
+        #     shortRoute["minStatnNm"] = ", ".join(minStatnNm)
+        #     shortRoute["minStatnId"] = ",".join(minStatnId)
+        #     shortRoute["statnFid"] = minStatnId[0]
+        #
+        # shtStatnNm = shortRoute["shtStatnNm"].split(", ")
+        # if shtStatnNm[0] == shtStatnNm[1]:
+        #     shtStatnId = shortRoute["shtStatnId"].split(",")
+        #     shtStatnNm.pop(0)
+        #     shtStatnId.pop(0)
+        #     shortRoute["shtStatnNm"] = ", ".join(shtStatnNm)
+        #     shortRoute["shtStatnId"] = ",".join(shtStatnId)
+        #     shortRoute["statnFid"] = shtStatnId[0]
+        #
         # 최소환승 노선 구하기
         minStationIDs = minRoute["minStatnId"][:-1].split(",")
-        pprint(minStationIDs)
+        # pprint(minStationIDs)
         minStationNames = minRoute["minStatnNm"][:-1].split(", ")
         minLines = {'line': [], 'station': []}
         for index, minStation in enumerate(minStationIDs):
@@ -167,15 +173,15 @@ class SubwayEstimatedTimeView(APIView):
             shortRoute["upDown"] = "상행"
         else:
             shortRoute["upDown"] = "하행"
-
-        if int(minRoute["minTravelTm"]) >= 180:
-            minRoute["minTravelTm"] = minRoute["shtTravelTm"]
-            minRoute["minTravelMsg"] = minRoute["shtTravelMsg"]
-
-        if int(shortRoute["shtTravelTm"]) >= 180:
-            shortRoute["shtTravelTm"] = shortRoute["minTravelTm"]
-            shortRoute["shtTravelMsg"] = shortRoute["minTravelMsg"]
-
+        #
+        # if int(minRoute["minTravelTm"]) >= 180:
+        #     minRoute["minTravelTm"] = minRoute["shtTravelTm"]
+        #     minRoute["minTravelMsg"] = minRoute["shtTravelMsg"]
+        #
+        # if int(shortRoute["shtTravelTm"]) >= 180:
+        #     shortRoute["shtTravelTm"] = shortRoute["minTravelTm"]
+        #     shortRoute["shtTravelMsg"] = shortRoute["minTravelMsg"]
+        #
         return Response({'data': {'최소환승': minRoute, '최단거리': shortRoute}}, status=status.HTTP_200_OK)
 
 
@@ -229,7 +235,6 @@ class SubwayTimeTableView(APIView):
             return Response({'data': "NOT ENOUGH PARAMS"}, status=status.HTTP_200_OK)
 
 
-        # pprint(station + " " + line)
         stations = getStationInfo(station)
         dict = next((item for item in stations if line in item['line']), None)
         if not dict:
@@ -277,7 +282,7 @@ class SubwayTimeTableView(APIView):
         return Response({'data': timetable}, status=status.HTTP_200_OK)
 
 
-# 지하철역이름(키워드)으로 {호선, 지하철역ID, 지하철역이름} 찾기
+# [자동완성] 지하철역이름(키워드)으로 {호선, 지하철역ID, 지하철역이름} 찾기
 class SubwayStationView(APIView):
     def get(self, request):
         station = request.GET.get("station")
@@ -294,56 +299,63 @@ class SubwayStationView(APIView):
 
 # 지하철역이름(키워드)으로 {호선, 지하철역ID, 지하철역이름} 찾는 함수
 def getStationInfo(station):
-    URL_SU = []
-    URL_SU.append("http://openapi.tago.go.kr/openapi/service/SubwayInfoService/getKwrdFndSubwaySttnList")
-    URL_SU.append("?")
-    URL_SU.append("serviceKey=")
-    URL_SU.append(API_KEY)
-    URL_SU.append("&")
-    URL_SU.append("subwayStationName=")
-    URL_SU.append(quote(station))
-    URL_SU = "".join(URL_SU)
-    req = Request(URL_SU)
-    response = urlopen(req)
-    response_body = response.read()
-    dict = xmltodict.parse(response_body)
-    dict = json.loads(json.dumps(dict))
-    dict = dict["response"]["body"]["items"]
+    # URL_SU = []
+    # URL_SU.append("http://openapi.tago.go.kr/openapi/service/SubwayInfoService/getKwrdFndSubwaySttnList")
+    # URL_SU.append("?")
+    # URL_SU.append("serviceKey=")
+    # URL_SU.append(API_KEY)
+    # URL_SU.append("&")
+    # URL_SU.append("subwayStationName=")
+    # URL_SU.append(quote(station))
+    # URL_SU = "".join(URL_SU)
+    # req = Request(URL_SU)
+    # response = urlopen(req)
+    # response_body = response.read()
+    # dict = xmltodict.parse(response_body)
+    # dict = json.loads(json.dumps(dict))
+    # dict = dict["response"]["body"]["items"]
+    #
+    #
+    # seouls = ['경춘선', '경의중앙선', '공항철도', '신분당선', '인천 1호선', '인천 2호선', '우이신설', '수인분당선', '김포골드']
+    # if not dict:
+    #     return None
+    # items = []
+    # if str(type(dict["item"])) == "<class 'dict'>":
+    #     items.append(dict["item"])
+    # else:
+    #     items = dict["item"]
+    #
+    # subways = []
+    # for item in items:
+    #     line = item["subwayRouteName"].replace("선", "")
+    #     info = {}
+    #     if (line.startswith("서울")):
+    #         info['line'] = item["subwayRouteName"][3:]
+    #     else:
+    #         for seoul in seouls:
+    #             if line in seoul:
+    #                 info['line'] = item["subwayRouteName"]
+    #     if "line" not in info:
+    #         continue
+    #     info["stationCode"] = item["subwayStationId"]
+    #     info["station"] = item["subwayStationName"]
+    #     subways.append(info)
+    # return subways
 
+    # station = request.GET.get('station')
+    queryset = Station.objects.filter(station__contains=station)
+    serializer = StationSerializer(queryset, many=True)
+    return serializer.data
 
-    seouls = ['경춘선', '경의중앙선', '공항철도', '신분당선', '인천 1호선', '인천 2호선', '우이신설', '수인분당선', '김포골드']
-    if not dict:
-        return None
-    items = []
-    if str(type(dict["item"])) == "<class 'dict'>":
-        items.append(dict["item"])
-    else:
-        items = dict["item"]
-    pprint(items)
-
-    subways = []
-    for item in items:
-        line = item["subwayRouteName"].replace("선", "")
-        info = {}
-        if (line.startswith("서울")):
-            info['line'] = item["subwayRouteName"][3:]
-        else:
-            for seoul in seouls:
-                if line in seoul:
-                    info['line'] = item["subwayRouteName"]
-        if "line" not in info:
-            continue
-        info["stationCode"] = item["subwayStationId"]
-        info["station"] = item["subwayStationName"]
-        subways.append(info)
-    pprint(subways)
-    return subways
 
 
 class StationInfoView(APIView):
     # 키워드에 맞는 서울 지하철 찾기
     def get(self, request):
         station = request.GET.get("station")
+        if not station:
+            return Response({"data": "NOT ENOUGH PARAMS"}, status=status.HTTP_200_OK)
+
         infos = getStationInfo(station)
         if not infos:
             return Response({"data": "NO DATA"}, status=status.HTTP_200_OK)
@@ -354,11 +366,14 @@ class StationInfoView(APIView):
                 stations.append(info["line"])
         stations.sort()
 
+        pprint(stations)
+
         return Response({"data": stations}, status=status.HTTP_200_OK)
 
 
-
-
-
-
-
+# class TestView(APIView):
+#     def get(self, request):
+#         station = request.GET.get('station')
+#         queryset = Station.objects.filter(station__contains=station)
+#         serializer = StationSerializer(queryset, many=True)
+#         return Response({"data": serializer.data}, status=status.HTTP_200_OK)
